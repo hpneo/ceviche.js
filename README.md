@@ -9,3 +9,14 @@ El hilo conductor de este libro es una historia que permitirá entender y aplica
 ## Capítulos
 1. [Entendiendo JavaScript](1.md)
 2. [Funciones](2.md)
+3. [DOM y CSSOM](3.md) *en progreso*
+4. HTML5 y APIs del navegador
+5. Pruebas en JavaScript
+6. Bibliotecas JavaScript
+7. Peticiones asíncronas
+8. jQuery
+9. Backbone.js
+10. Mejorando el flujo de trabajo
+
+## Apéndices
+A. [Referencia DOM](a.md)
