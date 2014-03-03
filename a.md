@@ -187,8 +187,6 @@ Devuelve un número, correspondiente al tipo de nodo que es:
 
 Devuelve una cadena con el contenido de un nodo, resultado de unir todos los valores de `textContent` de sus nodos hijos. Si un nodo solo tiene un nodo de texto como nodo hijo, el valor de `textContent` es una cadena con el contenido del texto.
 
----
-
 ### Interfaz `Element`
 
 Todos los elementos HTML en el DOM heredan de la interfaz `Element`, la misma que hereda de la interfaz `Node`. Esta interfaz contiene métodos utilizados para realizar operaciones dentro de un elemento, como manipular atributos u obtener elementos anidados según criterios como clase o selector CSS, o nombre de etiqueta.
