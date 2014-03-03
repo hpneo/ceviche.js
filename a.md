@@ -363,3 +363,57 @@ Devuelve el ancho de un elemento, incluyendo su *padding* derecho e izquierdo, p
 #### `tagName`
 
 Devuelve el nombre de la etiqueta, en mayúsculas. Similar a `nodeName`
+
+### Objeto `document`
+
+Entre los atributos que tiene un objeto `document` se encuentran:
+
+#### `documentElement`
+
+Devuelve un elemento que representa a la etiqueta `html`.
+
+#### `title`
+
+Devuelve el contenido de la etiqueta `<title></title>`, o uno asignado manualmente.
+
+#### `head`
+
+Devuelve un elemento que representa a la etiqueta `head`.
+
+#### `body`
+
+Devuelve un elemento que representa a la etiqueta `body`.
+
+#### `styleSheets`
+
+Devuelve una lista instancia de `StyleSheetList` con objetos `CSSStyleSheet`, uno por cada hoja de estilos definida (con `<style></style>`) o enlazada al documento (con `<link />`).
+
+#### `cookie`
+
+Devuelve una cadena con todas las cookies asignadas al documento actual.
+
+#### `location`
+
+Devuelve un objeto `Location`, el cual contiene información sobre la URL actual del documento. Esta propiedad puede ser cambiada, asignando una cadena con la nueva URL a la cual el navegador direccionará.
+
+---
+
+`document` también tiene algunas propiedades de la interfaz `Element`, como `children`, `firstElementChild `, `lastElementChild ` y `childElementCount`.
+
+Así mismo, tiene métodos que sirven para crear elementos, y acceder a cualquier elemento dentro del documento:
+
+#### `createAttribute`
+
+Crea un nodo atributo (instancia de `Attr`) con un nombre pasado como parámetro.
+
+#### `createComment`
+
+Crea un nodo comentario con el contenido pasado como parámetro.
+
+#### `createElement`
+
+Crea un nodo elemento con el nombre de la etiqueta pasado como parámetro.
+
+#### `createTextNode`
+
+Crea un nodo texto con el contenido pasado como parámetro.
