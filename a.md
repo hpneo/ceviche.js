@@ -10,7 +10,7 @@ Agrega un nodo al final de la lista de sus nodos hijos.
 
 #### `cloneNode`
 
-Clona un nodo, pero sin nodos hijos.
+Clona un nodo, con o sin nodos hijos, dependiendo del valor booleano que se le pase como parámetro.
 
 #### `compareDocumentPosition`
 
