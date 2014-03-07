@@ -298,6 +298,14 @@ Devuelve el primer nodo hijo que es un elemento.
 
 Devuelve el último nodo hijo que es un elemento.
 
+#### `nextElementSibling`
+
+Devuelve el siguiente nodo hermano que sea un elemento.
+
+#### `previousElementSibling`
+
+Devuelve el anterior nodo hermano que sea un elemento.
+
 #### `classList`
 
 Devuelve una lista instancia de `DOMTokenList` con todas las clases asignadas al elemento.
@@ -333,14 +341,6 @@ Devuelve una cadena con el contenido de un elemento en forma de HTML.
 #### `outerHTML`
 
 Similar a `innerHTML`, pero incluye las etiquetas HTML del elemento.
-
-#### `nextElementSibling`
-
-Devuelve el siguiente nodo hermano que sea un elemento.
-
-#### `previousElementSibling`
-
-Devuelve el anterior nodo hermano que sea un elemento.
 
 #### `scrollHeight`
 
