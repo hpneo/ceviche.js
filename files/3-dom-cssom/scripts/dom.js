@@ -4,7 +4,12 @@ function Dom(selectorOrElements) {
     this.elements = document.querySelectorAll(selectorOrElements);
   }
   else {
-    this.elements = selectorOrElements;
+    if (selectorOrElements instanceof Node) {
+      this.elements = [selectorOrElements];
+    }
+    else {
+      this.elements = selectorOrElements;
+    }
   }
 };
 
@@ -83,4 +88,45 @@ Dom.prototype.has = function(attributeName) {
   }
 
   return hasAttributeValues;
+};
+
+Dom.prototype.on = function (eventName, callback) {
+  var i = 0,
+      eventIdentifier = this.selector + ':' + eventName;
+
+  if (this.events == undefined) {
+    this.events = {};
+  }
+
+  if (this.events[eventIdentifier] == undefined) {
+    this.events[eventIdentifier] = [];
+  }
+
+  this.events[eventIdentifier].push(callback);
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].addEventListener(eventName, callback);
+  }
+};
+
+Dom.prototype.off = function(eventName) {
+  var i = 0,
+      e = 0,
+      eventIdentifier = this.selector + ':' + eventName;
+
+  if (this.events == undefined) {
+    this.events = {};
+  }
+
+  if (this.events[eventIdentifier] != undefined) {
+    for (e; e < this.events[eventIdentifier].length; e++) {
+      var callback = this.events[eventIdentifier][e];
+
+      for (i; i < this.elements.length; i++) {
+        this.elements[i].removeEventListener(eventName, callback);
+      }
+    }
+  }
+
+  this.events[eventIdentifier] = [];
 };
