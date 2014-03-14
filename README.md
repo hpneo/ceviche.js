@@ -7,9 +7,9 @@ Adicionalmente se verán herramientas adicionales como RequireJS, Grunt, y los e
 El hilo conductor de este libro es una historia que permitirá entender y aplicar los temas de cada capítulo en un escenario real.
 
 ## Capítulos
-1. [Entendiendo JavaScript](1.md)
-2. [Funciones](2.md)
-3. [DOM y CSSOM](3.md) *(en progreso)*
+1. [Entendiendo JavaScript](1-javascript.md)
+2. [Funciones](2-funciones.md)
+3. [DOM y CSSOM](3-dom-cssom.md) — *(en progreso)*
 4. HTML5 y APIs del navegador
 5. Pruebas en JavaScript
 6. Bibliotecas JavaScript
@@ -19,4 +19,4 @@ El hilo conductor de este libro es una historia que permitirá entender y aplica
 10. Mejorando el flujo de trabajo
 
 ## Apéndices
-A. [Referencia DOM](a.md)
+A. [Referencia DOM](a-dom.md)

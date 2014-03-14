@@ -22,7 +22,7 @@ Es este motor de renderizado el que, a su vez, se encarga de utilizar las hojas 
 
 La abstracción que el DOM realiza de un documento HTML utiliza el concepto de **árbol de nodos** para representar la estructura de elementos anidados que tiene el documento. Esto quiere decir que un elemento (o nodo en el árbol) puede tener elementos anidados dentro del mismo (denominados *nodos hijos*); al tener nodos hijos, este elemento automáticamente se convierte en un nodo padre. El primer nodo de un árbol, es decir, aquel que tenga nodos hijos pero no es hijo de ningún otro nodo, es llamado **nodo raíz**.
 
-Según la tabla de valores de la propiedad `nodeType` (ver [Apéndice A](a.md)), se pueden ver diferentes tipos de nodos. Al ser el DOM una abstracción basada en árboles de nodos, cada dato dentro de un documento HTML debe pertenecer a un tipo de nodo. Por ejemplo:
+Según la tabla de valores de la propiedad `nodeType` (ver [Apéndice A](a-dom.md)), se pueden ver diferentes tipos de nodos. Al ser el DOM una abstracción basada en árboles de nodos, cada dato dentro de un documento HTML debe pertenecer a un tipo de nodo. Por ejemplo:
 
 ```html
 <!DOCTYPE html>
@@ -154,7 +154,7 @@ nav.append({
 
 #### Recorriendo nodos y elementos
 
-Tanto las interfaces `Node` como `Element` [tienen](a.md#childnodes) [propiedades](a.md#children) que permiten obtener los nodos (y elementos) hijos de otro nodo, así como obtener los nodos *hermanos* de un nodo en específico (un nodo *hermano* es aquel nodo que está al mismo nivel que otro y comparten el mismo nodo padre).
+Tanto las interfaces `Node` como `Element` [tienen](a-dom.md#childnodes) [propiedades](a-dom.md#children) que permiten obtener los nodos (y elementos) hijos de otro nodo, así como obtener los nodos *hermanos* de un nodo en específico (un nodo *hermano* es aquel nodo que está al mismo nivel que otro y comparten el mismo nodo padre).
 
 Cada interfaz tiene sus propias propiedades para obtener nodos hijos y nodos hermanos; así, `childNodes` devuelve todos los nodos hijos, incluyendo nodos textos, comentarios o elementos; mientras que `children` devuelve todos los nodos hijos que son elementos. La diferencia es más notoria con las propiedades `firstChild` y `firstElementChild`, o `nextSibling` y `nextElementSibling`.
 
@@ -299,13 +299,13 @@ window.removeEventListener('load', function(e) {
 Por eso, es necesario guardar el callback utilizado en `addEventListener` en una variable para utlizarla luego en `removeEventListener`:
 
 ```javascript
-var WindowOnLoad = function(e) {
+var windowOnLoad = function(e) {
   console.log('window:load', e);
 };
 
-window.addEventListener('load', WindowOnLoad);
+window.addEventListener('load', windowOnLoad);
 
-window.removeEventListener('load', WindowOnLoad);
+window.removeEventListener('load', windowOnLoad);
 ```
 
 Ahora que ya vimos como agregar y eliminar *listeners* a un elemento, vamos a añadir esta funcionalidad a `dom.js`:
@@ -352,6 +352,8 @@ Dom.prototype.off = function(eventName) {
   this.events[eventIdentifier] = [];
 };
 ```
+
+Como debemos tener constancia de qué callbacks están siendo utilizados en `addEventListener`, los guardamos en la propiedad `this.events`. Luego, si queremos eliminarlos, iteramos dentro de esa propiedad y eliminamos los *listeners* con `removeEventListener`.
 
 #### Eventos propios
 
