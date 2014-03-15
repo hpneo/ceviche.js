@@ -434,9 +434,21 @@ Cuando un evento es lanzado, este pasa por 3 fases, en el siguiente orden: *Capt
 
 En el *event flow*, cada evento lanzado en el DOM empieza en el contexto global (es decir, `window`), pasa por el nodo raíz del documento (`document`) y sigue un camino a través de una serie de nodos hijos (*Capture phase*) que le permita llegar al elemento que lanza dicho evento (*Target phase*). En la *target phase*, el evento es lanzado. Luego, empieza la *bubbling phase*, siguiendo el mismo camino de la *capture phase*, pero en sentido inverso, hasta llegar al contexto global (`window`).
 
-Cuando se registra un *listener*, este se puede definir para que sea ejecutado en la *capture phase* o en la *bubbling phase*. Esto se logra pasándole un tercer parámetro a `addEventListener`; si es `true`, el *listener* se ejecutará en la *capture phase*; si es `false`, el *listener* se ejecutará en la *bubbling phase*. Por defecto, el valor de este parámetro es `false`. Cabe señalar que también debe ser pasado a `removeEventListener` si existen dos *listeners*, uno para cada fase, que apunten al mismo evento y elemento.
+Cuando se registra un *listener*, se puede definir para que sea ejecutado en la *capture phase* o en la *bubbling phase*. El orden en que un *listener* es ejecutado depende de la *fase* en la que está agregado:
 
-En `dom.js` definimos el tercer parámetro como `true`, tanto en `Dom.prototype.on` como en `Dom.prototype.off`, haciendo que todos los *listeners* sean ejecutados en la *capture phase*; de esta forma, el orden en el que agregamos los *listeners* será el mismo en el que son lanzados.
+```javascript
+window.addEventListener('click', function() {
+  console.log('Bubbling click event');
+}, false);                                       // Este listener se ejecutará segundo
+
+window.addEventListener('click', function() {
+  console.log('Capturing click event');
+}, true);                                       // Este listener se ejecutará primero
+```
+
+Para definir la fase en la que se ejecutará un *listener* se pasa un tercer parámetro a `addEventListener` que debe tener un valor booleano: si el parámetro es `true`, el *listener* se ejecutará en la *capture phase*, y si es `false` el *listener* se ejecutará en la *bubbling phase*. Por defecto, el valor de este parámetro es `false`. Cabe señalar que también debe ser pasado a `removeEventListener` si existen dos *listeners*, uno para cada fase, que apunten al mismo evento y elemento.
+
+En `dom.js` definimos el tercer parámetro como `true`, tanto en `Dom.prototype.on` como en `Dom.prototype.off`, haciendo que todos los *listeners* sean ejecutados en la *capture phase*. De esta forma, el orden en el que agregamos los *listeners* será el mismo en el que son lanzados.
 
 ### Rendimiento
 
