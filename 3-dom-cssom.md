@@ -490,7 +490,7 @@ new Dom('#background').html('<div class="slide" id="slide-1" title="Créditos: h
 
 Este método nos da el siguiente gráfico dentro de la pestaña *Timeline* de Chrome:
 
-![Utilizando innerHTML](images/3-dom-cssom/documentFragment.sin_fragmento.png "Utilizando innerHTML")
+![Utilizando innerHTML](/images/3-dom-cssom/documentFragment.sin_fragmento.png "Utilizando innerHTML")
 *Utilizando innerHTML*
 
 Ahora vamos a utilizar un fragmento:
@@ -526,7 +526,7 @@ Dom.prototype.html = function(htmlString) {
 };
 ```
 
-![Utilizando fragmento](images/3-dom-cssom/documentFragment.con_fragmento.png "Utilizando fragmento")
+![Utilizando fragmento](/images/3-dom-cssom/documentFragment.con_fragmento.png "Utilizando fragmento")
 *Utilizando fragmento*
 
 El tiempo utilizado por el navegador para recalcular estilos luego de añadir los elementos al DOM, segun la técnica:
