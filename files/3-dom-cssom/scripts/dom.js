@@ -4,7 +4,7 @@ function Dom(selectorOrElements) {
     this.elements = document.querySelectorAll(selectorOrElements);
   }
   else {
-    if (selectorOrElements instanceof Node) {
+    if (selectorOrElements instanceof EventTarget) {
       this.elements = [selectorOrElements];
     }
     else {
@@ -105,7 +105,7 @@ Dom.prototype.on = function (eventName, callback) {
   this.events[eventIdentifier].push(callback);
 
   for (i; i < this.elements.length; i++) {
-    this.elements[i].addEventListener(eventName, callback);
+    this.elements[i].addEventListener(eventName, callback, true);
   }
 };
 
@@ -123,7 +123,7 @@ Dom.prototype.off = function(eventName) {
       var callback = this.events[eventIdentifier][e];
 
       for (i; i < this.elements.length; i++) {
-        this.elements[i].removeEventListener(eventName, callback);
+        this.elements[i].removeEventListener(eventName, callback, true);
       }
     }
   }

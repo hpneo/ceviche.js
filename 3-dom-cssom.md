@@ -278,7 +278,7 @@ window.addEventListener('load', function(e) {
 
 El ejemplo anterior agrega un *listener* al evento `load` de `window`, donde el callback pasado como segundo parámetro es la función que se ejecutará cuando el evento se dispare (que es cuando el navegador termina de cargar el documento).
 
-Todos los callbacks enlazados a eventos toman un solo parámetro (en este caso, `e`). Este parámetro puede ser instancia de `FocusEvent`, `MouseEvent`, `KeyboardEvent`, `UIEvent` o `WheelEvent`, dependiendo del evento que sea lanzado. Todas las instancias heredan de la interfaz `Event`.
+Todos los callbacks enlazados a eventos toman un solo parámetro (en este caso, `e`). Este parámetro puede ser instancia de `FocusEvent`, `MouseEvent`, `KeyboardEvent`, `UIEvent` o `WheelEvent`, dependiendo del evento que sea lanzado. Todos los eventos heredan de la interfaz `Event`.
 
 #### `removeEventListener`
 
@@ -326,7 +326,7 @@ Dom.prototype.on = function (eventName, callback) {
   this.events[eventIdentifier].push(callback);
 
   for (i; i < this.elements.length; i++) {
-    this.elements[i].addEventListener(eventName, callback);
+    this.elements[i].addEventListener(eventName, callback, true);
   }
 };
 
@@ -344,16 +344,45 @@ Dom.prototype.off = function(eventName) {
       var callback = this.events[eventIdentifier][e];
 
       for (i; i < this.elements.length; i++) {
-        this.elements[i].removeEventListener(eventName, callback);
+        this.elements[i].removeEventListener(eventName, callback, true);
       }
     }
-  }
 
-  this.events[eventIdentifier] = [];
+    this.events[eventIdentifier] = [];
+  }
 };
 ```
 
-Como debemos tener constancia de qué callbacks están siendo utilizados en `addEventListener`, los guardamos en la propiedad `this.events`. Luego, si queremos eliminarlos, iteramos dentro de esa propiedad y eliminamos los *listeners* con `removeEventListener`.
+Como debemos tener constancia de los callbacks que están siendo utilizados en `addEventListener`, los guardamos en la propiedad `this.events`. Luego, si queremos eliminarlos, iteramos dentro de esa propiedad y eliminamos los *listeners* con `removeEventListener`.
+
+Así, utilizamos nuestros métodos de la siguiente forma:
+
+```javascript
+var win = new Dom(window);
+
+win.on('load', function(e) {
+  console.log('window:load');
+});
+```
+
+Para que nuestro `dom.js` funcione con `window` debemos cambiar el constructor una vez más, y debemos verificar si el argumento pasado al constructor es instancia de `EventTarget` (de todas formas, `Node` hereda de `EventTarget`):
+
+```javascript
+function Dom(selectorOrElements) {
+  if (typeof selectorOrElements == 'string') {
+    this.selector = selectorOrElements;
+    this.elements = document.querySelectorAll(selectorOrElements);
+  }
+  else {
+    if (selectorOrElements instanceof EventTarget) {
+      this.elements = [selectorOrElements];
+    }
+    else {
+      this.elements = selectorOrElements;
+    }
+  }
+};
+```
 
 #### Eventos propios
 
@@ -406,6 +435,8 @@ Document Object Model (DOM) Level 3 Events Specification. http://www.w3.org/TR/D
 En el *event flow*, cada evento lanzado en el DOM empieza en el contexto global (es decir, `window`), pasa por el nodo raíz del documento (`document`) y sigue un camino a través de una serie de nodos hijos (*Capture phase*) que le permita llegar al elemento que lanza dicho evento (*Target phase*). En la *target phase*, el evento es lanzado. Luego, empieza la *bubbling phase*, siguiendo el mismo camino de la *capture phase*, pero en sentido inverso, hasta llegar al contexto global (`window`).
 
 Cuando se registra un *listener*, este se puede definir para que sea ejecutado en la *capture phase* o en la *bubbling phase*. Esto se logra pasándole un tercer parámetro a `addEventListener`; si es `true`, el *listener* se ejecutará en la *capture phase*; si es `false`, el *listener* se ejecutará en la *bubbling phase*. Por defecto, el valor de este parámetro es `false`. Cabe señalar que también debe ser pasado a `removeEventListener` si existen dos *listeners*, uno para cada fase, que apunten al mismo evento y elemento.
+
+En `dom.js` definimos el tercer parámetro como `true`, tanto en `Dom.prototype.on` como en `Dom.prototype.off`, haciendo que todos los *listeners* sean ejecutados en la *capture phase*; de esta forma, el orden en el que agregamos los *listeners* será el mismo en el que son lanzados.
 
 ### Rendimiento
 
