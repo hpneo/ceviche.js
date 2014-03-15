@@ -466,6 +466,59 @@ Cuando se agregan nodos dentro de un bucle (la operación más común cuando se 
 
 La ventaja de utilizar un fragmento (una instancia de `DocumentFragment`) es que, al estar separado del árbol DOM del documento y es guardado en memoria, evita que el navegador tenga que renderizar de nuevo cada vez que se agregue un nodo al fragmento.
 
+Para probar este método implementaremos un método llamado `html`, el cual permitirá agregar elementos a un nodo pero utilizando cadenas. Inicialmente usaremos la propiedad `innerHTML`:
+
+```javascript
+Dom.prototype.html = function(htmlString) {
+  var i = 0;
+
+  this.elements[i].innerHTML = htmlString;
+};
+```
+
+Vamos a probar en un nodo vacío ejecutando la siguiente instrucción:
+
+```javascript
+new Dom('#background').html('<div class="slide" id="slide-1" title="Créditos: http://www.flickr.com/photos/saucesupreme/6774616862/"></div><div class="slide" id="slide-2" title="Créditos: http://www.flickr.com/photos/c32/4775267221/"></div><div class="slide" id="slide-3" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998183161/"></div><div class="slide" id="slide-4" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998217897/"></div><div class="slide" id="slide-5" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998185723/"></div><div class="slide" id="slide-6" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998141711/"></div>');
+```
+
+Este método nos da el siguiente gráfico dentro de la pestaña *Timeline* de Chrome:
+
+![Utilizando innerHTML](images/sin_fragmento.png "Utilizando innerHTML")
+Utilizando innerHTML
+
+Ahora vamos a utilizar un fragmento:
+
+```javascript
+Dom.prototype.html = function(htmlString) {
+  var i = 0,
+      f = 0;
+
+  var fragment = document.createDocumentFragment(),
+      root = Dom.createElement({
+        tag: 'div',
+        attributes: {
+          id: 'root'
+        }
+      });
+
+  root.innerHTML = htmlString;
+
+  for (f; f < root.childNodes.length; f++) {
+    fragment.appendChild(root.childNodes[f].cloneNode(true));
+  }
+
+  root = null;
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].appendChild(fragment.cloneNode(true));
+  }
+};
+```
+
+![Utilizando fragmento](images/con_fragmento.png "Utilizando fragmento")
+Utilizando fragmento
+
 #### Enlazando eventos a múltiples elementos
 
 Uno de los casos más comunes de uso de eventos es el de enlazar eventos a diferentes elementos que son similares (por ejemplo, un cliente de correo tiene el mismo enlace "marcar como importante" para cada correo en la bandeja). Con el DOM, se agrega un *listener* de un evento a un elemento utilizando `addEventListener`, pero no se puede agregar un *listener* a una lista de elementos.

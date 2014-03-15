@@ -39,8 +39,31 @@ Dom.prototype.append = function(newChildElement) {
   for (i; i < this.elements.length; i++) {
     this.elements[i].appendChild(newChildElement);
   }
+};
 
-  return this;
+Dom.prototype.html = function(htmlString) {
+  var i = 0,
+      f = 0;
+
+  var fragment = document.createDocumentFragment();
+  var root = Dom.createElement({
+    tag: 'div',
+    attributes: {
+      id: 'root'
+    }
+  });
+  root.innerHTML = htmlString;
+
+  for (f; f < root.childNodes.length; f++) {
+    fragment.appendChild(root.childNodes[f].cloneNode(true));
+  }
+
+  root = null;
+
+  for (i; i < this.elements.length; i++) {
+    // this.elements[i].innerHTML = htmlString;
+    this.elements[i].appendChild(fragment.cloneNode(true));
+  }
 };
 
 Dom.prototype.children = function() {

@@ -13,31 +13,31 @@
 }
 
 #slide-1 {
-  background: url('http://cevichejs.herokuapp.com/slides/slide-1.jpg') no-repeat center center;
+  background: url('../images/slides/slide-1.jpg') no-repeat center center;
   background-size: 100% auto;
 }
 
 #slide-2 {
-  background: url('http://cevichejs.herokuapp.com/slides/slide-2.jpg') no-repeat center center;
+  background: url('../images/slides/slide-2.jpg') no-repeat center center;
   background-size: 100% auto;
 }
 
 #slide-3 {
-  background: url('http://cevichejs.herokuapp.com/slides/slide-3.jpg') no-repeat center center;
+  background: url('../images/slides/slide-3.jpg') no-repeat center center;
   background-size: 100% auto;
 }
 
 #slide-4 {
-  background: url('http://cevichejs.herokuapp.com/slides/slide-4.jpg') no-repeat center center;
+  background: url('../images/slides/slide-4.jpg') no-repeat center center;
   background-size: 100% auto;
 }
 
 #slide-5 {
-  background: url('http://cevichejs.herokuapp.com/slides/slide-5.jpg') no-repeat center center;
+  background: url('../images/slides/slide-5.jpg') no-repeat center center;
   background-size: 100% auto;
 }
 
 #slide-6 {
-  background: url('slides/slide-6.jpg') no-repeat center center;
+  background: url('../images/slides/slide-6.jpg') no-repeat center center;
   background-size: 100% auto;
 }
