@@ -61,8 +61,12 @@ Dom.prototype.html = function(htmlString) {
   root = null;
 
   for (i; i < this.elements.length; i++) {
-    // this.elements[i].innerHTML = htmlString;
-    this.elements[i].appendChild(fragment.cloneNode(true));
+    this.elements[i].textContent = '';
+  }
+
+  for (i = 0; i < this.elements.length; i++) {
+    this.elements[i].innerHTML = htmlString;
+    // this.elements[i].appendChild(fragment.cloneNode(true));
   }
 };
 

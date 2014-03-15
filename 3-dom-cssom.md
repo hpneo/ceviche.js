@@ -430,7 +430,7 @@ Cuando un evento es lanzado, este pasa por 3 fases, en el siguiente orden: *Capt
 
 ![Document Object Model (DOM) Level 3 Events Specification: Event flow](http://www.w3.org/TR/DOM-Level-3-Events/images/eventflow.png "Document Object Model (DOM) Level 3 Events Specification")
 
-Document Object Model (DOM) Level 3 Events Specification. http://www.w3.org/TR/DOM-Level-3-Events/
+*Document Object Model (DOM) Level 3 Events Specification. http://www.w3.org/TR/DOM-Level-3-Events/*
 
 En el *event flow*, cada evento lanzado en el DOM empieza en el contexto global (es decir, `window`), pasa por el nodo raíz del documento (`document`) y sigue un camino a través de una serie de nodos hijos (*Capture phase*) que le permita llegar al elemento que lanza dicho evento (*Target phase*). En la *target phase*, el evento es lanzado. Luego, empieza la *bubbling phase*, siguiendo el mismo camino de la *capture phase*, pero en sentido inverso, hasta llegar al contexto global (`window`).
 
@@ -472,7 +472,13 @@ Para probar este método implementaremos un método llamado `html`, el cual perm
 Dom.prototype.html = function(htmlString) {
   var i = 0;
 
-  this.elements[i].innerHTML = htmlString;
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].textContent = '';
+  }
+
+  for (i = 0; i < this.elements.length; i++) {
+    this.elements[i].innerHTML = htmlString;
+  }
 };
 ```
 
@@ -485,7 +491,7 @@ new Dom('#background').html('<div class="slide" id="slide-1" title="Créditos: h
 Este método nos da el siguiente gráfico dentro de la pestaña *Timeline* de Chrome:
 
 ![Utilizando innerHTML](images/sin_fragmento.png "Utilizando innerHTML")
-Utilizando innerHTML
+*Utilizando innerHTML*
 
 Ahora vamos a utilizar un fragmento:
 
@@ -508,16 +514,27 @@ Dom.prototype.html = function(htmlString) {
     fragment.appendChild(root.childNodes[f].cloneNode(true));
   }
 
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].textContent = '';
+  }
+
   root = null;
 
-  for (i; i < this.elements.length; i++) {
+  for (i = 0; i < this.elements.length; i++) {
     this.elements[i].appendChild(fragment.cloneNode(true));
   }
 };
 ```
 
 ![Utilizando fragmento](images/con_fragmento.png "Utilizando fragmento")
-Utilizando fragmento
+*Utilizando fragmento*
+
+El tiempo utilizado por el navegador para recalcular estilos luego de añadir los elementos al DOM, segun la técnica:
+
+| Técnica | Tiempo (ms) |
+|---------|-------------|
+| `Element.prototype.innerHTML` | 4.047ms |
+| `document.createDocumentFragment` | 2.576ms |
 
 #### Enlazando eventos a múltiples elementos
 
