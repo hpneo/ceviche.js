@@ -446,7 +446,7 @@ window.addEventListener('click', function() {
 }, true);                                       // Este listener se ejecutará primero
 ```
 
-Para definir la fase en la que se ejecutará un *listener* se pasa un tercer parámetro a `addEventListener` que debe tener un valor booleano: si el parámetro es `true`, el *listener* se ejecutará en la *capture phase*, y si es `false` el *listener* se ejecutará en la *bubbling phase*. Por defecto, el valor de este parámetro es `false`. Cabe señalar que también debe ser pasado a `removeEventListener` si existen dos *listeners*, uno para cada fase, que apunten al mismo evento y elemento.
+Para definir la fase en la que se ejecutará un *listener* se pasa un tercer parámetro a `addEventListener`, el cual debe tener un valor booleano: si el parámetro es `true`, el *listener* se ejecutará en la *capture phase*, y si es `false` el *listener* se ejecutará en la *bubbling phase*. Por defecto, el valor de este parámetro es `false`. Cabe señalar que también debe ser pasado a `removeEventListener` si existen dos *listeners*, uno para cada fase, que apunten al mismo evento y elemento.
 
 En `dom.js` definimos el tercer parámetro como `true`, tanto en `Dom.prototype.on` como en `Dom.prototype.off`, haciendo que todos los *listeners* sean ejecutados en la *capture phase*. De esta forma, el orden en el que agregamos los *listeners* será el mismo en el que son lanzados.
 
@@ -484,10 +484,12 @@ Para probar este método implementaremos un método llamado `html`, el cual perm
 Dom.prototype.html = function(htmlString) {
   var i = 0;
 
+  // Eliminamos el contenido de todos los elementos
   for (i; i < this.elements.length; i++) {
     this.elements[i].textContent = '';
   }
 
+  // Agregamos el nuevo contenido a todos los elementos
   for (i = 0; i < this.elements.length; i++) {
     this.elements[i].innerHTML = htmlString;
   }
@@ -526,12 +528,14 @@ Dom.prototype.html = function(htmlString) {
     fragment.appendChild(root.childNodes[f].cloneNode(true));
   }
 
+  // Eliminamos el contenido de todos los elementos
   for (i; i < this.elements.length; i++) {
     this.elements[i].textContent = '';
   }
 
   root = null;
 
+  // Agregamos el fragmento a todos los elementos
   for (i = 0; i < this.elements.length; i++) {
     this.elements[i].appendChild(fragment.cloneNode(true));
   }
@@ -563,6 +567,103 @@ Esta técnica utiliza el *event flow* para agregar un *listener* al elemento pad
 Existen dos formas de obtener el elemento que lanza el evento: el contexto del mismo (`this`) o la propiedad `target` del evento (el parámetro del callback): Cuando se usa `addEventListener`, `this` y `target` referencian al mismo elemento, mientras que en *event delegation*, `this` será el elemento que ejecute `addEventListener` (es decir, el elemento padre), mientras que `target` será el elemento que lance el evento (es aquí donde ocurre la *target phase*).
 
 Dentro del callback del *listener*, se verifica que el elemento referenciado en `target` sea el que se desea utilizar (usualmente comparando las clases o el id de `target`).
+
+Vamos a implementar el *event delegation* en el método `delegate`:
+
+```javascript
+Dom.prototype.delegate = function(eventName, selector, callbak) {
+  var i = 0,
+      eventIdentifier = selector + ':' + eventName;
+
+  if (this.events == undefined) {
+    this.events = {};
+  }
+
+  if (this.events[eventIdentifier] == undefined) {
+    this.events[eventIdentifier] = [];
+  }
+
+  this.events[eventIdentifier].push(callback);
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].addEventListener(eventName, function(e) {
+      if (e.target.webkitMatchesSelector(selector)) {
+        callback(e);
+      }
+    }, true);
+  }
+};
+```
+
+En esta primera implementación utilizamos el método `webkitMatchesSelector`, el cual verifica que un elemento concuerde con un selector CSS dado. Si lo dejamos de esta forma, `Dom.prototype.delegate` solo funcionará en navegadores basados en Webkit y Blink, así que crearemos un método auxiliar:
+
+```javascript
+Dom.match = function(element, selector) {
+  var matchesSelector = element.matchesSelector || element.webkitMatchesSelector || element.mozMatchesSelector || element.oMatchesSelector || element.msMatchesSelector;
+
+  return matchesSelector.call(element, selector);
+};
+```
+
+Así, cambiamos `e.target.webkitMatchesSelector(selector)` por `Dom.match(e.target, selector)`:
+
+```javascript
+Dom.prototype.delegate = function(eventName, selector, callbak) {
+  var i = 0,
+      eventIdentifier = selector + ':' + eventName;
+
+  if (this.events == undefined) {
+    this.events = {};
+  }
+
+  if (this.events[eventIdentifier] == undefined) {
+    this.events[eventIdentifier] = [];
+  }
+
+  this.events[eventIdentifier].push(callback);
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].addEventListener(eventName, function(e) {
+      if (Dom.match(e.target, selector)) {
+        callback(e);
+      }
+    }, true);
+  }
+};
+```
+
+Y lo utilizamos de la siguiente manera (podemos utilizar el archivo [http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html)):
+
+```javascript
+var doc = new Dom(document);
+
+doc.delegate('click', 'nav a', function(e) {
+  console.log(e.target.getAttribute('href'));
+});
+
+// Si empezamos a hacer clic a los enlaces de la barra superior nos saldrán los siguientes mensajes:
+// "#carta"
+// "#locales"
+// "#historia"
+```
+
+Si agregamos un enlace más a la barra superior y hacemos clic en él, el evento `click` también se lanzará:
+
+```javascript
+var nav = new Dom('nav');
+nav.append({
+  tag: 'a',
+  attributes: {
+    href: '#reservaciones'
+  },
+  content: 'Reservaciones'
+});
+
+// Hacemos clic en el enlace recientemente creado y saldrá el siguiente mensaje:
+// "#reservaciones"
+```
+
+Esta es una de las ventajas de utilizar *event delegation*: con un solo *listener* hemos capturado eventos de 4 enlaces.
 
 ## CSSOM
 

@@ -157,3 +157,32 @@ Dom.prototype.off = function(eventName) {
 
   this.events[eventIdentifier] = [];
 };
+
+Dom.match = function(element, selector) {
+  var matchesSelector = element.matchesSelector || element.webkitMatchesSelector || element.mozMatchesSelector || element.oMatchesSelector || element.msMatchesSelector;
+
+  return matchesSelector.call(element, selector);
+};
+
+Dom.prototype.delegate = function(eventName, selector, callback) {
+  var i = 0,
+      eventIdentifier = selector + ':' + eventName;
+
+  if (this.events == undefined) {
+    this.events = {};
+  }
+
+  if (this.events[eventIdentifier] == undefined) {
+    this.events[eventIdentifier] = [];
+  }
+
+  this.events[eventIdentifier].push(callback);
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].addEventListener(eventName, function(e) {
+      if (Dom.match(e.target, selector)) {
+        callback(e);
+      }
+    }, true);
+  }
+};
