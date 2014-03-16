@@ -180,7 +180,7 @@ Este método no es tan útil, ya que nos devuelve una lista nativa que no tendr�
 
 ```javascript
 function Dom(selectorOrElements) {
-  if (typeof selectorOrElements == 'string') {
+  if (typeof selectorOrElements === 'string') {
     this.selector = selectorOrElements;
     this.elements = document.querySelectorAll(selectorOrElements);
   }
@@ -315,11 +315,11 @@ Dom.prototype.on = function (eventName, callback) {
   var i = 0,
       eventIdentifier = this.selector + ':' + eventName;
 
-  if (this.events == undefined) {
+  if (this.events === undefined) {
     this.events = {};
   }
 
-  if (this.events[eventIdentifier] == undefined) {
+  if (this.events[eventIdentifier] === undefined) {
     this.events[eventIdentifier] = [];
   }
 
@@ -335,7 +335,7 @@ Dom.prototype.off = function(eventName) {
       e = 0,
       eventIdentifier = this.selector + ':' + eventName;
 
-  if (this.events == undefined) {
+  if (this.events === undefined) {
     this.events = {};
   }
 
@@ -369,7 +369,7 @@ Para que nuestro `dom.js` funcione con `window` debemos cambiar el constructor u
 
 ```javascript
 function Dom(selectorOrElements) {
-  if (typeof selectorOrElements == 'string') {
+  if (typeof selectorOrElements === 'string') {
     this.selector = selectorOrElements;
     this.elements = document.querySelectorAll(selectorOrElements);
   }
@@ -575,11 +575,11 @@ Dom.prototype.delegate = function(eventName, selector, callbak) {
   var i = 0,
       eventIdentifier = selector + ':' + eventName;
 
-  if (this.events == undefined) {
+  if (this.events === undefined) {
     this.events = {};
   }
 
-  if (this.events[eventIdentifier] == undefined) {
+  if (this.events[eventIdentifier] === undefined) {
     this.events[eventIdentifier] = [];
   }
 
@@ -612,11 +612,11 @@ Dom.prototype.delegate = function(eventName, selector, callbak) {
   var i = 0,
       eventIdentifier = selector + ':' + eventName;
 
-  if (this.events == undefined) {
+  if (this.events === undefined) {
     this.events = {};
   }
 
-  if (this.events[eventIdentifier] == undefined) {
+  if (this.events[eventIdentifier] === undefined) {
     this.events[eventIdentifier] = [];
   }
 
@@ -677,7 +677,7 @@ La especificación de CSS define el denominado *box model*, el cual empieza defi
 
 ![Box model](http://www.w3.org/TR/CSS2/images/boxdim.png)
 
-Box model. http://www.w3.org/TR/CSS2/box.html
+*Box model. http://www.w3.org/TR/CSS2/box.html*
 
 Los rectángulos *padding*, *border* y *margin* pueden ser personalizados mediante CSS. Incluso, los 4 lados de cada rectángulo pueden tener valores diferentes.
 
@@ -719,6 +719,47 @@ Para poder agregar una regla a una hoja de estilos se utiliza el método `addRul
 #### `window.getComputedStyle`
 
 Este método devuelve un objeto instancia de `CSSStyleDeclaration` con todos los estilos de un elemento pasado como parámetro. Estos estilos son calculados por el navegador a partir de estilos propios del sistema operativo, el navegador y hojas de estilos incluidas en el documento que contengan reglas aplicables a dicho elemento. Estos estilos son de solo lectura, a diferencia de los obtenidos por la propiedad `style` de cada instancia de `CSSStyleRule`.
+
+En `dom.js` crearemos un método `style`:
+
+```javascript
+Dom.prototype.style = function() {
+  var i = 0;
+
+  var styles = [];
+
+  for (i; i < this.elements.length; i++) {
+    styles.push(window.getComputedStyle(this.elements[i]));
+  }
+
+  return styles;
+};
+```
+
+Sin embargo, `window.getComputedStyle` es un método pesado que impacta en el rendimiento de la aplicación. Para evitar esto guardaremos el resultado en una propiedad llamada `styles`:
+
+```javascript
+Dom.prototype.style = function() {
+  var i = 0,
+      element;
+
+  if (this.styles === undefined) {
+    this.styles = {};
+  }
+
+  for (i; i < this.elements.length; i++) {
+    element = this.elements[i];
+
+    if (this.styles[element] === undefined) {
+      this.styles[element] = window.getComputedStyle(element);
+    }
+  }
+
+  return this.styles;
+};
+```
+
+Dentro del DOM, cada nodo es un objeto único, por lo que podemos utilizarlos como nombres dentro del objeto plano `this.styles`. Así mismo, `window.getComputedStyle` devuelve una lista *viva*, así que cada vez que cambiemos algún estilo dentro de un elemento, este cambio se reflejará en su respectivo valor dentro de `this.styles`.
 
 ### *Media queries*
 

@@ -1,5 +1,5 @@
 function Dom(selectorOrElements) {
-  if (typeof selectorOrElements == 'string') {
+  if (typeof selectorOrElements === 'string') {
     this.selector = selectorOrElements;
     this.elements = document.querySelectorAll(selectorOrElements);
   }
@@ -121,11 +121,11 @@ Dom.prototype.on = function (eventName, callback) {
   var i = 0,
       eventIdentifier = this.selector + ':' + eventName;
 
-  if (this.events == undefined) {
+  if (this.events === undefined) {
     this.events = {};
   }
 
-  if (this.events[eventIdentifier] == undefined) {
+  if (this.events[eventIdentifier] === undefined) {
     this.events[eventIdentifier] = [];
   }
 
@@ -141,7 +141,7 @@ Dom.prototype.off = function(eventName) {
       e = 0,
       eventIdentifier = this.selector + ':' + eventName;
 
-  if (this.events == undefined) {
+  if (this.events === undefined) {
     this.events = {};
   }
 
@@ -168,11 +168,11 @@ Dom.prototype.delegate = function(eventName, selector, callback) {
   var i = 0,
       eventIdentifier = selector + ':' + eventName;
 
-  if (this.events == undefined) {
+  if (this.events === undefined) {
     this.events = {};
   }
 
-  if (this.events[eventIdentifier] == undefined) {
+  if (this.events[eventIdentifier] === undefined) {
     this.events[eventIdentifier] = [];
   }
 
@@ -185,4 +185,23 @@ Dom.prototype.delegate = function(eventName, selector, callback) {
       }
     }, true);
   }
+};
+
+Dom.prototype.style = function() {
+  var i = 0,
+      element;
+
+  if (this.styles === undefined) {
+    this.styles = {};
+  }
+
+  for (i; i < this.elements.length; i++) {
+    element = this.elements[i];
+
+    if (this.styles[element] === undefined) {
+      this.styles[element] = window.getComputedStyle(element);
+    }
+  }
+
+  return this.styles;
 };
