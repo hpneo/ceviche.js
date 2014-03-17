@@ -767,4 +767,59 @@ Los *media queries* permiten utilizar CSS para actualizar la presentación de un
 
 #### `window.matchMedia`
 
-Con este método se puede saber si una o más condiciones corresponden al estado actual del navegador, y devuelve una instancia de `MediaQueryList` que permite agregar *listeners* con el método `addEventListener`. A diferencia del DOM, este método solo acepta un parámetro, el cual es un callback que se ejecutará cada vez que cambie alguna de las condiciones que se están evaluando. Este manejo de eventos es útil para precargar estilos, *scripts*, o imágenes específicas según resoluciones diferentes.
+Con este método se puede saber si una o más condiciones corresponden al estado actual del navegador, y devuelve una instancia de `MediaQueryList` que permite agregar *listeners* con el método `addListener`. A diferencia del DOM, este método solo acepta un parámetro, el cual es un callback que se ejecutará cada vez que cambie alguna de las condiciones que se están evaluando. Este manejo de eventos es útil para precargar estilos, *scripts*, o imágenes específicas según resoluciones diferentes.
+
+Para manejar mejor este método crearemos un archivo `cssom.js`, el cual contendrá un objeto `CSSom`:
+
+```javascript
+CSSom = {
+  mediaQueries: {}
+};
+```
+
+Como las instancias de `MediaQueryList` permiten agregar *listeners*, crearemos dos métodos para manejarlos de forma más simple:
+
+```javascript
+CSSom.on = function(mediaQueryString, callback) {
+  var mediaQueryList;
+
+  if (this.mediaQueries[mediaQueryString] === undefined) {
+    this.mediaQueries[mediaQueryString] = [];
+  }
+
+  mediaQueryList = window.matchMedia(mediaQueryString);
+  mediaQueryList.addListener(callback);
+
+  this.mediaQueries[mediaQueryString].push({
+    mediaQueryList: mediaQueryList,
+    callback: callback
+  });
+};
+
+CSSom.off = function(mediaQueryString) {
+  var i = 0,
+      mediaQueryResult;
+
+  if (this.mediaQueries[mediaQueryString] !== undefined) {
+    for (i; i < this.mediaQueries[mediaQueryString]; i++) {
+      mediaQueryResult = this.mediaQueries[mediaQueryString];
+      mediaQueryResult.mediaQueryList.removeListener(mediaQueryResult.callback);
+    }
+
+    this.mediaQueries[mediaQueryString] = [];
+  }
+};
+```
+
+De esta forma, podemos definir eventos para determinados media queries:
+
+```javascript
+CSSom.on('(orientation: portrait)', function(mq) {
+  if (mq.matches) {
+    document.body.className = 'portrait';
+  }
+  else {
+    document.body.className = 'landscape';
+  }
+});
+```
