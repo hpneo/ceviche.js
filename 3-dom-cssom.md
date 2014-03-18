@@ -78,7 +78,7 @@ Para eliminar un nodo solo es necesario que el nodo padre ejecute el método `re
 
 ##### Simplificando el manejo del DOM con `dom.js`
 
-Como viste en el punto anterior, tener que realizar 2 pasos para agregar un nodo al DOM puede llegar a ser tedioso (sobre todo si tenemos que hacerlo varias veces). Adicionalmente, pronto notarás que la API del DOM es *verbosa*, por lo que sería una buena idea crear una biblioteca que permita reducir el número de palabras escritas y simplifique los pasos para manejar el DOM; así que realizaremos una biblioteca llamada `dom.js`.
+Como viste en el punto anterior, tener que realizar 2 pasos para agregar un nodo al DOM puede llegar a ser tedioso (sobre todo si tenemos que hacerlo varias veces). Adicionalmente, pronto notarás que la API del DOM es verbosa, por lo que sería una buena idea crear una biblioteca que permita reducir el número de palabras escritas y simplifique los pasos para manejar el DOM; así que realizaremos una biblioteca llamada `dom.js`, la cual usaremos dentro de [La Buena Espina](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html).
 
 Empecemos por crear un constructor llamado `Dom`:
 
@@ -632,7 +632,7 @@ Dom.prototype.delegate = function(eventName, selector, callbak) {
 };
 ```
 
-Y lo utilizamos de la siguiente manera (podemos utilizar el archivo [http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html)):
+Y lo utilizamos de la siguiente manera (podemos probar en el archivo [http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html)):
 
 ```javascript
 var doc = new Dom(document);
@@ -664,6 +664,68 @@ nav.append({
 ```
 
 Esta es una de las ventajas de utilizar *event delegation*: con un solo *listener* hemos capturado eventos de 4 enlaces.
+
+---
+
+### Mejorando `dom.js`
+
+Existen algunos métodos útiles que podemos agregar a `dom.js` y que nos servirán en La Buena Espina.
+
+Por ejemplo, necesitaremos agregar y eliminar clases a elementos dentro del DOM:
+
+```javascript
+Dom.prototype.addClass = function(className) {
+  var i = 0;
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].classList.add(className);
+  }
+};
+
+Dom.prototype.removeClass = function(className) {
+  var i = 0;
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].classList.remove(className);
+  }
+};
+
+Dom.prototype.hasClass = function(className) {
+  var i = 0,
+      hasClass = [];
+
+  for (i; i < this.elements.length; i++) {
+    hasClass.push(this.elements[i].classList.contains(className));
+  }
+};
+
+```
+
+Así como saber cuál es el primer y último elemento hijo de un contenedor:
+
+```javascript
+Dom.prototype.firstChild = function() {
+  return new Dom(this.elements[0].firstElementChild);
+};
+
+Dom.prototype.lastChild = function() {
+  return new Dom(this.elements[0].lastElementChild);
+};
+```
+
+O el lugar que ocupa un elemento entre sus elementos hermanos:
+
+```javascript
+Dom.prototype.index = function() {
+  return Array.prototype.indexOf.call(this.elements[0].parentNode.children, this.elements[0]);
+};
+```
+
+En este método utilizamos el método `indexOf` de `Array`. Las propiedades en el DOM como `children` no devuelven arreglos, si no listas instancias de `NodeList` (o `HTMLCollection` dependiendo del navegador); y si bien estas listas no son arreglos, es posible utilizar los métodos propios de instancias de `Array` juntando dos conceptos vistos en el capítulo anterior: *prototypes* y el método `call`.
+
+A grandes rasgos, `Array.prototype.indexOf` es una función que itera a partir de los elementos del *arreglo* que lo ejecuta (es decir, su _contexto_) mientras busca por el elemento que es pasado como parámetro, cuando lo encuentra devuelve el número de la iteración en la que ha sido encontrado, el cual es el índice en el que se encuentra dicho elemento. En nuestro caso, `children` no es un arreglo, pero todas sus propiedades pueden ser accesibles mediante índices que empiezan en 0, y tiene una propiedad `length` que contiene el número de elementos dentro de la lista. Este tipo de objetos son llamados *array-like objects* y se pueden ver en muchas partes del DOM y del lenguaje en sí (por ejemplo, la palabra reservada `arguments` o las instancias de `CSSStyleDeclaration` y `NamedNodeMap` son *array-like objects*).
+
+---
 
 ## CSSOM
 

@@ -13,6 +13,14 @@ function Dom(selectorOrElements) {
   }
 };
 
+function dom(selectorOrElements) {
+  return new Dom(selectorOrElements);
+};
+
+Dom.prototype.at = function(index) {
+  return this.elements[index];
+};
+
 Dom.createElement = function(options) {
   var element = document.createElement(options.tag),
       attributes = Object.keys(options.attributes || {}),
@@ -204,4 +212,67 @@ Dom.prototype.style = function() {
   }
 
   return this.styles;
+};
+
+Dom.prototype.addClass = function(className) {
+  var i = 0;
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].classList.add(className);
+  }
+};
+
+Dom.prototype.removeClass = function(className) {
+  var i = 0;
+
+  for (i; i < this.elements.length; i++) {
+    this.elements[i].classList.remove(className);
+  }
+};
+
+Dom.prototype.hasClass = function(className) {
+  var i = 0,
+      hasClass = [];
+
+  for (i; i < this.elements.length; i++) {
+    hasClass.push(this.elements[i].classList.contains(className));
+  }
+};
+
+Dom.prototype.first = function() {
+  return new Dom(this.elements[0]);
+};
+
+Dom.prototype.last = function() {
+  return new Dom(this.elements[this.elements.length - 1]);
+};
+
+Dom.prototype.firstChild = function() {
+  return new Dom(this.elements[0].firstElementChild);
+};
+
+Dom.prototype.lastChild = function() {
+  return new Dom(this.elements[0].lastElementChild);
+};
+
+Dom.prototype.isFirstChild = function(element) {
+  if (element instanceof Dom) {
+    return this.elements[0].parentNode.firstElementChild === element.elements[0];
+  }
+  else {
+    return this.elements[0].parentNode.firstElementChild === element;
+  }
+};
+
+Dom.prototype.isLastChild = function(element) {
+  if (element instanceof Dom) {
+    return this.elements[0].parentNode.lastElementChild === element.elements[0];
+  }
+  else {
+    return this.elements[0].parentNode.lastElementChild === element;
+  }
+};
+
+Dom.prototype.index = function() {
+  return Array.prototype.indexOf.call(this.elements[0].parentNode.children, this.elements[0]);
 };
