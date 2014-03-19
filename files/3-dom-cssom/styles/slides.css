@@ -14,7 +14,27 @@
 }
 
 #background .slide.current {
-  opacity: 1;
+  -webkit-animation-name: slide;
+  -webkit-animation-duration: 5s;
+  -webkit-animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes slide {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  80% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 #slide-1 {

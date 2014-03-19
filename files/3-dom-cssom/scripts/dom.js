@@ -276,3 +276,11 @@ Dom.prototype.isLastChild = function(element) {
 Dom.prototype.index = function() {
   return Array.prototype.indexOf.call(this.elements[0].parentNode.children, this.elements[0]);
 };
+
+Dom.prototype.next = function() {
+  return new Dom(this.elements[0].nextElementSibling);
+};
+
+Dom.prototype.previous = function() {
+  return new Dom(this.elements[0].previousElementSibling);
+};

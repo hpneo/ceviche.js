@@ -885,3 +885,69 @@ CSSom.on('(orientation: portrait)', function(mq) {
   }
 });
 ```
+
+### Transiciones y Animaciones
+
+Las transiciones y animaciones son nuevas herramientas dentro de CSS que permiten animar, valga la redundancia, elementos dentro de un documento, interpolando los valores de algunas de sus propiedades, como el alto, ancho y posición.
+
+Por ejemplo, haremos un efecto simple dentro del sitio web de _La Buena Espina_ para cambiar la imagen de fondo cada cierto tiempo. Inicialmente necesitaremos tener una serie de elementos con clase `slide`, y definimos que todos esos elementos por defecto no deben ser visibles, dándole un valor de 0 a la propiedad `opacity`, mientras que el *slide* que quiera mostrarse debe tener el valor de 1 en la misma propiedad:
+
+```css
+.slide {
+  opacity: 0;
+}
+
+.slide.current {
+  opacity: 1;
+}
+```
+
+El siguiente paso es definir una transición para la propiedad `opacity`, la cual durará 5 segundos. El navegador es el encargado de calcular los valores que tendrá `opacity` durante los 5 segundos que dure la transición:
+
+```css
+.slide {
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 5.0s;
+}
+
+.slide.current {
+  opacity: 1;
+}
+```
+
+Las animaciones en CSS son similares a las transiciones, con la diferencia que dan más control al usuario con respecto a los valores que puede tener una propiedad dentro del ciclo de vida de una animación (mientras que, en una transición, es el navegador el que calcula dichos valores).
+
+Par el ejemplo anterior, podemos utilizar animaciones en vez de transiciones:
+
+```css
+.slide {
+  opacity: 0;
+}
+
+.slide.current {
+  animation-name: slide;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slide {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  80% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+```
+
+En este caso, con las animaciones tenemos el poder de definir qué valores tendrá `opacity` al inicio (0%), fin (100%), a los 2.5 segundos (50%) y a los 4 segundos (80%) de transcurrida la animación.
