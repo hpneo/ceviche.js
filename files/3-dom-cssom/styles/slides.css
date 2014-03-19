@@ -11,30 +11,12 @@
   height: 100%;
   position: absolute;
   opacity: 0;
+  transition-property: opacity;
+  transition-duration: 5.0s;
 }
 
 #background .slide.current {
-  -webkit-animation-name: slide;
-  -webkit-animation-duration: 5s;
-  -webkit-animation-fill-mode: forwards;
-}
-
-@-webkit-keyframes slide {
-  0% {
-    opacity: 0;
-  }
-
-  50% {
-    opacity: 0.3;
-  }
-
-  80% {
-    opacity: 0.7;
-  }
-
-  100% {
-    opacity: 1;
-  }
+  opacity: 1;
 }
 
 #slide-1 {
@@ -65,4 +47,22 @@
 #slide-6 {
   background: url('../images/slides/slide-6.jpg') no-repeat center center;
   background-size: 100% auto;
+}
+
+@-webkit-keyframes slide {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  80% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

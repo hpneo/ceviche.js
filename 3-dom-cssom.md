@@ -951,3 +951,31 @@ Par el ejemplo anterior, podemos utilizar animaciones en vez de transiciones:
 ```
 
 En este caso, con las animaciones tenemos el poder de definir qué valores tendrá `opacity` al inicio (0%), fin (100%), a los 2.5 segundos (50%) y a los 4 segundos (80%) de transcurrida la animación.
+
+El hecho de tener más control en las animaciones también se ve reflejado en el CSSOM. Mientras que solo existe el evento `transitionend` para transiciones, las animaciones tienen 3 eventos: `animationstart`, `animationiteration`, `animationend`.
+
+Por ejemplo, si queremos agregar un *listener* al evento `transitionend` que muestre en la consola el tiempo transcurido en la transición:
+
+```javascript
+dom('.slide').on('transitionend', function(e) {
+  console.log('transitionend', e.elapsedTime);
+});
+```
+
+Mientras que, si utilizamos animaciones, podemos agregar un *listener* al evento `animationstart` para saber cuándo empezó una animación:
+
+```javascript
+dom('.slide').on('animationstart', function(e) {
+  console.log('animationstart', e);
+});
+```
+
+O agregar un *listener* al evento `animationend` para saber en qué momento terminó una animación:
+
+```javascript
+dom('.slide').on('animationend', function(e) {
+  console.log('animationend', e);
+});
+```
+
+El evento `animationiteration` es lanzado cada vez que empiece una iteración de la animación. Una animación puede ser definida para ser ejecutada un número determinado de veces (o un número *infinito* de veces), mediante la propiedad `animation-iteration-count`.
