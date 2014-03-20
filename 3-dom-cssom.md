@@ -890,7 +890,7 @@ CSSom.on('(orientation: portrait)', function(mq) {
 
 Las transiciones y animaciones son nuevos estilos en CSS que permiten animar, valga la redundancia, elementos dentro de un documento, interpolando los valores de algunas de sus propiedades, como el alto, ancho y posición (aunque [muchas otras propiedades pueden ser animadas](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties)).
 
-Por ejemplo, _La Buena Espina_ se vería bien si le ponemos un efecto simple para cambiar la imagen de fondo cada cierto tiempo. Inicialmente necesitaremos tener una serie de elementos `div` con clase `slide`, y definimos que todos esos elementos por defecto no deben ser visibles, dándole un valor de 0 a la propiedad `opacity`, mientras que el *slide* que quiera mostrarse debe tener el valor de 1 en la misma propiedad:
+Por ejemplo, **La Buena Espina** se vería bien si le ponemos un efecto simple para cambiar la imagen de fondo cada cierto tiempo. Inicialmente necesitaremos tener una serie de elementos `div` con clase `slide`, y definimos que todos esos elementos por defecto no deben ser visibles, dándole un valor de 0 a la propiedad `opacity`, mientras que el *slide* que quiera mostrarse debe tener el valor de 1 en la misma propiedad:
 
 ```css
 .slide {
@@ -980,4 +980,110 @@ dom('.slide').on('animationend', function(e) {
 });
 ```
 
-El evento `animationiteration` es lanzado cada vez que empieza una iteración de la animación. Una animación puede ser definida para ser ejecutada un número determinado de veces (y cada vez es una _iteración_), mediante la propiedad `animation-iteration-count`.
+El evento `animationiteration` es lanzado cada vez que empieza una iteración de la animación. Una animación puede ser definida para ser ejecutada un número determinado de veces (y cada vez es una **iteración**), mediante la propiedad `animation-iteration-count`.
+
+---
+
+Sabiendo un poco más sobre transiciones y animaciones crearemos un *script* simple para crear el efecto para cambiar la imagen de fondo. Primero, debemos tener un poco de HTML base:
+
+```html
+<div id="background">
+  <div class="slide current" id="slide-1" title="Créditos: http://www.flickr.com/photos/saucesupreme/6774616862/"></div>
+  <div class="slide" id="slide-2" title="Créditos: http://www.flickr.com/photos/c32/4775267221/"></div>
+  <div class="slide" id="slide-3" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998183161/"></div>
+</div>
+```
+
+Notemos que el primer *slide* tiene la clase `current`, de esta forma nos aseguramos de mostrar una imagen al cargar el sitio.
+
+Ahora, agregamos el CSS respectivo:
+
+```css
+#background {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+#background .slide {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  transition-property: opacity;
+  transition-duration: 3.5s;
+}
+
+#background .slide.current {
+  opacity: 1;
+}
+
+#slide-1 {
+  background: url('../images/slides/slide-1.jpg') no-repeat center center;
+  background-size: 100% auto;
+}
+
+#slide-2 {
+  background: url('../images/slides/slide-2.jpg') no-repeat center center;
+  background-size: 100% auto;
+}
+
+#slide-3 {
+  background: url('../images/slides/slide-3.jpg') no-repeat center center;
+  background-size: 100% auto;
+}
+```
+
+Hemos definido una transición para la propiedad `opacity` que dure 3 segundos y medio. De esta forma, si le agregamos la clase `current` a un elemento con la clase `slide`, se *disparará* la transición que cambie el valor de `opacity` de 0 a 1.
+
+Hasta este momento solo se mostrará la primera imagen de fondo y no cambiará. Para empezar con la secuencia de imágenes, usaremos el evento `load` de `window` para agregarle la clase `current` al siguiente elemento:
+
+```javascript
+dom(window).on('load', function() {
+  var current = dom('.slide.current'),
+      next = current.next();
+
+  current.removeClass('current');
+  next.addClass('current');
+});
+```
+
+Este código tiene dos particularidades que no hemos visto en este capítulo:
+
+* La función `dom`: En realidad solo devuelve una instancia de `Dom`, pero es útil ya que evita tener que crear una instancia de `Dom` cada vez que queramos trabajar con el DOM.
+* El método `next`: Toma el elemento actual (en este caso, el *slide* que tenga la clase `current`) y devuelve su siguiente elemento hermano, con `nextElementSibling`.
+
+Con este código, ya podremos ver que cambia de la primera imagen a la segunda mediante una transición de opacidad (propiedad `opacity`), pero al terminar esta transición no cambia a la tercera. Para lograrlo usaremos el evento `transitionend`:
+
+```javascript
+dom('#background').delegate('transitionend', '.slide.current', function(e) {
+  var current = dom(e.target),
+      next = current.next();
+
+  current.removeClass('current');
+  next.addClass('current');
+});
+```
+
+Estamos utilizando el *event delegation* para definir un solo evento `transitionend`, en vez de tener uno por cada elemento con clase `slide`. Así mismo, definimos el evento solo para el *slide* visible en el momento, ya que el evento `transitionend` se disparará tanto para cuando termina la transición del valor de `opacity` de 0 a 1 (invisible a visible) como de 1 a 0 (visible a invisible).
+
+Sin embargo, cuando ya se haya mostrado el último elemento (aquel que tiene id `slide-3`) y se lance el evento `transitionend`, el callback tratará de encontrar el siguiente elemento con `current.next()`. Dado que `current` guarda una referencia al último *slide* de la lista, `next()` no encontrará ningún valor, por lo que, internamente, la propiedad `elements` tendrá valor `null` y dará error al intentar ejecutar el método `addClass`.
+
+Para corregir este pequeño *bug*, verificamos si se llegó al último elemento mediante el método `isLastSibling`. Si es el último elemento de la lista (en otras palabras, el último de sus elementos hermanos), `next` guarda una referencia al primer elemento de la lista con el método `firstSibling`.
+
+```javascript
+dom('#background').delegate('transitionend', '.slide.current', function(e) {
+  var current = dom(e.target),
+      next = current.next();
+
+  current.removeClass('current');
+
+  if (current.isLastSibling()) {
+    next = current.firstSibling();
+  }
+
+  next.addClass('current');
+});
+```

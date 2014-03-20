@@ -18,16 +18,39 @@
   </header>
   <section id="content">
     <div id="background">
-      <div class="slide" id="slide-6" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998141711/"></div>
-      <div class="slide" id="slide-5" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998185723/"></div>
-      <div class="slide" id="slide-4" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998217897/"></div>
-      <div class="slide" id="slide-3" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998183161/"></div>
-      <div class="slide" id="slide-2" title="Créditos: http://www.flickr.com/photos/c32/4775267221/"></div>
       <div class="slide current" id="slide-1" title="Créditos: http://www.flickr.com/photos/saucesupreme/6774616862/"></div>
+      <div class="slide" id="slide-2" title="Créditos: http://www.flickr.com/photos/c32/4775267221/"></div>
+      <div class="slide" id="slide-3" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998183161/"></div>
+      <div class="slide" id="slide-4" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998217897/"></div>
+      <div class="slide" id="slide-5" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998185723/"></div>
+      <div class="slide" id="slide-6" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998141711/"></div>
     </div>
   </section>
   <footer></footer>
   <script src="scripts/dom.js"></script>
   <script src="scripts/cssom.js"></script>
+  <script>
+    var container = dom('#background');
+    container.delegate('transitionend', '.slide.current', function(e) {
+      var current = dom(e.target),
+          next = current.next();
+
+      current.removeClass('current');
+
+      if (current.isLastSibling()) {
+        next = current.firstSibling();
+      }
+
+      next.addClass('current');
+    });
+
+    dom(window).on('load', function() {
+      var current = dom('.slide.current'),
+          next = current.next();
+
+      current.removeClass('current');
+      next.addClass('current');
+    });
+  </script>
 </body>
 </html>

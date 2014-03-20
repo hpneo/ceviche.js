@@ -237,6 +237,8 @@ Dom.prototype.hasClass = function(className) {
   for (i; i < this.elements.length; i++) {
     hasClass.push(this.elements[i].classList.contains(className));
   }
+
+  return hasClass;
 };
 
 Dom.prototype.first = function() {
@@ -255,22 +257,20 @@ Dom.prototype.lastChild = function() {
   return new Dom(this.elements[0].lastElementChild);
 };
 
-Dom.prototype.isFirstChild = function(element) {
-  if (element instanceof Dom) {
-    return this.elements[0].parentNode.firstElementChild === element.elements[0];
-  }
-  else {
-    return this.elements[0].parentNode.firstElementChild === element;
-  }
+Dom.prototype.firstSibling = function() {
+  return new Dom(this.elements[0].parentNode.firstElementChild);
 };
 
-Dom.prototype.isLastChild = function(element) {
-  if (element instanceof Dom) {
-    return this.elements[0].parentNode.lastElementChild === element.elements[0];
-  }
-  else {
-    return this.elements[0].parentNode.lastElementChild === element;
-  }
+Dom.prototype.lastSibling = function() {
+  return new Dom(this.elements[0].parentNode.lastElementChild);
+};
+
+Dom.prototype.isFirstSibling = function() {
+  return this.elements[0] === this.elements[0].parentNode.firstElementChild;
+};
+
+Dom.prototype.isLastSibling = function() {
+  return this.elements[0] === this.elements[0].parentNode.lastElementChild;
 };
 
 Dom.prototype.index = function() {

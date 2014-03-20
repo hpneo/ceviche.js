@@ -12,7 +12,7 @@
   position: absolute;
   opacity: 0;
   transition-property: opacity;
-  transition-duration: 5.0s;
+  transition-duration: 3.5s;
 }
 
 #background .slide.current {
