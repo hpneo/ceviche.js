@@ -888,9 +888,9 @@ CSSom.on('(orientation: portrait)', function(mq) {
 
 ### Transiciones y Animaciones
 
-Las transiciones y animaciones son nuevas herramientas dentro de CSS que permiten animar, valga la redundancia, elementos dentro de un documento, interpolando los valores de algunas de sus propiedades, como el alto, ancho y posición.
+Las transiciones y animaciones son nuevos estilos en CSS que permiten animar, valga la redundancia, elementos dentro de un documento, interpolando los valores de algunas de sus propiedades, como el alto, ancho y posición (aunque [muchas otras propiedades pueden ser animadas](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties)).
 
-Por ejemplo, haremos un efecto simple dentro del sitio web de _La Buena Espina_ para cambiar la imagen de fondo cada cierto tiempo. Inicialmente necesitaremos tener una serie de elementos con clase `slide`, y definimos que todos esos elementos por defecto no deben ser visibles, dándole un valor de 0 a la propiedad `opacity`, mientras que el *slide* que quiera mostrarse debe tener el valor de 1 en la misma propiedad:
+Por ejemplo, _La Buena Espina_ se vería bien si le ponemos un efecto simple para cambiar la imagen de fondo cada cierto tiempo. Inicialmente necesitaremos tener una serie de elementos `div` con clase `slide`, y definimos que todos esos elementos por defecto no deben ser visibles, dándole un valor de 0 a la propiedad `opacity`, mientras que el *slide* que quiera mostrarse debe tener el valor de 1 en la misma propiedad:
 
 ```css
 .slide {
@@ -916,9 +916,11 @@ El siguiente paso es definir una transición para la propiedad `opacity`, la cua
 }
 ```
 
-Las animaciones en CSS son similares a las transiciones, con la diferencia que dan más control al usuario con respecto a los valores que puede tener una propiedad dentro del ciclo de vida de una animación (mientras que, en una transición, es el navegador el que calcula dichos valores).
+Las animaciones en CSS son similares a las transiciones, con la principal diferencia que las animaciones dan más control al usuario con respecto a los valores que puede tener una propiedad dentro del ciclo de vida de una animación (mientras que, en una transición, es el navegador el que calcula dichos valores).
 
-Par el ejemplo anterior, podemos utilizar animaciones en vez de transiciones:
+Para definir una animación en CSS, necesitamos definir una regla del tipo *keyframes*, la cual contendrá una lista de puntos en donde una propiedad cambiará de valor. De esta forma, el navegador se encargará de tomar dos *keyframes* (uno de partida y uno de fin) y calculará los valores intermedios para el tiempo que debe transcurrir entre estos dos *keyframes*. Si bien en esto las animaciones son similares a las transiciones, en las animaciones pueden haber más de dos *keyframes*, lo que le da más control al usuario al momento de animar un elemento.
+
+Basados en el ejemplo anterior, podemos utilizar animaciones en vez de transiciones:
 
 ```css
 .slide {
@@ -950,9 +952,9 @@ Par el ejemplo anterior, podemos utilizar animaciones en vez de transiciones:
 }
 ```
 
-En este caso, con las animaciones tenemos el poder de definir qué valores tendrá `opacity` al inicio (0%), fin (100%), a los 2.5 segundos (50%) y a los 4 segundos (80%) de transcurrida la animación.
+En este caso, con las animaciones tenemos el poder de definir qué valores tendrá `opacity` al inicio (0%), fin (100%), a los 2 segundos y medio (50%), y a los 4 segundos (80%) de transcurrida la animación.
 
-El hecho de tener más control en las animaciones también se ve reflejado en el CSSOM. Mientras que solo existe el evento `transitionend` para transiciones, las animaciones tienen 3 eventos: `animationstart`, `animationiteration`, `animationend`.
+El hecho de tener más control en las animaciones también se ve reflejado en el CSSOM. Mientras que solo existe el evento `transitionend` para las transiciones, las animaciones tienen 3 eventos: `animationstart`, `animationiteration`, `animationend`.
 
 Por ejemplo, si queremos agregar un *listener* al evento `transitionend` que muestre en la consola el tiempo transcurido en la transición:
 
@@ -970,7 +972,7 @@ dom('.slide').on('animationstart', function(e) {
 });
 ```
 
-O agregar un *listener* al evento `animationend` para saber en qué momento terminó una animación:
+Y agregar un *listener* al evento `animationend` para saber en qué momento terminó una animación:
 
 ```javascript
 dom('.slide').on('animationend', function(e) {
@@ -978,4 +980,4 @@ dom('.slide').on('animationend', function(e) {
 });
 ```
 
-El evento `animationiteration` es lanzado cada vez que empiece una iteración de la animación. Una animación puede ser definida para ser ejecutada un número determinado de veces (o un número *infinito* de veces), mediante la propiedad `animation-iteration-count`.
+El evento `animationiteration` es lanzado cada vez que empieza una iteración de la animación. Una animación puede ser definida para ser ejecutada un número determinado de veces (y cada vez es una _iteración_), mediante la propiedad `animation-iteration-count`.
