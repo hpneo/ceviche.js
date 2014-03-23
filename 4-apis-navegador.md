@@ -77,7 +77,9 @@ navigator.geolocation.getCurrentPosition(function(position) {
 
 Cuando se ejecute este código se mostrará una ventana o un mensaje (dependiendo del navegador) pidiendo permiso al usuario para poder realizar la geolocalización. Es importante resaltar este punto ya que no es posible obtener la ubicación de un equipo sin previo permiso del usuario.
 
-[Permisos para geolocalización](/images/4-apis-navegador/geolocation.png "Permisos para geolocalización")
+![Permisos para geolocalización](/images/4-apis-navegador/geolocation.png "Permisos para geolocalización")
+
+*Permisos para geolocalización*
 
 Si denegamos el permiso de geolocalización al navegador, la consola nos mostrará este mensaje:
 
