@@ -284,3 +284,13 @@ Dom.prototype.next = function() {
 Dom.prototype.previous = function() {
   return new Dom(this.elements[0].previousElementSibling);
 };
+
+Dom.prototype.value = function() {
+  var element = this.elements[0];
+  if (element instanceof HTMLInputElement) {
+    return this.elements[0].value;
+  }
+  else {
+    return this.elements[0].textContent;
+  }
+};
