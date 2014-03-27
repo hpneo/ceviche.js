@@ -78,7 +78,7 @@ Para eliminar un nodo solo es necesario que el nodo padre ejecute el método `re
 
 ##### Simplificando el manejo del DOM con `dom.js`
 
-Como viste en el punto anterior, tener que realizar 2 pasos para agregar un nodo al DOM puede llegar a ser tedioso (sobre todo si tenemos que hacerlo varias veces). Adicionalmente, pronto notarás que la API del DOM es verbosa, por lo que sería una buena idea crear una biblioteca que permita reducir el número de palabras escritas y simplifique los pasos para manejar el DOM; así que realizaremos una biblioteca llamada `dom.js`, la cual usaremos dentro de [La Buena Espina](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html).
+Como vimos en el punto anterior, tener que realizar 2 pasos para agregar un nodo al DOM puede llegar a ser tedioso (sobre todo si tenemos que hacerlo varias veces). Adicionalmente, pronto notarás que la API del DOM es verbosa, por lo que sería una buena idea crear una biblioteca que permita reducir el número de palabras escritas y simplifique los pasos para manejar el DOM; así que realizaremos una biblioteca llamada `dom.js`, la cual usaremos dentro de [La Buena Espina](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html).
 
 Empecemos por crear un constructor llamado `Dom`:
 

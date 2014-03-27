@@ -788,7 +788,7 @@ number instanceof Number;
 bool instanceof Boolean;
 // false
 ```
-##### Valor primitivos
+#### Valor primitivos
 Como se puede ver en los 3 últimos ejemplos, `instanceof` devuelve false aún cuando sabemos que `string` es una cadena, `number` es un número y `bool` contiene un valor lógico. Esto sucede porque `instanceof` no trabaja bien con los denominados [valores primitivos](http://www.ecma-international.org/ecma-262/5.1/#sec-4.3.2). Cada valor primitivo tiene un constructor asociado:
 
 | Valor primitivo | Constructor |
