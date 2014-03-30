@@ -113,7 +113,105 @@ Cuando ya tenemos estos valores podemos utilizar algún servicio de mapas, como 
 
 ## Application Cache
 
+Para el caso de aplicaciones web suele ser de vital importancia el poder acceder a ellas de manera *offline*, sobre todo si la conexión a Internet solo se hace necesaria para respaldar información en un servidor externo. En este tipo de aplicaciones donde se debería poder acceder a los archivos "estáticos" de la aplicación independientemente del estado de conexión que tenga el equipo, y es aquí donde el *Application Cache* entra en acción.
+
+Esta API permite definir un archivo *manifiesto* que indicará cuáles son los archivos que se desean descargar cuando el navegador se conecta a la aplicación cuando está *online*, y que luego utilizará cuando no exista una conexión a Internet disponible.
+
+Un manifiesto básico sigue el siguiente formato:
+
+```
+CACHE MANIFEST
+
+/
+/images/logo.png
+/images/sprites.png
+/styles/layout.css
+/javascript/libraries/dom.js
+/javascript/app.js
+```
+
+En este caso, el manifiesto le indica al navegador que debe descargar y guardar en caché todos los archivos ubicados en esas rutas. Sin embargo, las capacidades de este manifiesto no se reducen a indicar la lista de archivos a guardar en caché, si no que permite indicar cuáles deben ser obtenidos siempre desde el servidor, así como indicar archivos que se utilizarán cuando la conexión falle.
+
+```
+CACHE MANIFEST
+
+CACHE:
+/
+images/logo.png
+images/sprites.png
+styles/layout.css
+scripts/libraries/dom.js
+scripts/app.js
+
+NETWORK:
+*
+
+FALLBACK:
+/ /offline.html
+```
+
+Este nuevo manifiesto indica explícitamente cuáles son los archivos que deben ser guardados en caché (similar al primer manifiesto), así como los archivos que deben obtenerse del servidor (por defecto, todos los que no están definidos debajo de la línea `CACHE`), y define el archivo que el navegador debe usar en caso algún archivo no pueda ser obtenido.
+
+Para que el navegador sepa dónde encontrar este archivo, debe ser incluido como atributo dentro de la etiqueta `<html>`:
+
+```html
+<html manifest="manifest.appcache">
+  ...
+</html>
+```
+
 ## File
+
+Con esta API podemos leer archivos que cargamos desde local, mediante la etiqueta `<input type="file" />`, así como al realizar operaciones *drag and drop* de manera nativa. De esta forma, podemos previsualizar imágenes antes de subirlas a un servidor o realizar operaciones con los archivos aunque la aplicación esté *offline*.
+
+Cuando trabajamos con elementos `<input>` podemos acceder a los archivos que han sido elegidos mediante la propiedad `files`, la cual es una lista instancia de `FileList`. Cada elemento de esta lista es un objeto instancia de `File` y tiene algunas propiedades:
+
+| Propiedad | Descripción |
+|-----------|-------------|
+| `name` | Nombre del archivo |
+| `size` | Tamaño en bytes del archivo |
+| `type` | *MIME type* del archivo |
+| `lastModifiedDate` | Última fecha de modificación del archivo |
+
+Sabiendo las propiedades que tienen estos objetos de *File API*, podemos crear un demo simple, empezando con el código HTML básico:
+
+```html
+<input type="file" name="files" id="files" multiple />
+
+<h4>Imágenes elegidas:</h4>
+<div id="preview"></div>
+```
+
+Y luego utilizamos la API propiamente dicha:
+
+```javascript
+var input = document.getElementById('files'),
+    preview = document.getElementById('preview');
+
+input.addEventListener('change', function(e) {
+  var files = e.target.files;
+
+  for (var i = 0; i < files.length; i++) {
+    (function(file) {
+      var reader = new FileReader(),
+          img = document.createElement('img');
+
+      img.width = 300;
+      preview.appendChild(img);
+
+      reader.addEventListener('load', function(e) {
+        img.src = e.target.result;
+      });
+
+      reader.readAsDataURL(file);
+    })(files[i]);
+  }
+});
+```
+
+Dentro de este código de ejemplo utilizamos la función constructora `FileReader`, la cual permite leer los objetos de tipo `File` y convertirlo a una cadena de tipo [__Data URI__](https://developer.mozilla.org/en/docs/data_URIs), para, de esta forma, poder cargarlo en un elemento `<img>`.
+
+Dentro del bucle que lee cada imagen obtenida por el input `files` utilizamos una [función inmediatamente invocada](/2-funciones#funciones-inmediatamente-invocadas) debido a la naturaleza asíncrona de `FileReader`. Con este tipo de funciones, se obliga al navegador a ejecutar todo el código dentro de la función antes de pasar a la siguiente iteración, lo que nos asegura que se lean los valores correctos para cada iteración.
 
 ## File System
 
