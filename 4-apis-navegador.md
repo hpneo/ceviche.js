@@ -211,9 +211,20 @@ input.addEventListener('change', function(e) {
 
 Dentro de este código de ejemplo utilizamos la función constructora `FileReader`, la cual permite leer los objetos de tipo `File` y convertirlo a una cadena de tipo [__Data URI__](https://developer.mozilla.org/en/docs/data_URIs), para, de esta forma, poder cargarlo en un elemento `<img>`.
 
-Dentro del bucle que lee cada imagen obtenida por el input `files` utilizamos una [función inmediatamente invocada](/2-funciones#funciones-inmediatamente-invocadas) debido a la naturaleza asíncrona de `FileReader`. Con este tipo de funciones, se obliga al navegador a ejecutar todo el código dentro de la función antes de pasar a la siguiente iteración, lo que nos asegura que se lean los valores correctos para cada iteración.
+En el bucle que lee cada imagen obtenida por el input `files` utilizamos una [función inmediatamente invocada](/2-funciones#funciones-inmediatamente-invocadas) debido a la naturaleza asíncrona de `FileReader`. Con este tipo de funciones, se obliga al navegador a ejecutar todo el código dentro de la función antes de pasar a la siguiente iteración, lo que nos asegura que se lean los valores correctos para cada iteración.
 
 ## File System
+
+Esta API simula un sistema de archivos en local, permitiendo crear, modificar y leer archivos mediante JavaScript. Este sistema de archivos simulado no es el sistema de archivos del sistema operativo, si no que está separado en un entorno controlado (a este tipo de entornos se le llama *sandbox*). Actualmente esta API está en fase experimental y está disponible en Chrome y Opera, por lo que tiene un uso potencial en aplicaciones para Chrome OS o aplicaciones web que funcionan con Chromium.
+
+Al ser un entorno controlado, File System API tiene ciertas restricciones:
+
+* **Cada origen tiene su sistema de archivos**: Un origen está formado por el protocol, dominio y puerto de un documento. Similar a las APIs de Storage, cada origen tiene su propio sistema de archivos y no se pueden acceder entre sí.
+* **No se pueden crear o renombrar archivos ejecutables**: Por seguridad, no se pueden crear archivos ejecutable, ya que estos pueden ser aplicaciones maliciosas (virus, troyanos, etc).
+* **No se puede salir del *sandbox***: Igualmente, por seguridad, una aplicación no puede usar la API para acceder a archivos que estén en el sistema de archivos del sistema operativo.
+* **No se puede ejecutar desde el protocolo `file://`**: También por seguridad, si se tratar de utilizar esta API en un archivo desde `file://`, el navegador lanzará una excepción y fallará.
+
+Adicionalmente, esta API tiene soporte para trabajar de forma síncrona y asíncrona, recomendando utilizar WebWorkers para el primer caso.
 
 ## History
 
