@@ -224,7 +224,17 @@ Al ser un entorno controlado, File System API tiene ciertas restricciones:
 * **No se puede salir del *sandbox***: Igualmente, por seguridad, una aplicación no puede usar la API para acceder a archivos que estén en el sistema de archivos del sistema operativo.
 * **No se puede ejecutar desde el protocolo `file://`**: También por seguridad, si se tratar de utilizar esta API en un archivo desde `file://`, el navegador lanzará una excepción y fallará.
 
-Adicionalmente, esta API tiene soporte para trabajar de forma síncrona y asíncrona, recomendando utilizar WebWorkers para el primer caso.
+Adicionalmente, esta API tiene soporte para trabajar de forma síncrona y asíncrona, recomendando utilizar WebWorkers para el primer caso:
+
+| Interfaz | Descripción | Interfaz Síncrona |
+|----------|-------------|-------------------|
+| `LocalFileSystem ` | Permite acceder al sistema de archivos controlado | `LocalFileSystemSync` |
+| `FileSystem` | Representa un sistema de archivos | `FileSystemSync` |
+| `Entry` | Representa una entrada en el sistema de archivos, el cual puede ser un archivo o un directorio | `EntrySync` |
+| `DirectoryEntry` | Representa un directorio en el sistema de archivos | `DirectoryEntrySync` |
+| `DirectoryReader` | Permite leer un directorio en el sistema de archivos | `DirectoryReaderSync` |
+| `FileEntry` | Representa un archivo en el sistema de archivos | `FileEntrySync` |
+| `FileError` | Error lanzado cuando falla el acceso al sistema de archivos | `FileException` |
 
 ## History
 
