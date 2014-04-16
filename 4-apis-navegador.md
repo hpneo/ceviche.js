@@ -217,7 +217,7 @@ En el bucle que lee cada imagen obtenida por el input `files` utilizamos una [fu
 
 Esta API simula un sistema de archivos en local, permitiendo crear, modificar y leer archivos mediante JavaScript. Este sistema de archivos simulado no es el sistema de archivos del sistema operativo, si no que está separado en un entorno controlado (a este tipo de entornos se le llama *sandbox*). Actualmente esta API está en fase experimental y está disponible en Chrome y Opera, por lo que tiene un uso potencial en aplicaciones para Chrome OS o aplicaciones web que funcionan con Chromium.
 
-Al ser un entorno controlado, File System API tiene ciertas restricciones:
+Al ser un entorno controlado, *File System API* tiene ciertas restricciones:
 
 * **Cada origen tiene su sistema de archivos**: Un origen está formado por el protocol, dominio y puerto de un documento. Similar a las APIs de Storage, cada origen tiene su propio sistema de archivos y no se pueden acceder entre sí.
 * **No se pueden crear o renombrar archivos ejecutables**: Por seguridad, no se pueden crear archivos ejecutable, ya que estos pueden ser aplicaciones maliciosas (virus, troyanos, etc).
@@ -237,5 +237,7 @@ Adicionalmente, esta API tiene soporte para trabajar de forma síncrona y asínc
 | `FileError` | Error lanzado cuando falla el acceso al sistema de archivos | `FileException` |
 
 ## History
+
+Con la *History API* podemos simular entradas en el historial del navegador sin necesidad de realizar peticiones al servidor donde la aplicación está alojada.
 
 ## Websocket
