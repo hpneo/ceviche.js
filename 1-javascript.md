@@ -389,11 +389,11 @@ Object.defineProperty(siteTitle, 'internalValue', {
 
 Este método recibe 3 parámetros: el objeto a modificar, la propiedad a definir y el descriptor de la propiedad. Un descriptor de propiedad puede ser de dos tipos:
 * Descriptor de datos: para propiedades que tienen un valor
-..* `value`: El valor asignado por defecto a la propiedad. Este valor puede ser de cualquier tipo.
-..* `writable`: Valor booleano que define si la propiedad es grabable o no.
+  * `value`: El valor asignado por defecto a la propiedad. Este valor puede ser de cualquier tipo.
+  * `writable`: Valor booleano que define si la propiedad es grabable o no.
 * Descriptor de acceso: para definir métodos de acceso (`get` y `set`).
-..* `get`: Si está definida, esta función se ejecutará al intentar acceder a la propiedad.
-..* `set`: Si está definida, esta función se ejecutará al intentar asignar un valor a la propiedad.
+  * `get`: Si está definida, esta función se ejecutará al intentar acceder a la propiedad.
+  * `set`: Si está definida, esta función se ejecutará al intentar asignar un valor a la propiedad.
 
 Ambos tipos de descriptores comparten dos atributos con valores booleanos: `configurable` y `enumerable`.
 
