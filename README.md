@@ -15,8 +15,7 @@ El hilo conductor de este libro es una historia que permitirá entender y aplica
 6. Bibliotecas JavaScript
 7. Peticiones asíncronas
 8. jQuery
-9. Backbone.js
-10. Mejorando el flujo de trabajo
+9. Mejorando el flujo de trabajo
 
 ## Apéndices
 A. [Referencia DOM](a-dom.md)

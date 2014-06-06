@@ -5,6 +5,7 @@
 >El dueño de La Buena Espina te ha pedido personalmente realizar el sitio y quiere que visitarla sea una experiencia tan buena como su comida, así que es tu deber como desarrollador crear una aplicación con contenido fácilmente mantenible y de un aspecto visual impactante.
 
 ## Entendiendo JavaScript
+
 JavaScript es un lenguaje de programación dinámico orientado a objetos creado en 1995 por Brendan Eich. El uso del nombre *Java* fue una decisión comercial debido al auge que tenía dicho lenguaje en aquel entonces, pero no están relacionados más allá de algunas similitudes en la sintaxis.
 
 Al momento de su creación existieron diferentes implementaciones del mismo, haciendo caótico su uso. Esto, sumado al nombre, que ocasionaba confusiones con respecto a su funcionamiento, y algunos errores de diseño, hizo que se volviera un lenguaje subestimado y mal usado por mucho tiempo.
@@ -243,13 +244,16 @@ Los objetos literales son colecciones de pares nombre-valor donde la primera par
 Se puede crear un objeto de tres formas:
 
 A. De forma literal:
+
 ```javascript
 var object = {};
 
 object;
 // {}
 ```
+
 B. Creando una instancia de `Object`:
+
 ```javascript
 var object = new Object({});
 
@@ -298,6 +302,7 @@ var dish = {
 ```
 
 A. Con punto:
+
 ```javascript
 dish.name;
 // "Ceviche simple"
@@ -305,7 +310,9 @@ dish.name;
 dish.name = 'Ceviche simple (estilo trujillano)';
 // "Ceviche simple (estilo trujillano)"
 ```
+
 B. Con corchetes:
+
 ```javascript
 dish['name'];
 // "Ceviche simple"

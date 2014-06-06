@@ -10,6 +10,7 @@ Las funciones en JavaScript también son objetos, por lo que tienen propiedades 
 En JavaScript se pueden crear funciones de 3 formas:
 
 A. Declarando una función, con la sentencia `function`:
+
 ```javascript
 function sum(a, b) {
   return a + b;
@@ -19,6 +20,7 @@ sum(1, 2);
 ```
 
 B. Expresando una función, con el operador `function`:
+
 ```javascript
 var sum = function sum(a, b) {
   return a + b;
@@ -28,6 +30,7 @@ sum(1, 2);
 ```
 
 C. Creando una instancia del constructor `Function`:
+
 ```javascript
 var sum = new Function('a', 'b', 'return a + b');
 

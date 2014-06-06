@@ -236,8 +236,72 @@ Adicionalmente, esta API tiene soporte para trabajar de forma síncrona y asínc
 | `FileEntry` | Representa un archivo en el sistema de archivos | `FileEntrySync` |
 | `FileError` | Error lanzado cuando falla el acceso al sistema de archivos | `FileException` |
 
+Para empezar a trabajar con esta API debemos pedirle al navegador que nos de un sistema de archivos para el origen en el cual estamos trabajando:
+
+```javascript
+var requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+
+requestFileSystem(window.TEMPORARY, 1024 * 1024 * 5, function(fileSystem) {
+  console.log(fileSystem);
+}, function(error) {
+  console.log(error);
+});
+```
+
+Donde `requestFileSystem` es una variable que guardará una referencia a `window.requestFileSystem` (de existir), o de `window.webkitRequestFileSystem` (en caso `window.requestFileSystem` no exista). Este tipo de asignaciones son comunes cuando se trabaja con APIs que aún no son estándares, ya que primero se busca la implementación *estándar*, y luego la implementación propia del navegador (la cual va acompañada de un prefijo, que puede ser `webkit`, `moz`, `ms` u `o`).
+
+`requestFileSystem` es una función que permite obtener un sistema de archivos dentro del navegador, y tiene 4 parámetros:
+
+* **Tipo de almacenamiento**: el cual puede ser `window.TEMPORARY` (el navegador puede borrar los archivos si necesita espacio) o `window.PERSISTENT` (solo el usuario puede borrar los archivos).
+* **Tamaño en bytes**: El tamaño que se quiere asignar al sistema de archivos, el cual puede requerir un permiso explícito del usuario si el tamaño pedido es muy grande.
+* **Callback de éxito**: Este callback toma un parámetro, el cual es una instancia de `DOMFileSystem` y tiene dos propiedades: `name` y `root` (instancia de `DirectoryEntry`)
+* **Callback de error**: Este callback también toma un solo parámetro, el cual es una instancia de `FileError` y contiene 3 propiedades: el código del error, el nombre del error y un mensaje descriptivo.
+
+> Otro punto importante es ver cómo una variable guarda una referencia a una función. Recordemos que las funciones son ciudadanos de primera clase en JavaScript, por lo que es posible guardarlas en una variable, o pasarlas como parámetros (como en los dos últimos valores de `requestFileSystem`).
+
+Si se desea crear un sistema de archivos *persistente* se debe pedir una cuota de espacio al navegador:
+
+```javascript
+window.webkitStorageInfo.requestQuota(window.PERSISTENT, 1024 * 1024 * 5, function(bytes) {
+  window.webkitRequestFileSystem(window.PERSISTENT, bytes, function(fileSystem) {
+    console.log(fileSystem);
+  }, function(error) {
+    console.log('Error en requestFileSystem', error);
+  });
+}, function(error) {
+  console.log('Error en requestQuota', error);
+});
+```
+
+Luego de haber obtenido el sistema de archivos, podemos crear un archivo de la siguiente forma:
+
+```javascript
+function successCallback(fileSystem) {
+  fileSystem.root.getFile('demo.txt', { create : true }, function(fileEntry) {
+    fileEntry.createWriter(function(writer) {
+      writer.onwriteend = function(e) {
+        console.log('Archivo creado.');
+      };
+
+      var blob = new Blob(['Demo']);
+      writer.write(blob);
+    });
+  });
+}
+```
+
+Para crear un archivo tenemos que seguir dos pasos: obtener una referencia al archivo que queremos crear (con `getFile`), y crear una instancia de `FileWriter` (con `createWriter`).
+
+`getFile` acepta 4 parámetros: El nombre del archivo, un objeto de opciones y dos callbacks, uno de éxito y otro de error. Es en el objeto de opciones donde se indica si el archivo se creará o editará (en ambos casos se utiliza `create : true`, pero si solo se quiere crear un archivo y evitar reescribir uno existent, se añade `exclusive : true`).
+
+La instancia de `FileWriter` tiene diferentes handlers para manejar los eventos relacionados a la escritura del archivo, pero también tiene a `EventTarget` en su *cadena de prototypes*. Esto quiere decir que podemos utilizar los métodos `addEventListener` y `removeEventListener` para manejar los eventos de esta instancia.
+
+Por último, para poder realizar en sí la escritura del archivo debemos crear una instancia de `Blob`, el cual toma arreglos como parámetros, cada cual indicando una parte del contenido del archivo. Estos parámetros pueden ser arreglos, como también otras instancias de `Blob`. Luego, se utiliza el método `write` de la instancia de `FileWriter` para escribir el *blob*.
+
 ## History
 
 Con la *History API* podemos simular entradas en el historial del navegador sin necesidad de realizar peticiones al servidor donde la aplicación está alojada.
 
 ## Websocket
+
+Los websockets permiten una comunicación bi-direccional con el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional).
