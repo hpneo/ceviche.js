@@ -209,7 +209,7 @@ input.addEventListener('change', function(e) {
 });
 ```
 
-Dentro de este código de ejemplo utilizamos la función constructora `FileReader`, la cual permite leer los objetos de tipo `File` y convertirlo a una cadena de tipo [__Data URI__](https://developer.mozilla.org/en/docs/data_URIs), para, de esta forma, poder cargarlo en un elemento `<img>`.
+Dentro de este código de ejemplo utilizamos la función constructora `FileReader`, la cual permite leer las instancias de `File` y convertirlo a una cadena de tipo [__Data URI__](https://developer.mozilla.org/en/docs/data_URIs) para, de esta forma, poder cargarlo en un elemento `<img>`.
 
 En el bucle que lee cada imagen obtenida por el input `files` utilizamos una [función inmediatamente invocada](/2-funciones#funciones-inmediatamente-invocadas) debido a la naturaleza asíncrona de `FileReader`. Con este tipo de funciones, se obliga al navegador a ejecutar todo el código dentro de la función antes de pasar a la siguiente iteración, lo que nos asegura que se lean los valores correctos para cada iteración.
 
@@ -273,6 +273,8 @@ window.webkitStorageInfo.requestQuota(window.PERSISTENT, 1024 * 1024 * 5, functi
 });
 ```
 
+### Escribiendo archivos
+
 Luego de haber obtenido el sistema de archivos, podemos crear un archivo de la siguiente forma:
 
 ```javascript
@@ -283,7 +285,7 @@ function successCallback(fileSystem) {
         console.log('Archivo creado.');
       };
 
-      var blob = new Blob(['Demo']);
+      var blob = new Blob(['Texto', ' de ', 'prueba']);
       writer.write(blob);
     });
   });
@@ -292,11 +294,59 @@ function successCallback(fileSystem) {
 
 Para crear un archivo tenemos que seguir dos pasos: obtener una referencia al archivo que queremos crear (con `getFile`), y crear una instancia de `FileWriter` (con `createWriter`).
 
-`getFile` acepta 4 parámetros: El nombre del archivo, un objeto de opciones y dos callbacks, uno de éxito y otro de error. Es en el objeto de opciones donde se indica si el archivo se creará o editará (en ambos casos se utiliza `create : true`, pero si solo se quiere crear un archivo y evitar reescribir uno existent, se añade `exclusive : true`).
+`getFile` acepta 4 parámetros: El nombre del archivo, un objeto de opciones y dos callbacks, uno de éxito y otro de error. Es en el objeto de opciones donde se indica si el archivo se creará o editará (en ambos casos se utiliza `create : true`, pero si solo se quiere crear un archivo y evitar reescribir uno existente, se añade `exclusive : true`).
 
-La instancia de `FileWriter` tiene diferentes handlers para manejar los eventos relacionados a la escritura del archivo, pero también tiene a `EventTarget` en su *cadena de prototypes*. Esto quiere decir que podemos utilizar los métodos `addEventListener` y `removeEventListener` para manejar los eventos de esta instancia.
+La instancia de `FileWriter` tiene diferentes *handlers* para manejar los eventos relacionados a la escritura del archivo, pero también tiene a `EventTarget` en su **cadena de prototypes**. Esto quiere decir que podemos utilizar los métodos `addEventListener` y `removeEventListener` para manejar los eventos de esta instancia.
 
-Por último, para poder realizar en sí la escritura del archivo debemos crear una instancia de `Blob`, el cual toma arreglos como parámetros, cada cual indicando una parte del contenido del archivo. Estos parámetros pueden ser arreglos, como también otras instancias de `Blob`. Luego, se utiliza el método `write` de la instancia de `FileWriter` para escribir el *blob*.
+Por último, para poder realizar la escritura del archivo, propiamente dicha, debemos crear una instancia de [`Blob`](https://developer.mozilla.org/es/docs/Web/API/Blob), el cual tiene como primer parámetro un arreglo, el cual contiene las partes del contenido del archivo. Estas partes pueden ser cadenas, u otras instancias de `Blob`. Luego, se debe utilizar el método `write` de la instancia de `FileWriter` para escribir el *blob*.
+
+### Leyendo archivos
+
+Para leer archivos también necesitamos obtener una referencia del archivo que deseamos leer; y para esto usamos el método `getFile`, solo que en este caso el segundo parámetro no tendrá ningúna propiedad.
+
+```javascript
+function successCallback(fileSystem) {
+  fileSystem.root.getFile('demo.txt', {}, function(fileEntry) {
+    fileEntry.file(function(file) {
+      var reader = new FileReader();
+
+      reader.onloadend = function(e) {
+        console.log(this.result);
+      };
+
+      reader.readAsText(file);
+    });
+  });
+}
+```
+
+Luego de obtener la referencia del archivo debemos obtener el archivo en sí, mediante el método `file`, para luego crear una instancia de `FileReader`. Esta función, que ya ha sido utilizada por la *File API*, permite leer un archivo como texto plano, utilizando el método `readAsText`.
+
+### Actualizando archivos
+
+Para actualizar un archivo debemos seguir los mismos que se utilizaron para crear y escribir un archivo nuevo, excepto por un par de cambios:
+
+* El valor de `create` debe ser `false`.
+* Mover la posición del cursor de la instancia de `File Writer` al final del archivo, utilizando el método `seek`.
+
+```javascript
+function successCallback(fileSystem) {
+  fileSystem.root.getFile('demo.txt', { create : false }, function(fileEntry) {
+    fileEntry.createWriter(function(writer) {
+      writer.seek(writer.length);
+
+      writer.onwriteend = function(e) {
+        console.log('Archivo actualizado.');
+      };
+
+      var blob = new Blob(['\n', 'Texto', ' de ', 'prueba']);
+      writer.write(blob);
+    });
+  });
+}
+```
+
+En este caso, cualquier *blob* que se escriba en el archivo va a sobreescribir el contenido que pueda existir en la posición que el cursor se encuentre (por defecto está en la posición `0`, al inicio del archivo). Es por eso que, en este caso, se pone el cursor al final del archivo.
 
 ## History
 
