@@ -12,6 +12,9 @@ Al momento de su creación existieron diferentes implementaciones del mismo, hac
 
 Para 1997 la ECMA, una organización creada para desarrollar estándares de comunicación e información, realizó una especificación estándar llamada ECMAScript, la cual debe ser implementada por todos los navegadores. JavaScript en sí no es sinónimo de ECMAScript, si no una implementación de esta, al igual que ActionScript o JScript. ECMAScript actualmente está en su versión 5.1, existiendo ya avances de la versión 6.
 
+![JavaScript Timeline. http://tom-barker.com/](/images/1-javascript/JavaScriptTimeline.jpg "JavaScript Timeline. http://tom-barker.com/")
+*JavaScript Timeline. http://tom-barker.com/*
+
 JavaScript es un lenguaje que está influenciado por muchos otros lenguajes. Tiene similitudes con Java (y por lo tanto, algo de C/C++), y un poco de Self y Scheme, logrando hacer de él un lenguaje imperativo (se le dice al computador qué hacer y cómo, como C/C++ y Java), pero con conceptos de programación funcional (los programas son escritos en forma de funciones aritméticas, gracias a Self y Scheme). Además, tiene sus propias características:
 
 * **Es un lenguaje de tipado dinámico**, esto quiere decir que una variable puede ser tanto un número como una cadena de caracteres o un objeto sin necesidad de una conversión especial.
