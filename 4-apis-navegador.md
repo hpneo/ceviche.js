@@ -162,7 +162,7 @@ Para que el navegador sepa dónde encontrar este archivo, debe ser incluido como
 
 ## File
 
-Con esta API podemos leer archivos que cargamos desde local, mediante la etiqueta `<input type="file" />`, así como al realizar operaciones *drag and drop* de manera nativa. De esta forma, podemos previsualizar imágenes antes de subirlas a un servidor o realizar operaciones con los archivos aunque la aplicación esté *offline*.
+Con esta API podemos leer archivos que cargamos desde el navegador, mediante la etiqueta `<input type="file" />`, así como al realizar operaciones *drag and drop* de manera nativa. De esta forma, podemos previsualizar imágenes antes de subirlas a un servidor o realizar operaciones con los archivos aunque la aplicación esté *offline*.
 
 Cuando trabajamos con elementos `<input>` podemos acceder a los archivos que han sido elegidos mediante la propiedad `files`, la cual es una lista instancia de `FileList`. Cada elemento de esta lista es un objeto instancia de `File` y tiene algunas propiedades:
 
@@ -215,7 +215,7 @@ En el bucle que lee cada imagen obtenida por el input `files` utilizamos una [fu
 
 ## File System
 
-Esta API simula un sistema de archivos en local, permitiendo crear, modificar y leer archivos mediante JavaScript. Este sistema de archivos simulado no es el sistema de archivos del sistema operativo, si no que está separado en un entorno controlado (a este tipo de entornos se le llama *sandbox*). Actualmente esta API está en fase experimental y está disponible en Chrome y Opera, por lo que tiene un uso potencial en aplicaciones para Chrome OS o aplicaciones web que funcionan con Chromium.
+Esta API simula un sistema de archivos en el navegador, permitiendo crear, modificar y leer archivos mediante JavaScript. Este sistema de archivos simulado no es el sistema de archivos del sistema operativo, si no que está separado en un entorno controlado (a este tipo de entornos se le llama *sandbox*). Actualmente esta API está en fase experimental y está disponible en Chrome y Opera, por lo que tiene un uso potencial en aplicaciones para Chrome OS o aplicaciones web que funcionan con Chromium.
 
 Al ser un entorno controlado, *File System API* tiene ciertas restricciones:
 
@@ -272,6 +272,10 @@ window.webkitStorageInfo.requestQuota(window.PERSISTENT, 1024 * 1024 * 5, functi
   console.log('Error en requestQuota', error);
 });
 ```
+
+![Permisos para cuota de espacio](/images/4-apis-navegador/file_system.png "Permisos para cuota de espacio")
+
+> Chrome recomienda utilizar `navigator.webkitTemporaryStorage` o `navigator.webkitPersistentStorage` en vez de `window.webkitStorageInfo` para obtener la cuota de espacio. Ambos objetos siguen teniendo el método `requestQuota`.
 
 ### Escribiendo archivos
 
