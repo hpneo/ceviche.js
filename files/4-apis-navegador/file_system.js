@@ -46,3 +46,9 @@ requestFileSystem(window.TEMPORARY, 1024 * 1024 * 5, function(fileSystem) {
     }, handleError);
   }, handleError);
 }, handleError);
+
+requestFileSystem(window.TEMPORARY, 1024 * 1024 * 5, function(fileSystem) {
+  fileSystem.root.getDirectory('examples', { create : true }, function(directoryEntry) {
+    console.log(directoryEntry);
+  }, handleError);
+}, handleError);

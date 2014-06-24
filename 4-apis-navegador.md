@@ -352,6 +352,26 @@ function successCallback(fileSystem) {
 
 En este caso, cualquier *blob* que se escriba en el archivo va a sobreescribir el contenido que pueda existir en la posición que el cursor se encuentre (por defecto está en la posición `0`, al inicio del archivo). Es por eso que, en este caso, se pone el cursor al final del archivo.
 
+### Creando carpetas
+
+Para crear una carpeta se utiliza el método `getDirectory`, el cual es un método similar a `getFile`:
+
+```javascript
+function successCallback(fileSystem) {
+  fileSystem.root.getDirectory('examples', { create : true }, function(directoryEntry) {
+    // directoryEntry
+  });
+}
+```
+
+De esta forma ya tenemos la carpeta creada. `directoryEntry` es una instancia de `DirectoryEntry` (recordemos: `fileSystem.root` también es una instancia de `DirectoryEntry`, por lo que se pueden realizar las mismas operaciones con ambos objetos).
+
+### Obtener el contenido de una carpeta
+
+Las instancias de `DirectoryEntry` tienen un método llamado `createReader`, el cual crea una instancia de `DirectoryReader`. Las instancias de `DirectoryReader` tienen un método llamado `readEntries`, el cual ejecuta dos callbacks, según si la operación ha sido exitosa o no, y devuelve la lista de *entradas* de una carpeta (una *entrada* puede ser un archivo o una carpeta).
+
+### Eliminando carpetas
+
 ## History
 
 Con la *History API* podemos simular entradas en el historial del navegador sin necesidad de realizar peticiones al servidor donde la aplicación está alojada.
