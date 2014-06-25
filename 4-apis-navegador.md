@@ -354,7 +354,7 @@ En este caso, cualquier *blob* que se escriba en el archivo va a sobreescribir e
 
 ### Creando carpetas
 
-Para crear una carpeta se utiliza el método `getDirectory`, el cual es un método similar a `getFile`:
+Para crear una carpeta es necesario utilizar el método `getDirectory`, el cual es similar a `getFile` en cuanto a parámetros:
 
 ```javascript
 function successCallback(fileSystem) {
@@ -364,13 +364,55 @@ function successCallback(fileSystem) {
 }
 ```
 
-De esta forma ya tenemos la carpeta creada. `directoryEntry` es una instancia de `DirectoryEntry` (recordemos: `fileSystem.root` también es una instancia de `DirectoryEntry`, por lo que se pueden realizar las mismas operaciones con ambos objetos).
+De esta forma ya tenemos la carpeta creada. `directoryEntry` es una instancia de `DirectoryEntry` (recordemos: `fileSystem.root` también es una instancia de `DirectoryEntry`, por lo que se pueden realizar las mismas operaciones que hemos visto anteriormente).
 
 ### Obtener el contenido de una carpeta
 
 Las instancias de `DirectoryEntry` tienen un método llamado `createReader`, el cual crea una instancia de `DirectoryReader`. Las instancias de `DirectoryReader` tienen un método llamado `readEntries`, el cual ejecuta dos callbacks, según si la operación ha sido exitosa o no, y devuelve la lista de *entradas* de una carpeta (una *entrada* puede ser un archivo o una carpeta).
 
+
+```javascript
+function successCallback(fileSystem) {
+  var directoryReader = fileSystem.root.createReader();
+  directoryReader.readEntries(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      console.log(entries[i]);
+    }
+  });
+}
+```
+
+En este caso, es `fileSystem.root` quien crea una instancia de `DirectoryReader`, ya que queremos ver cuáles son los archivos y carpetas que se encuentran dentro de la carpeta raíz. Cabe notar que los elementos de *entries* puede ser instancias de `FileEntry` o de `DirectoryEntry`, dependiendo del tipo de entrada (archivo o carpeta, respectivamente).
+
 ### Eliminando carpetas
+
+Para eliminar una carpeta tenemos dos métodos de `DirectoryEntry`: `remove` y `removeRecursively`. El primer método solo podrá eliminar una carpeta si esta está vacía, mientras que el segundo método eliminará todo el contenido de la carpeta antes de eliminar la carpeta en sí.
+
+```javascript
+function successCallback(fileSystem) {
+  fileSystem.root.getDirectory('examples', {}, function(directoryEntry) {
+    directoryEntry.remove(function() {
+      console.log('Carpeta eliminada');
+    }, function() {
+      console.log('La carpeta no pudo ser elimninada');
+    });
+  });
+}
+```
+
+El método `removeRecursively` funciona exactamente igual:
+
+```javascript
+function successCallback(fileSystem) {
+  fileSystem.root.getDirectory('examples', {}, function(directoryEntry) {
+    directoryEntry.removeRecursively(function() {
+      console.log('Carpeta eliminada');
+    });
+  });
+}
+```
+
+Cabe destacar que todos los métodos usados dentro de FileSystem API toman dos callbacks: uno de éxito y otro de error, donde este último siempre recibirá un único parámetro con las causas del error. De esta forma, es posible crear una sola función que sirva como callback de error para todos los métodos de FileSystem API, como en [este código de ejemplo](http://cevichejs.herokuapp.com/files/4-apis-navegador/file_system.js).
 
 ## History
 

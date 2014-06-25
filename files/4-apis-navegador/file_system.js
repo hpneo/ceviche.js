@@ -52,3 +52,29 @@ requestFileSystem(window.TEMPORARY, 1024 * 1024 * 5, function(fileSystem) {
     console.log(directoryEntry);
   }, handleError);
 }, handleError);
+
+requestFileSystem(window.TEMPORARY, 1024 * 1024 * 5, function(fileSystem) {
+  var directoryReader = fileSystem.root.createReader();
+
+  directoryReader.readEntries(function(entries) {
+    for (var i = 0; i < entries.length; i++) {
+      console.log(entries[i]);
+    }
+  }, handleError);
+}, handleError);
+
+requestFileSystem(window.TEMPORARY, 1024 * 1024 * 5, function(fileSystem) {
+  fileSystem.root.getDirectory('examples', {}, function(directoryEntry) {
+    directoryEntry.remove(function() {
+      console.log('Carpeta eliminada');
+    }, handleError);
+  }, handleError);
+}, handleError);
+
+requestFileSystem(window.TEMPORARY, 1024 * 1024 * 5, function(fileSystem) {
+  fileSystem.root.getDirectory('examples', {}, function(directoryEntry) {
+    directoryEntry.removeRecursively(function() {
+      console.log('Carpeta eliminada');
+    }, handleError);
+  }, handleError);
+}, handleError);
