@@ -412,11 +412,87 @@ function successCallback(fileSystem) {
 }
 ```
 
-Cabe destacar que todos los métodos usados dentro de FileSystem API toman dos callbacks: uno de éxito y otro de error, donde este último siempre recibirá un único parámetro con las causas del error. De esta forma, es posible crear una sola función que sirva como callback de error para todos los métodos de FileSystem API, como en [este código de ejemplo](http://cevichejs.herokuapp.com/files/4-apis-navegador/file_system.js).
+Cabe destacar que todos los métodos usados dentro de la *FileSystem API* toman dos callbacks: uno de éxito y otro de error, donde este último siempre recibirá un único parámetro con las causas del error. De esta forma, es posible crear una sola función que sirva como callback de error para todos los métodos de la *FileSystem API*, como en [este código de ejemplo](http://cevichejs.herokuapp.com/files/4-apis-navegador/file_system.js).
 
 ## History
 
-Con la *History API* podemos simular entradas en el historial del navegador sin necesidad de realizar peticiones al servidor donde la aplicación está alojada.
+Con la *History API* podemos simular entradas en el historial del navegador sin necesidad de realizar peticiones al servidor donde la aplicación está alojada (una entrada en el historial es cada página visitada en una pestaña de navegador).
+
+Tradicionalmente, cuando un usuario ingresa a una dirección desde el navegador, o haciendo clic en un enlace, pasa lo siguiente:
+
+1. El navegador realiza una petición al servidor al que apunta la dirección ingresada.
+2. El servidor recibe la petición y la procesa, devolviendo una respuesta hacia el navegador.
+3. El navegador muestra dicha respuesta al usuario final, lo cual también implica cambiar la dirección de la barra de direcciones del navegador mismo.
+4. Se crea una entrada en el historial del navegador para la ventana actual. De esta forma el usuario sabe que está en una nueva página y que tiene la opciónde regresar a la anterior.
+
+*History API* hace que estos pasos ya no sean obligatoriamente seguidos, ya que es posible cambiar la dirección de la barra de direcciones del navegador sin necesidad de hacer que el navegador envíe una petición al servidor, de tal forma que del flujo tradicional solo se ejecute el paso 4. Así mismo, ofrece un evento completamente nuevo, el cual se dispara cuando navegamos por las entradas del historial.
+
+### Agregando una entrada con `pushState`
+
+El objeto `history` es el encargado de manejar el historial del navegador, y tiene algunos métodos como `back`, `forward`o `go`para navegar a través del historial, y una propiedad `length` que indica el número de entradas en el historial. A su vez, `history` tiene un método llamado `pushState`, el cual agrega una entrada al historial del navegador y cambia la dirección en la barra de direcciones del navegador, pero no realiza ninguna petición al servidor de la nueva dirección.
+
+Suponiendo que los visitantes de **La Buena Espina** utilizan navegadores que soportan la *History API*, podemos hacer que los enlaces de la barra superior utilicen `pushState`, y de esta forma mostrar las secciones manipulando el DOM (para esto, todas las secciones deben estar previamente cargadas en la página):
+
+```javascript
+var state = {
+  prevURL: '/carta',
+  actualURL: '/locales'
+};
+
+history.length;
+// 1
+
+history.pushState(state, 'Locales', '/locales');
+
+history.length;
+// 2
+```
+
+El método `pushState` toma 3 parámetros:
+1. Un objeto representado el *state* o estado de la nueva entrada en el historial. Sirve para guardar información relacionada a la URL que se está agregando.
+2. El nuevo título que tendrá la pestaña del navegador. Este parámetro es ignorado por algunos navegador, por lo que podría no ser útil de momento.
+3. La URL que se agregará al historial. Este parámetro reemplazará todo lo que venga después del origen (un origen está conformado por el protocolo, el dominio y el puerto de una dirección).
+
+Cabe notar aquí que ni `pushState` ni `replaceState` pueden poner una URL cuyo origen sea diferente al actual, esto es por un tema de seguridad: Por ejemplo, se podría tener un enlace que modifique la URL actual por la URL de un banco de confianza, pero sin la necesidad de cargar la web de dicho banco.
+
+Así mismo, por seguridad, la *History API* no está disponible en archivos en local (es decir, aquellos que se ejecuten desde el protocolo `file://`).
+
+### Reemplazando una entrada con `replaceState`
+
+Si con `pushState` podemos agregar una entrada al historial, con `replaceState` podemos reemplazar la entrada actual (es decir, donde estemos navegando actualmente).
+
+Siguiendo con el ejemplo anterior, tenemos que la dirección actualmente es `/locales`, y queremos que al buscar locales por distrito, cambie la dirección pero no agregue una entrada más en el historial:
+
+```javascript
+var state = {
+  prevURL: '/carta',
+  actualURL: '/locales?buscar_en=Lince',
+};
+
+history.length;
+// 2
+
+history.replaceState(state, 'Locales', '/locales?buscar_en=Lince');
+
+history.length;
+// 2
+```
+
+El método `replaceState` toma los mismos parámetros que `pushState` y sirve, principalmente, para actualizar la entrada actual con algunos valores propios de la interacción del usuario con el sitio web.
+
+### Evento `popstate`
+
+El evento `popstate` es lanzado cada vez que se *viaja* a través del historial, ya sea con los botones del navegador, o con los métodos `back`, `forward` o `go` de `history`.
+
+Por ejemplo, para conocer el *state* de la entrada actual del historial a la que se navegó, se puede utilizar el siguiente código:
+
+```javascript
+window.addEventListener('popstate', function(e) {
+  console.log(e.state);
+});
+```
+
+Dado que este evento corresponde a la pestaña (o ventana) actual, es `window` el encargado de *escuchar* el evento.
 
 ## Websocket
 
