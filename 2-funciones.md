@@ -626,7 +626,8 @@ var titleBuilder = (function() {
 })();
 
 SiteNotifier.subscribe('site_title:changed', function(message) {
-  console.log(message.oldTitle, ' → ', message.newTitle);           // en vez de mostrar en la consola se puede cambiar el título de la pestaña
+  // en vez de mostrar en la consola se puede cambiar el título de la pestaña
+  console.log(message.oldTitle, ' → ', message.newTitle);
 });
 
 titleBuilder.addPart('Carta');
@@ -641,3 +642,82 @@ titleBuilder.reset();
 ```
 
 De esta forma, cada vez que agregue una parte al título (con `addPart`), o la devuelva a su estado original (con `reset`), se ejecutarán los callbacks suscritos al canal `site_title:changed`.
+
+### Mixins
+
+En la sección sobre *prototypes* creamos la función constructora `Dish`, la cual permite recrear los platillos que ofrece La Buena Espina:
+
+```javascript
+function Dish(options) {
+  this.name = options.name;
+  this.ingredients = options.ingredients;
+  this.garnishes = options.garnishes;
+  this.diners = options.diners;
+};
+```
+
+Así mismo, creamos una nueva función llamada `Bevereage`, que servirá para modelar las distintas bebidas que ofrece el restaurante:
+
+```javascript
+function Beverage(options) {
+  this.name = options.name;
+  this.quantity = options.quantity;
+};
+```
+
+Pero el dueño de La Buena Espina quiere tener una calculadora en el sitio web, que permita saber cuánto gastará un posible cliente según lo que vaya a pedir, y para esto necesitamos que todos los items de la carta (en este caso, `Dish`y `Beverage`) tengan un método que agregue el precio a una calculadora. 
+
+Podríamos tener un *prototype* en común para ambos pero suena un poco forzado. ¿Cómo es que `Dish` y `Beverage` podrían tener un objeto *padre* en común? Ambos necesitan el mismo comportamiento, pero son muy diferentes para compartir un *prototype*. Es aquí donde podemos usar un *mixin*.
+
+Un *mixin* es una colección de métodos que pueden ser agregados a un objeto (generalmente al *prototype* de una función constructora) y así extender las funcionalidades que tiene dicho objeto. De esta forma podemos simular la herencia múltiple que el lenguaje no da por sí mismo (en JavaScript se maneja herencia simple al extender o reemplazar el *prototype* de una función):
+
+```javascript
+var CalculatorItems = [];
+
+var CalculatorMixin = {
+  addToCalculator: function(price, quantity) {
+    CalculatorItems.push({
+      name: this.name,
+      price: price,
+      subtotal: price * quantity
+    });
+  }
+};
+
+for (var mixinMethodName in CalculatorMixin) {
+  Dish.prototype[mixinMethodName] = CalculatorMixin[mixinMethodName];
+  Beverage.prototype[mixinMethodName] = CalculatorMixin[mixinMethodName];
+}
+```
+
+La forma de usar un *mixin* es iterando en él (para eso utilizamos un `for..in`) y añadiendo cada método del *mixin* en el *prototype* destino. De esta forma, podemos agregar un platillo a la calculadora:
+
+```javascript
+var cevicheSimple = new Dish({
+  name: 'Ceviche simple',
+  diners: 4
+});
+
+cevicheSimple.addToCalculator(20, 1);
+
+var limonadaFrozen = new Beverage({
+  name: 'Limonada frozen',
+  quantity: '1 vaso'
+});
+
+limonadaFrozen.addToCalculator(7, 2);
+```
+
+Y calculando:
+
+```javascript
+var total = 0;
+
+for (var i = 0; i < CalculatorItems.length; i++) {
+  total = total + CalculatorItems[i].subtotal;
+}
+
+// toFixed convierte un número a una cadena con determinado número de decimales
+console.log('Total:', 'S/.', total.toFixed(2));
+// Total: S/. 34.00
+```

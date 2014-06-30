@@ -923,7 +923,7 @@ for (prop in obj) {
 // date : Wed Feb 05 2014 00:01:40 GMT-0500 (PET)
 ```
 
-Si el objeto evaluado en una sentencia for..in tiene propiedades heredadas de otro objeto, estas también se iterarán.
+Si el objeto evaluado en una sentencia `for..in` tiene propiedades heredadas de otro objeto, estas también se iterarán.
 
 #### `while`
 `while` ejecuta las sentencias de su bloque mientras la condición pasada sea verdadera.

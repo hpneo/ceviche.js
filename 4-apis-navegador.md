@@ -496,4 +496,8 @@ Dado que este evento corresponde a la pestaña (o ventana) actual, es `window` e
 
 ## Websocket
 
-Los websockets permiten una comunicación bi-direccional con el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional).
+Los websockets permiten una comunicación bi-direccional con el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional). Así, podemos enviarle datos al servidor y estar a la espera de *escuchar* los datos que el servidor pueda mandar.
+
+## Server-Sent Event
+
+La *Server-Sent Event API* es una alternativa para los Websockets, ya que permite que el navegador esté *escuchando* los datos que un servidor pueda mandar; en este caso, esta API utiliza el protocolo HTTP, en comparación al protocolo WS que es utilizado por los Websockets. Sin embargo, esta API solo permite *escuchar* datos, mas no enviar datos al servidor.
