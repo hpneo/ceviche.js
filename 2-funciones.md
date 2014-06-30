@@ -656,7 +656,7 @@ function Dish(options) {
 };
 ```
 
-Así mismo, creamos una nueva función llamada `Bevereage`, que servirá para modelar las distintas bebidas que ofrece el restaurante:
+Así mismo, creamos una nueva función llamada `Beverage`, que servirá para modelar las distintas bebidas que ofrece el restaurante:
 
 ```javascript
 function Beverage(options) {
