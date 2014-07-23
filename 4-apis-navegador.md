@@ -20,11 +20,11 @@ Ahora se pueden realizar peticiones al servidor sin recargar toda la página, te
 
 Algunas de las siguientes APIs del navegador servirán para **La Buena Espina**, pero utilizarlas no implica que estemos creando una aplicación web, puesto que ese término está dirigido a la función del producto que se haga y no a las tecnologías que utilice.
 
-## Storage
+## Web Storage
 
 Empecemos con una API simple de usar pero que soluciona un problema común al trabajar con una aplicación web: El dueño de **La Buena Espina** quiere un formulario de contacto para que los comensales puedan dar sus impresiones sobre el servicio y la comida. Pero, ¿qué pasaría si luego de enviar el formulario se pierde la conexión, el usuario cierra su navegador o el servidor no responde? Los comentarios no llegarán al dueño y se pueden perder buenas críticas con respecto al restaurante.
 
-Las APIs de Storage solucionan este problema, al menos en parte, ya que permiten guardar información en el navegador. Esta información es guardada en formato *nombre - valor*, similar a un solo objeto plano en JavaScript, y puede existir en dos formas:
+Las APIs de Web Storage solucionan este problema, al menos en parte, ya que permiten guardar información en el navegador. Esta información es guardada en formato *nombre - valor*, similar a un solo objeto plano en JavaScript, y puede existir en dos formas:
 
 * *Local Storage*: Existiendo uno por cada *origen* (el valor devuelto por `location.origin`). Estará disponible luego de haber cerrado el navegador.
 * *Session Storage*: Similar al *Local Storage*, solo está disponible mientras el navegador esté abierto.
@@ -42,6 +42,8 @@ dom('#contact-form').on('submit', function() {
 ```
 
 De esta forma, cuando enviemos el formulario, se guardará el contenido del elemento `#contact-comment` en el *Local Storage* bajo el nombre `contact_content`.
+
+> [Soporte para Web Storage](http://caniuse.com/#feat=namevalue-storage)
 
 ## Geolocation
 
@@ -111,6 +113,8 @@ Y si le damos el permiso, nos devolverá el siguiente objeto (cuyos valores pued
 
 Cuando ya tenemos estos valores podemos utilizar algún servicio de mapas, como [Google Maps](https://developers.google.com/maps/documentation/javascript/), [Mapbox](https://www.mapbox.com/mapbox.js/) o [Leaflet](http://leafletjs.com/reference.html) para mostrar la ubicación de forma visual en un mapa.
 
+> [Soporte para Geolocation](http://caniuse.com/#feat=geolocation)
+
 ## Application Cache
 
 Para el caso de aplicaciones web suele ser de vital importancia el poder acceder a ellas de manera *offline*, sobre todo si la conexión a Internet solo se hace necesaria para respaldar información en un servidor externo. En este tipo de aplicaciones donde se debería poder acceder a los archivos "estáticos" de la aplicación independientemente del estado de conexión que tenga el equipo, y es aquí donde el *Application Cache* entra en acción.
@@ -159,6 +163,8 @@ Para que el navegador sepa dónde encontrar este archivo, debe ser incluido como
   ...
 </html>
 ```
+
+> [Soporte para Application Cache](http://caniuse.com/#feat=offline-apps)
 
 ## File
 
@@ -212,6 +218,8 @@ input.addEventListener('change', function(e) {
 Dentro de este código de ejemplo utilizamos la función constructora `FileReader`, la cual permite leer las instancias de `File` y convertirlo a una cadena de tipo [__Data URI__](https://developer.mozilla.org/en/docs/data_URIs) para, de esta forma, poder cargarlo en un elemento `<img>`.
 
 En el bucle que lee cada imagen obtenida por el input `files` utilizamos una [función inmediatamente invocada](/2-funciones#funciones-inmediatamente-invocadas) debido a la naturaleza asíncrona de `FileReader`. Con este tipo de funciones, se obliga al navegador a ejecutar todo el código dentro de la función antes de pasar a la siguiente iteración, lo que nos asegura que se lean los valores correctos para cada iteración.
+
+> [Soporte para File](http://caniuse.com/#feat=fileapi)
 
 ## File System
 
@@ -414,6 +422,8 @@ function successCallback(fileSystem) {
 
 Cabe destacar que todos los métodos usados dentro de la *FileSystem API* toman dos callbacks: uno de éxito y otro de error, donde este último siempre recibirá un único parámetro con las causas del error. De esta forma, es posible crear una sola función que sirva como callback de error para todos los métodos de la *FileSystem API*, como en [este código de ejemplo](http://cevichejs.herokuapp.com/files/4-apis-navegador/file_system.js).
 
+> [Soporte para File System](http://caniuse.com/#feat=filesystem)
+
 ## History
 
 Con la *History API* podemos simular entradas en el historial del navegador sin necesidad de realizar peticiones al servidor donde la aplicación está alojada (una entrada en el historial es cada página visitada en una pestaña de navegador).
@@ -494,6 +504,8 @@ window.addEventListener('popstate', function(e) {
 
 Dado que este evento corresponde a la pestaña (o ventana) actual, es `window` el encargado de *escuchar* el evento.
 
+> [Soporte para History](http://caniuse.com/#feat=history)
+
 ## Websocket
 
 Los websockets permiten una comunicación bi-direccional entre el navegador y el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional). Así, no solo podemos enviarle información al servidor, si no que podemos estar a la espera de *escuchar* los datos que el servidor pueda mandar por su cuenta.
@@ -567,6 +579,8 @@ var connection = new WebSocket(websocketURL);
 
 Opcionalmente, en el servidor se puede restringir si se aceptan o no conexiones de diferentes orígenes de websockets (mediante el [Content Security Policy](http://www.html5rocks.com/en/tutorials/security/content-security-policy/), específicamente la directiva `connect-src`).
 
+> [Soporte para Websocket](http://caniuse.com/#feat=websockets)
+
 ## Server-Sent Event
 
 La *Server-Sent Event API* es una alternativa para los websockets, ya que permite que el navegador esté *escuchando* los datos que un servidor pueda mandar; en este caso, la API utiliza el protocolo HTTP(S), en comparación al protocolo WS que es utilizado por los websockets. Sin embargo, solo se pueden *escuchar* datos, mas no enviar datos al servidor, por lo que puede ser utilizado en casos donde no es necesario o se quiere evitar que el navegador envíe datos al servidor.
@@ -601,4 +615,6 @@ sseConnection.addEventListener('booked_table', function(e) {
 });
 ```
 
-Hay que tener en cuenta que tanto para websockets como para server-sent events la información que recibimos del servidor (y que enviamos, en el primer caso) es tratada como cadena, por lo que, de ser el caso, se deben hacer las conversiones necesarias, o utilizar JSON si se trabaja con arreglos u objetos.
+Hay que tener en cuenta que tanto para websockets como para server-sent events la información que recibimos del servidor (o que enviamos, en el caso de websockets) es una cadena, por lo que, de ser el caso, se deben hacer las conversiones necesarias, o utilizar JSON si se trabaja con arreglos u objetos.
+
+> [Soporte para Server-Sent Event](http://caniuse.com/#feat=eventsource)
