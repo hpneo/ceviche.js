@@ -496,7 +496,7 @@ Dado que este evento corresponde a la pestaña (o ventana) actual, es `window` e
 
 ## Websocket
 
-Los websockets permiten una comunicación bi-direccional con el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional). Así, no solo podemos enviarle información al servidor, si no que podemos estar a la espera de *escuchar* los datos que el servidor pueda mandar por su cuenta.
+Los websockets permiten una comunicación bi-direccional entre el navegador y el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional). Así, no solo podemos enviarle información al servidor, si no que podemos estar a la espera de *escuchar* los datos que el servidor pueda mandar por su cuenta.
 
 Para poder utilizar websockets necesitamos tener un servidor de websockets, al cual se accede mediante el protocolo `ws://`, o `wss://` en caso de querer una conexión segura. Existen bibliotecas para crear servidores de websockets en [varios lenguajes](http://www.html5rocks.com/es/tutorials/websockets/basics/#toc-serversideimplementations).
 
