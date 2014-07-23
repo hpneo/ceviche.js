@@ -503,7 +503,7 @@ Para poder utilizar websockets necesitamos tener un servidor de websockets, al c
 En el navegador solo necesitamos crear una instancia de `WebSocket`, pasándole la url del servidor de websockets:
 
 ```javascript
-var connection = new WebSocket('ws://localhost:1234');
+var connection = new WebSocket('ws://html5rocks.websocket.org/echo');
 
 connection.onopen = function(e) {
   console.log('Connected');
@@ -525,7 +525,7 @@ connection.onmessage = function(e) {
 `WebSocket` tiene a `EventTarget` en su **cadena de prototypes** (que es como se define la *herencia* en JavaScript), por lo que podemos usar `addEventListener` en la variable `connection`:
 
 ```javascript
-var connection = new WebSocket('ws://localhost:1234');
+var connection = new WebSocket('ws://html5rocks.websocket.org/echo');
 
 connection.addEventListener('open', function(e) {
   console.log('Connected');
@@ -547,10 +547,25 @@ connection.addEventListener('message', function(e) {
 Con este código tenemos lo básico para poder escuchar los datos que el servidor mande, pero si queremos enviarle información al servidor, debemos utilizar el método `send`:
 
 ```javascript
-connection.send('Hi from Ceviche.js');
+connection.send('Hi from La Buena Espina');
 ```
 
-Hay que tener algunas consideraciones al momento de lanzar un servidor de websockets. Por ejemplo, si se usan websockets en una web que usa HTTPS, las conexiones al servidor de websockets deben ser con WSS. También se debe verificar si se aceptan conexiones desde orígenes diferentes al del servidor de websockets.
+Hay que tener algunas consideraciones al momento de utilizar un servidor de websockets. Por ejemplo, si se usan websockets en una web que usa HTTPS, las conexiones al servidor de websockets deben ser con WSS. A diferencia de HTTP(S), los protocolos de websockets no cambian automáticamente (un protocolo cambia automáticamente cuando tenemos una imagen cuya url es `//labuenaespina.pe/logo.png` y según la página actual puede cargar `http://labuenaespina.pe/logo.png` o `https://labuenaespina.pe/logo.png`); por lo que se debe cambiar manualmente:
+
+```javascript
+var websocketURL = '//html5rocks.websocket.org/echo';
+
+if (location.protocol === 'http:') {
+  websocketURL = 'ws:' + websocketURL;
+}
+else if (location.protocol === 'https:') {
+  websocketURL = 'wss:' + websocketURL;
+}
+
+var connection = new WebSocket(websocketURL);
+```
+
+Opcionalmente, en el servidor se puede restringir si se aceptan o no conexiones de diferentes orígenes de websockets (mediante el [Content Security Policy](http://www.html5rocks.com/en/tutorials/security/content-security-policy/), específicamente la directiva `connect-src`).
 
 ## Server-Sent Event
 
