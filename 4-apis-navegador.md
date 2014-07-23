@@ -484,7 +484,7 @@ El método `replaceState` toma los mismos parámetros que `pushState` y sirve, p
 
 El evento `popstate` es lanzado cada vez que se *viaja* a través del historial, ya sea con los botones del navegador, o con los métodos `back`, `forward` o `go` de `history`.
 
-Por ejemplo, para conocer el *state* de la entrada actual del historial a la que se navegó, se puede utilizar el siguiente código:
+Por ejemplo, para conocer el *state* de la entrada del historial a la cual se navegó, se puede utilizar el siguiente código:
 
 ```javascript
 window.addEventListener('popstate', function(e) {
@@ -496,7 +496,61 @@ Dado que este evento corresponde a la pestaña (o ventana) actual, es `window` e
 
 ## Websocket
 
-Los websockets permiten una comunicación bi-direccional con el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional). Así, podemos enviarle datos al servidor y estar a la espera de *escuchar* los datos que el servidor pueda mandar.
+Los websockets permiten una comunicación bi-direccional con el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional). Así, no solo podemos enviarle información al servidor, si no que podemos estar a la espera de *escuchar* los datos que el servidor pueda mandar por su cuenta.
+
+Para poder utilizar websockets necesitamos tener un servidor de websockets, al cual se accede mediante el protocolo `ws://`, o `wss://` en caso de querer una conexión segura. Existen bibliotecas para crear servidores de websockets en [varios lenguajes](http://www.html5rocks.com/es/tutorials/websockets/basics/#toc-serversideimplementations).
+
+En el navegador solo necesitamos crear una instancia de `WebSocket`, pasándole la url del servidor de websockets:
+
+```javascript
+var connection = new WebSocket('ws://localhost:1234');
+
+connection.onopen = function(e) {
+  console.log('Connected');
+};
+
+connection.onclose = function(e) {
+  console.log('Disconnected');
+};
+
+connection.onerror = function(e) {
+  console.log('An error ocurred');
+};
+
+connection.onmessage = function(e) {
+  console.log('Message received: ', e.data);
+};
+```
+
+`WebSocket` tiene a `EventTarget` en su **cadena de prototypes** (que es como se define la *herencia* en JavaScript), por lo que podemos usar `addEventListener` en la variable `connection`:
+
+```javascript
+var connection = new WebSocket('ws://localhost:1234');
+
+connection.addEventListener('open', function(e) {
+  console.log('Connected');
+});
+
+connection.addEventListener('close', function(e) {
+  console.log('Disconnected');
+});
+
+connection.addEventListener('error', function(e) {
+  console.log('An error ocurred');
+});
+
+connection.addEventListener('message', function(e) {
+  console.log('Message received: ', e.data);
+});
+```
+
+Con este código tenemos lo básico para poder escuchar los datos que el servidor mande, pero si queremos enviarle información al servidor, debemos utilizar el método `send`:
+
+```javascript
+connection.send('Hi from Ceviche.js');
+```
+
+Hay que tener algunas consideraciones al momento de lanzar un servidor de websockets. Por ejemplo, si se usan websockets en una web que usa HTTPS, las conexiones al servidor de websockets deben ser con WSS. También se debe verificar si se aceptan conexiones desde orígenes diferentes al del servidor de websockets.
 
 ## Server-Sent Event
 
