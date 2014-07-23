@@ -569,4 +569,36 @@ Opcionalmente, en el servidor se puede restringir si se aceptan o no conexiones 
 
 ## Server-Sent Event
 
-La *Server-Sent Event API* es una alternativa para los Websockets, ya que permite que el navegador esté *escuchando* los datos que un servidor pueda mandar; en este caso, esta API utiliza el protocolo HTTP, en comparación al protocolo WS que es utilizado por los Websockets. Sin embargo, esta API solo permite *escuchar* datos, mas no enviar datos al servidor.
+La *Server-Sent Event API* es una alternativa para los websockets, ya que permite que el navegador esté *escuchando* los datos que un servidor pueda mandar; en este caso, la API utiliza el protocolo HTTP(S), en comparación al protocolo WS que es utilizado por los websockets. Sin embargo, solo se pueden *escuchar* datos, mas no enviar datos al servidor, por lo que puede ser utilizado en casos donde no es necesario o se quiere evitar que el navegador envíe datos al servidor.
+
+Para abrir una conexión al servidor debemos crear una instancia de `EventSource`:
+
+```javascript
+var sseConnection = new EventSource('sse_stream.php');
+
+sseConnection.addEventListener('open', function(e) {
+  console.log('Connected');
+});
+
+sseConnection.addEventListener('close', function(e) {
+  console.log('Disconnected');
+});
+
+sseConnection.addEventListener('error', function(e) {
+  console.log('An error ocurred', e.readyState);
+});
+
+sseConnection.addEventListener('message', function(e) {
+  console.log('Message received: ', e.data);
+});
+```
+
+Una de las ventajas que tiene esta API es que podemos *escuchar* eventos propios, los cuales deben ser generados por el servidor mismo. Por ejemplo, podríamos tener un *feed* de eventos en La Buena Espina que indique cuando una mesa ha sido reservada:
+
+```javascript
+sseConnection.addEventListener('booked_table', function(e) {
+  console.log('The table ' + e.data + ' has been booked');
+});
+```
+
+Hay que tener en cuenta que tanto para websockets como para server-sent events la información que recibimos del servidor (y que enviamos, en el primer caso) es tratada como cadena, por lo que, de ser el caso, se deben hacer las conversiones necesarias, o utilizar JSON si se trabaja con arreglos u objetos.
