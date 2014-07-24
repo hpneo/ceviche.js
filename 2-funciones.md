@@ -506,28 +506,31 @@ Un callback es una función pasada como parámetro en otra función, la cual eje
 Este extiende el *prototype* de `Array` para crear el método `each`:
 
 ```javascript
-if (!Array.prototype.each) {                    // como es un objeto nativo, se verifica que el método no exista antes de crearlo
+// como es un objeto nativo, se verifica que el método no exista antes de crearlo
+if (!Array.prototype.each) {
   Array.prototype.each = function (callback) {
-    if (callback instanceof Function) {         // luego, se verifica que el callback sea una función
+    // luego, se verifica que el callback sea una función
+    if (callback instanceof Function) {
       var i;
 
       for (i = 0; i < this.length; i++) {
-        callback.call(this[i], this[i], i);     // el callback de Array.prototype.each puede recibir 2 argumentos: elemento e índice
+        // el callback de Array.prototype.each puede recibir 2 argumentos: elemento e índice
+        callback.call(this[i], this[i], i);
       }
     }
   };
 }
 
-[0, 1, 2, 3, 4, 5].each(function(item) {
-  console.log(item.toString(2));
+[0, 1, 2, 3, 4, 5].each(function(item, index) {
+  console.log(item.toString(2), index);
 });
 
-// "0"
-// "1"
-// "10"
-// "11"
-// "100"
-// "101"
+// "0"    0
+// "1"    1
+// "10"   2
+// "11"   3
+// "100"  4
+// "101"  5
 ```
 
 ### Publish / Subscribe
