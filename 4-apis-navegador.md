@@ -229,7 +229,7 @@ Al ser un entorno controlado, *File System API* tiene ciertas restricciones:
 
 * **Cada origen tiene su sistema de archivos**: Un origen está formado por el protocolo, dominio y puerto de un documento. Similar a las APIs de Storage, cada origen tiene su propio sistema de archivos y no se pueden acceder entre sí.
 * **No se pueden crear o renombrar archivos ejecutables**: Por seguridad, no se pueden crear archivos ejecutables, ya que estos pueden ser aplicaciones maliciosas (virus, troyanos, etc).
-* **No se puede salir del *sandbox***: Igualmente, por seguridad, una aplicación no puede usar la API para acceder a archivos que estén en el sistema de archivos del sistema operativo.
+* ** No se puede salir del *sandbox* **: Igualmente, por seguridad, una aplicación no puede usar la API para acceder a archivos que estén en el sistema de archivos del sistema operativo.
 * **No se puede ejecutar desde el protocolo `file://`**: También por seguridad, si se tratar de utilizar esta API en un archivo desde `file://`, el navegador lanzará una excepción y fallará.
 
 Adicionalmente, esta API tiene soporte para trabajar de forma síncrona y asíncrona, recomendando utilizar WebWorkers para el primer caso:
