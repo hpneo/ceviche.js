@@ -18,7 +18,7 @@ Las aplicaciones web no son de ahora y no implican utilizar solo JavaScript. Exi
 
 Ahora se pueden realizar peticiones al servidor sin recargar toda la página, tener una comunicación interactiva con el servidor, realizar algunas operaciones sin necesidad de tener una conexión, leer y escribir archivos en el equipo, entre otros.
 
-Algunas de las siguientes APIs del navegador servirán para **La Buena Espina**, pero utilizarlas no implica que estemos creando una aplicación web, puesto que ese término está dirigido a la función del producto que se haga y no a las tecnologías que utilice.
+Algunas de las siguientes APIs del navegador servirán para **La Buena Espina**, pero utilizarlas no significa que estemos creando una aplicación web, ya que una aplicación web no está determinada por las tecnologías que usa.
 
 ## Web Storage
 
@@ -512,6 +512,8 @@ Los websockets permiten una comunicación bi-direccional entre el navegador y el
 
 Para poder utilizar websockets necesitamos tener un servidor de websockets, al cual se accede mediante el protocolo `ws://`, o `wss://` en caso de querer una conexión segura. Existen bibliotecas para crear servidores de websockets en [varios lenguajes](http://www.html5rocks.com/es/tutorials/websockets/basics/#toc-serversideimplementations).
 
+> A grandes rasgos, el navegador abre conexiones HTTP de petición/respuesta: iniciará enviando una petición hacia el servidor y este enviará una respuesta; y cuando la respuesta ha sido enviada por el servidor, la conexión se cierra. Pero puede existir el caso donde se necesiten enviar peticiones o recibir respuestas sucesivamente (como tener notificaciones en una aplicación web o un chat en tiempo real), y abrir y cerrar conexiones puede demorar mucho. es aquí donde aparece WS: En WS se crea una conexión y se deja abierta hasta que alguna de las dos partes cierre la conexión, no importa cuantos mensajes se manden entre sí.
+
 En el navegador solo necesitamos crear una instancia de `WebSocket`, pasándole la url del servidor de websockets:
 
 ```javascript
@@ -569,7 +571,9 @@ Con este código tenemos lo básico para poder escuchar los datos que el servido
 connection.send('Hi from La Buena Espina');
 ```
 
-Hay que tener algunas consideraciones al momento de utilizar un servidor de websockets. Por ejemplo, si se usan websockets en una web que usa HTTPS, las conexiones al servidor de websockets deben ser con WSS. A diferencia de HTTP(S), los protocolos de websockets no cambian automáticamente (un protocolo cambia automáticamente cuando tenemos una imagen cuya url es `//labuenaespina.pe/logo.png` y según la página actual puede cargar `http://labuenaespina.pe/logo.png` o `https://labuenaespina.pe/logo.png`); por lo que se debe cambiar manualmente:
+Hay que tener algunas consideraciones al momento de utilizar un servidor de websockets. Por ejemplo, si se usan websockets en una web que usa HTTPS, las conexiones al servidor de websockets deben ser con WSS.
+
+A diferencia de HTTP(S), los protocolos de websockets no cambian automáticamente (un protocolo cambia automáticamente cuando tenemos una imagen cuya url es `//labuenaespina.pe/logo.png` y según la página actual puede cargar `http://labuenaespina.pe/logo.png` o `https://labuenaespina.pe/logo.png`); por lo que se debe cambiar manualmente:
 
 ```javascript
 var websocketURL = '//html5rocks.websocket.org/echo';
