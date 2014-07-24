@@ -506,7 +506,7 @@ Dado que este evento corresponde a la pestaña (o ventana) actual, es `window` e
 
 > [Soporte para History](http://caniuse.com/#feat=history)
 
-## Websocket
+## WebSocket
 
 Los websockets permiten una comunicación bi-direccional entre el navegador y el servidor, de tal forma que este puede enviarnos datos sin necesidad de hacerle una petición (como ocurre en un modelo tradicional). Así, no solo podemos enviarle información al servidor, si no que podemos estar a la espera de *escuchar* los datos que el servidor pueda mandar por su cuenta.
 
@@ -533,6 +533,13 @@ connection.onmessage = function(e) {
   console.log('Message received: ', e.data);
 };
 ```
+
+Estas 4 funciones definen 4 *handlers* para 4 eventos diferentes:
+
+* `open`: Este evento es lanzado cuando se logra abrir una conexión con el servidor de websocket (en este caso con `ws://html5rocks.websocket.org/echo`)
+* `close`: Es lanzado cuando se cierra una conexión, ya sea del lado del navegador o del servidor.
+* `error`: Este evento es lanzado cuando existe un error en la conexión o en alguno de los lados de la comunicación.
+* `message`: Es lanzado cuando llega un mensaje desde el otro lado de la comunicación (en este caso, del servidor). El parámetro que recibe el *handler* tiene una propiedad llamada `data`, el cual contiene el mensaje que el servidor envió.
 
 `WebSocket` tiene a `EventTarget` en su **cadena de prototypes** (que es como se define la *herencia* en JavaScript), por lo que podemos usar `addEventListener` en la variable `connection`:
 
