@@ -595,7 +595,7 @@ La *Server-Sent Event API* es una alternativa para los websockets, ya que permit
 Para abrir una conexión al servidor debemos crear una instancia de `EventSource`:
 
 ```javascript
-var sseConnection = new EventSource('sse_stream.php');
+var sseConnection = new EventSource('/sse_stream');
 
 sseConnection.addEventListener('open', function(e) {
   console.log('Connected');
@@ -606,7 +606,7 @@ sseConnection.addEventListener('close', function(e) {
 });
 
 sseConnection.addEventListener('error', function(e) {
-  console.log('An error ocurred', e.readyState);
+  console.log('An error ocurred');
 });
 
 sseConnection.addEventListener('message', function(e) {
