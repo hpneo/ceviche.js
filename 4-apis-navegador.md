@@ -618,7 +618,8 @@ Una de las ventajas que tiene esta API es que podemos *escuchar* eventos propios
 
 ```javascript
 sseConnection.addEventListener('booked_table', function(e) {
-  console.log('The table ' + e.data + ' has been booked');
+  var tableId = e.data;
+  console.log('La mesa ' + tableId + ' ha sido reservada');
 });
 ```
 
