@@ -13,8 +13,8 @@ El hilo conductor de este libro es una historia que permitirá entender y aplica
 2. [Funciones](2-funciones.md)
 3. [DOM y CSSOM](3-dom-cssom.md)
 4. [APIs del navegador](4-apis-navegador.md)
-5. Pruebas en JavaScript
-6. Bibliotecas JavaScript
+5. [Pruebas](5-pruebas.md)
+6. Bibliotecas de terceros
 7. Peticiones asíncronas
 8. jQuery
 9. Mejorando el flujo de trabajo

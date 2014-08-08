@@ -5,6 +5,7 @@
 > Para lograr una buena estructura en cualquier tipo de proyecto es necesario hacer uso de algunos patrones de diseño, que son soluciones probadas a situaciones comunes en todo tipo de sitio o aplicación web. Estos patrones utilizan funciones a un nivel más avanzado de lo visto en el capítulo anterior, que es justo de lo que trata esta parte.
 
 ## Funciones
+
 Las funciones en JavaScript también son objetos, por lo que tienen propiedades y métodos. Además de ser objetos, son llamadas *ciudadanos de primera clase* (*first-class citizen*), el tipo de estructura más importante en un lenguaje, así que pueden ser pasadas como parámetros (*callbacks*), ser asignadas a una variable (constructores y funciones anónimas) o ser retornadas por otra función (*closures*).
 
 En JavaScript se pueden crear funciones de 3 formas:
