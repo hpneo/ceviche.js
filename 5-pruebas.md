@@ -14,7 +14,7 @@ var resultado = 10 + 15;
 console.assert(resultado === 25, 'La suma de 10 y 15 debe ser 25');
 ```
 
-Usamos `console.assert` para verificar una condición, que debe dar `true`, o, en caso contrario, mostrar un mensaje de error, el cual está definido como segundo parámetro. `console.assert` es un método de la consola disponible en todos los navegadores modernos (desde IE8 en adelante, Firefox, Chrome, Safari y Opera).
+Usamos `console.assert` para verificar una condición, que debe dar `true`, o, en caso contrario, mostrar un mensaje de error, el cual contiene la descripción de la validación. `console.assert` es un método de la consola disponible en todos los navegadores modernos (desde IE8 en adelante, Firefox, Chrome, Safari y Opera).
 
 Idealmente, nuestro código más importante debe tener pruebas automatizadas que validen que funcione correctamente.
 
@@ -59,7 +59,20 @@ Ahora, crearemos algunas validaciones con `console.assert`:
 
 ```javascript
 console.assert(titleBuilder.toString() === 'La Buena Espina', 'El título por defecto debe ser "La Buena Espina"');
+```
 
+De esta forma validamos que el título sea "La Buena Espina" si no hemos navegado por ninguna sección del sitio. ¿Qué pasaría si una validación falla? Tenemos un mensaje de error en la consola de la siguiente forma:
+
+```javascript
+console.assert(titleBuilder.toString() === ' - La Buena Espina - ', 'El título por defecto debe ser "La Buena Espina"');
+// Assertion failed: El título por defecto debe ser "La Buena Espina" 
+```
+
+El primer parámetro es una condición que debe evaluarse como verdadero, mientras que el segundo parámetro es la descripción de la validación.
+
+Podemos seguir haciendo más validaciones, de la siguiente forma:
+
+```javascript
 titleBuilder.addPart('Carta');
 titleBuilder.addPart('Pescados');
 titleBuilder.addPart('Ceviches');
@@ -72,7 +85,7 @@ titleBuilder.addPart('Locales');
 console.assert(titleBuilder.toString() === 'La Buena Espina — Locales', 'El título ahora debe ser "La Buena Espina — Locales"');
 ```
 
-Si las validaciones con `console.assert` pasan correctamente (el primer parámetro debe evaluarse como verdadero), la descripción de la validación (el segundo parámetro de cada `assert`) no se mostrará.
+Si las validaciones con `console.assert` pasan correctamente, la descripción de la validación no se mostrará. Este comportamiento puede no ser tan útil: __¿Cómo sabemos cuántas validaciones han pasado correctamente, y cuántas no?__ Además, __¿de qué nos sirve tener los mensajes de error en la consola?__. Es aquí donde entran en escena diversos frameworks para pruebas, una de las cuales es QUnit.
 
 ### QUnit
 
