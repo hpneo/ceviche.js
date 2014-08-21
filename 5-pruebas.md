@@ -133,4 +133,6 @@ En este caso `assert.ok` toma los mismos valores que `console.assert` (una condi
 
 QUnit nos permite realizar pruebas unitarias utilizando un lenguaje un tanto *técnico*, lo que nos permite crear pruebas para un módulo, una función constructora o algún caso similar. Pero, ¿cómo podríamos crear pruebas que sean más legibles? Es aquí donde entra el concepto de Behavior-Driven Development, o BDD.
 
-Behavior-Driven Development es un modo de realizar pruebas donde estas están enfocadas en función al *comportamiento* de lo que se va a probar (por ejemplo, un módulo o una función), y no a, simplemente, listar una serie de características (que debería tener dicho módulo, por poner un ejemplo).
+Behavior-Driven Development es un modo de realizar pruebas donde estas se enfocan en función al *comportamiento* de lo que se va a probar (por ejemplo, qué debería hacer un módulo o una función), y no a, verificar que el código probado devuelva un valor en específico.
+
+[Jasmine](http://jasmine.github.io/2.0/introduction.html) es una biblioteca que permite realizar pruebas unitarias utilizando BDD, lo que nos da la opción de crear pruebas más interesantes que solo hacer *El título por defecto debe ser "La Buena Espina"*. Así mismo, nos da métodos para realizar validaciones en un lenguaje más natural y no tan técnico, como verificar si un número es mayor o menor que otro, si una cadena contiene una parte de otra cadena, si algún valor puede ser considerado como `true` o `false` (denominados *truthy* o *falsy*, respectivamente), entre otros.
