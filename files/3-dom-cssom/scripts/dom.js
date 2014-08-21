@@ -196,22 +196,15 @@ Dom.prototype.delegate = function(eventName, selector, callback) {
 };
 
 Dom.prototype.style = function() {
-  var i = 0,
-      element;
+  var i = 0;
 
-  if (this.styles === undefined) {
-    this.styles = {};
-  }
+  var styles = [];
 
   for (i; i < this.elements.length; i++) {
-    element = this.elements[i];
-
-    if (this.styles[element] === undefined) {
-      this.styles[element] = window.getComputedStyle(element);
-    }
+    styles.push(window.getComputedStyle(this.elements[i]));
   }
 
-  return this.styles;
+  return styles;
 };
 
 Dom.prototype.addClass = function(className) {

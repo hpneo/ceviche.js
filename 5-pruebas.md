@@ -128,3 +128,9 @@ QUnit.test('módulo titleBuilder', function(assert) {
 ```
 
 En este caso `assert.ok` toma los mismos valores que `console.assert` (una condición que debe evaluarse como verdadera y la descripción de la validación). Las 3 validaciones o *asserts* son agrupadas en una *prueba* o *test*, definida por el método `QUnit.test`.
+
+### Jasmine
+
+QUnit nos permite realizar pruebas unitarias utilizando un lenguaje un tanto *técnico*, lo que nos permite crear pruebas para un módulo, una función constructora o algún caso similar. Pero, ¿cómo podríamos crear pruebas que sean más legibles? Es aquí donde entra el concepto de Behavior-Driven Development, o BDD.
+
+Behavior-Driven Development es un modo de realizar pruebas donde estas están enfocadas en función al *comportamiento* de lo que se va a probar (por ejemplo, un módulo o una función), y no a, simplemente, listar una serie de características (que debería tener dicho módulo, por poner un ejemplo).

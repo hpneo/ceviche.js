@@ -798,30 +798,19 @@ Dom.prototype.style = function() {
 };
 ```
 
-Sin embargo, `window.getComputedStyle` es un método pesado que impacta en el rendimiento de la aplicación. Para evitar esto guardaremos el resultado en una propiedad llamada `styles`:
+Sin embargo, `window.getComputedStyle` es un método pesado que impacta en el rendimiento de la aplicación, por lo que hay que tener cuidado en qué momentos se va a utilizar. Además, `window.getComputedStyle` devuelve una lista *viva*, así que cada vez que cambiemos algún estilo dentro de un elemento, se verá reflejado en cualquier variable o propiedad que guarde un valor previo de `window.getComputedStyle`:
 
 ```javascript
-Dom.prototype.style = function() {
-  var i = 0,
-      element;
+var bodyStyle = window.getComputedStyle(document.body);
 
-  if (this.styles === undefined) {
-    this.styles = {};
-  }
+bodyStyle.backgroundColor;
+// "rgb(255, 255, 255)"
 
-  for (i; i < this.elements.length; i++) {
-    element = this.elements[i];
+document.body.style.background = 'rgba(10, 10, 10, 0.2)';
 
-    if (this.styles[element] === undefined) {
-      this.styles[element] = window.getComputedStyle(element);
-    }
-  }
-
-  return this.styles;
-};
+bodyStyle.backgroundColor;
+// "rgba(10, 10, 10, 0.2)"
 ```
-
-Dentro del DOM, cada nodo es un objeto único, por lo que podemos utilizarlos como nombres dentro del objeto plano `this.styles`. Así mismo, `window.getComputedStyle` devuelve una lista *viva*, así que cada vez que cambiemos algún estilo dentro de un elemento, este cambio se reflejará en su respectivo valor dentro de `this.styles`.
 
 ### *Media queries*
 
