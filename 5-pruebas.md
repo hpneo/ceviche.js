@@ -136,3 +136,48 @@ QUnit nos permite realizar pruebas unitarias utilizando un lenguaje un tanto *t�
 Behavior-Driven Development es un modo de realizar pruebas donde estas se enfocan en función al *comportamiento* de lo que se va a probar (por ejemplo, qué debería hacer un módulo o una función), y no a, verificar que el código probado devuelva un valor en específico.
 
 [Jasmine](http://jasmine.github.io/2.0/introduction.html) es una biblioteca que permite realizar pruebas unitarias utilizando BDD, lo que nos da la opción de crear pruebas más interesantes que solo hacer *El título por defecto debe ser "La Buena Espina"*. Así mismo, nos da métodos para realizar validaciones en un lenguaje más natural y no tan técnico, como verificar si un número es mayor o menor que otro, si una cadena contiene una parte de otra cadena, si algún valor puede ser considerado como `true` o `false` (denominados *truthy* o *falsy*, respectivamente), entre otros.
+
+---
+#### Valores *truthy* y *falsy*
+
+Cuando comparamos un valor dentro de una condicional pueden pasar dos cosas: O el valor que se compara es un booleano (es `true` o `false`), o no lo es. Si es booleano, la condicional se ejecuta directamente:
+
+```javascript
+if (10 + 15 === 25) {
+  console.log('10 + 15 es igual a 25');
+}
+
+// 10 + 15 es igual a 25
+```
+
+Pero si el valor que se compara no es un booleano, ocurre un *type coercion*, o conversión implícita. JavaScript es un lenguaje con tipado dinámico, lo que significa que una variable, o propiedad, pueden tener cualquier tipo de valor, sin necesidad de hacer una conversión explícita, o *casting*. Esto puede ocurrir en dos casos:
+
+A. Al usar `==`, o `!=`:
+
+```javascript
+if (10 + 15 == '25') {
+  console.log('10 + 15 es igual a 25, aunque sea una cadena');
+}
+
+// 10 + 15 es igual a 25, aunque sea una cadena
+```
+
+En este caso, `==` (y `!=`) compara valores y no tipos de datos (es decir: `10 + 15` es igual a 25`, y `'25'` tiene el mismo valor que `25`).
+
+B. O al pasar un valor a una condicional:
+
+```javascript
+if (10) {
+  console.log('10 es convertido implícitamente a true');
+}
+
+// 10 es convertido implícitamente a true
+```
+
+En JavaScript, un número diferente a `0` es *igual* a `true`, mientras que `0` es igual a `false`. De igual forma, una cadena vacía es *igual* a `false`, mientras que, si tuviera algún caracter (incluyendo espacios), sería *igual* a `true`.
+
+Cada vez que nos referimos a que un valor es *igual* a `true` (así, en cursiva), decimos que ese valor es *truthy*. Por otro lado, si decimos que un valor es *igual* a `false` (de nuevo, en cursiva), decimos que ese valor es *falsy*.
+
+Algunos ejemplos más sobre *type coercion* se pueden encontrar [en este link](http://dorey.github.io/JavaScript-Equality-Table/).
+
+---
