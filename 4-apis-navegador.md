@@ -594,7 +594,7 @@ Opcionalmente, en el servidor se puede restringir si se aceptan o no conexiones 
 
 ## Server-Sent Event
 
-La *Server-Sent Event API* es una alternativa para los websockets, ya que permite que el navegador esté *escuchando* los datos que un servidor pueda mandar; en este caso, la API utiliza el protocolo HTTP(S), en comparación al protocolo WS que es utilizado por los websockets. Sin embargo, solo se pueden *escuchar* datos, mas no enviar datos al servidor, por lo que puede ser utilizado en casos donde no es necesario o se quiere evitar que el navegador envíe datos al servidor.
+La *Server-Sent Event API* es una alternativa para los websockets, ya que permite que el navegador esté *escuchando* los datos que un servidor pueda mandar. En este caso, la API utiliza el protocolo HTTP(S), en comparación al protocolo WS que es utilizado por los websockets. Sin embargo, solo se pueden *escuchar* datos, mas no enviar datos al servidor, por lo que puede ser utilizado en casos donde no es necesario o se quiere evitar que el navegador envíe datos al servidor.
 
 Para abrir una conexión al servidor debemos crear una instancia de `EventSource`:
 

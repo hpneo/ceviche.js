@@ -135,10 +135,11 @@ QUnit nos permite realizar pruebas unitarias utilizando un lenguaje un tanto *t�
 
 Behavior-Driven Development es un modo de realizar pruebas donde estas se enfocan en función al *comportamiento* de lo que se va a probar (por ejemplo, qué debería hacer un módulo o una función), y no a, verificar que el código probado devuelva un valor en específico.
 
-[Jasmine](http://jasmine.github.io/2.0/introduction.html) es una biblioteca que permite realizar pruebas unitarias utilizando BDD, lo que nos da la opción de crear pruebas más interesantes que solo hacer *El título por defecto debe ser "La Buena Espina"*. Así mismo, nos da métodos para realizar validaciones en un lenguaje más natural y no tan técnico, como verificar si un número es mayor o menor que otro, si una cadena contiene una parte de otra cadena, si algún valor puede ser considerado como `true` o `false` (denominados *truthy* o *falsy*, respectivamente), entre otros.
+[Jasmine](http://jasmine.github.io/2.0/introduction.html) es una biblioteca que permite realizar pruebas unitarias utilizando BDD, lo que nos da la opción de crear pruebas más interesantes que solo hacer *El título por defecto debe ser "La Buena Espina"*. Así mismo, nos da métodos para realizar validaciones en un lenguaje más natural y no tan técnico, como verificar si un número es mayor o menor que otro, si una cadena es parte de otra cadena, si algún valor puede ser **considerado** como `true` o `false` (denominados *truthy* o *falsy*, respectivamente), entre otros.
 
 ---
-#### Valores *truthy* y *falsy*
+
+#### *Type coercion* y valores *truthy* y *falsy*
 
 Cuando comparamos un valor dentro de una condicional pueden pasar dos cosas: O el valor que se compara es un booleano (es `true` o `false`), o no lo es. Si es booleano, la condicional se ejecuta directamente:
 
@@ -181,3 +182,41 @@ Cada vez que nos referimos a que un valor es *igual* a `true` (así, en cursiva)
 Algunos ejemplos más sobre *type coercion* se pueden encontrar [en este link](http://dorey.github.io/JavaScript-Equality-Table/).
 
 ---
+
+Para poder usar Jasmine debemos descargarlo desde la [cuenta del proyecto en GitHub](https://github.com/pivotal/jasmine/releases). En este caso, trabajaremos con la versión 2.0.2. El zip descargado contiene una estructura de archivos y carpetas que utiliza Jasmine:
+
+* Carpeta `lib`: Aquí se encuentran todos los archivos que componen Jasmine, incluyendo hojas de estilo y la biblioteca en sí.
+* Carpeta `spec`: En esta carpeta deben estar todas las pruebas que haremos a nuestro código.
+* Archivo `SpecRunner.html`: Este archivo servirá de reporte para las pruebas que haremos. Similar a la página que armamos para QUnit.
+* Carpeta `src`: Aquí debería ir el código que queremos probar.
+
+Por defecto, Jasmine viene con código de ejemplo dentro de `spec` y `src`, indicando el orden en el que debe ir nuestro código en `SpecRunner.html`:
+
+```html
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Jasmine Spec Runner v2.0.2</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-2.0.2/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="lib/jasmine-2.0.2/jasmine.css">
+
+  <script type="text/javascript" src="lib/jasmine-2.0.2/jasmine.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.2/jasmine-html.js"></script>
+  <script type="text/javascript" src="lib/jasmine-2.0.2/boot.js"></script>
+
+  <!-- include source files here... -->
+  <script type="text/javascript" src="src/Player.js"></script>
+  <script type="text/javascript" src="src/Song.js"></script>
+
+  <!-- include spec files here... -->
+  <script type="text/javascript" src="spec/SpecHelper.js"></script>
+  <script type="text/javascript" src="spec/PlayerSpec.js"></script>
+
+</head>
+
+<body>
+</body>
+</html>
+```
