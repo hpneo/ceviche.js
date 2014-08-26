@@ -257,7 +257,7 @@ describe("Player", function() {
 });
 ```
 
-En Jasmine, cada método `describe` crea una suite de pruebas, y cada método `it` permite definir una prueba (aquí son llamados *specs*). Según la imagen de arriba, el código anterior se debería leer así:
+En Jasmine, cada método `describe` crea una suite de pruebas (una suite de pruebas es un conjunto de pruebas), y cada método `it` permite definir una prueba (aquí son llamados *specs*). Según la imagen de arriba, el código anterior se debería leer así:
 
 ```
 Player should be able to play a Song
