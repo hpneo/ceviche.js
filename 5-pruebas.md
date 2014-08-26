@@ -108,6 +108,8 @@ Para poder utilizar QUnit debemos descargar dos archivos desde su web (o utiliza
 </html>
 ```
 
+#### Pruebas con QUnit
+
 Con este código tenemos la base necesaria para poder realizar pruebas unitarias con QUnit. Lo siguiente será pasar las validaciones que hicimos con `console.assert` a una prueba unitaria con QUnit:
 
 ```javascript
@@ -192,7 +194,7 @@ Para poder usar Jasmine debemos descargarlo desde la [cuenta del proyecto en Git
 * Archivo `SpecRunner.html`: Este archivo servirá de reporte para las pruebas que haremos. Similar a la página que armamos para QUnit.
 * Carpeta `src`: Aquí debería ir el código que queremos probar.
 
-Por defecto, Jasmine viene con código de ejemplo dentro de las carpetas `spec` y `src`, e indicando el orden en el que debe ir nuestro código en `SpecRunner.html`:
+Por defecto, Jasmine viene con código de ejemplo dentro de las carpetas `spec` y `src`, e indicando el orden en el que debe ir nuestro código en `SpecRunner.html` (en este caso, usando el ejemplo que el mismo Jasmine nos da):
 
 ```html
 <!DOCTYPE HTML>
@@ -232,3 +234,74 @@ El *Spec Runner* de Jasmine carga los siguientes archivos:
 Luego de esto, se debe cargar el código que deseamos probar (los que se encuentran en la carpeta `src`), y luego las pruebas en sí (carpeta `spec`). Al final debe quedar así:
 
 ![Jasmine Spec Runner 2.0.2](/images/5-pruebas/jasmine_spec_runner.png "Jasmine Spec Runner 2.0.2")
+
+#### Pruebas con Jasmine
+
+Jasmine tiene una forma de organizar las pruebas, según el enfoque de BDD. De acuerdo a Jasmine, el código debe ser legible como si fuera un texto *en inglés*. Según la imagen anterior, se debería leer así:
+
+```
+Player should be able to play a Song
+
+Player, when song has been paused, should indicate that the song is currently paused
+Player, when song has been paused, should be possible to resume
+
+Player tells the current song if the user has made it a favorite
+
+Player#resume should throw an exception if song is already playing
+```
+
+Entonces, nuestras pruebas deben ser escritas de manera similar:
+
+```javascript
+describe('Módulo titleBuilder', function() {
+  beforeEach(function() {
+    titleBuilder.reset();
+  });
+
+  it('debe devolver "La Buena Espina", por defecto', function() {
+    expect(titleBuilder.toString()).toEqual('La Buena Espina');
+  });
+
+  describe('Al agregar más de una sección', function() {
+    it('debe devolver "La Buena Espina › Carta › Pescados › Ceviches"', function() {
+      titleBuilder.addPart('Carta');
+      titleBuilder.addPart('Pescados');
+      titleBuilder.addPart('Ceviches');
+      
+      expect(titleBuilder.toString()).toEqual('La Buena Espina › Carta › Pescados › Ceviches');
+    });
+  });
+
+  describe('Al agregar una sola sección', function() {
+    it('debe devolver "La Buena Espina — Locales"', function() {
+      titleBuilder.addPart('Locales');
+
+      expect(titleBuilder.toString()).toEqual('La Buena Espina — Locales');
+    });
+  });
+});
+```
+
+El resultado sería el siguiente:
+
+![Jasmine Spec Runner 2.0.2](/images/5-pruebas/jasmine_spec_runner_title_builder.png "Jasmine Spec Runner 2.0.2")
+
+En Jasmine, cada método `describe` crea una suite de pruebas, y cada método `it` permite definir una prueba (aquí son llamados *specs*). Cada prueba puede tener una o más validaciones o *asserts*, que, en este caso, son definidas con el método `expect`.
+
+El método `expect` permite utilizar lo que en Jasmine se llaman *matchers*. Estos *matchers* permiten validar a un nivel más complejo que simplemente comparar dos valores con `===` o `!==`. Los *matchers* que vienen por defecto son:
+
+* `toBe`: Igual a utilizar `===`.
+* `toEqual`: Similar a `toBe` pero permite comparar objetos literales.
+* `toMatch`: Compara cadenas con expresiones regulares o con otras cadenas.
+* `toBeDefined`: Valida si una propiedad está definida (que no sea `undefined`)
+* `toBeUndefined`: Lo opuesto a `toBeDefined`
+* `toBeNull`: Valida si una variable o propiedad tiene valor `null`.
+* `toBeTruthy`: Permite saber si un valor es *truthy*.
+* `toBeFalsy`: Permite saber si un valor es *falsy*.
+* `toContain`: Valida si un elemento está dentro de un array.
+* `toBeLessThan`: Valida si un número es menor a otro.
+* `toBeGreaterThan`: Valida si un número es mayor a otro.
+* `toBeCloseTo`: Valida si un número decimal es cercano a un número entero.
+* `toThrow`: Valida si una función lanzará una excepción al ser ejecutada.
+
+Así mismo, el valor devuelto por `expect` tiene una propiedad llamada `not`, el cual permite invertir el valor de cada matcher (recordemos que, a fin de cuentas, una validación debe devolver `true` o `false`).
