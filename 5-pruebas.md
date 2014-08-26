@@ -127,7 +127,9 @@ QUnit.test('módulo titleBuilder', function(assert) {
 });
 ```
 
-En este caso `assert.ok` toma los mismos valores que `console.assert` (una condición que debe evaluarse como verdadera y la descripción de la validación). Las 3 validaciones o *asserts* son agrupadas en una *prueba* o *test*, definida por el método `QUnit.test`.
+En este caso `assert.ok` toma los mismos valores que `console.assert` (una condición que debe evaluarse como verdadera y la descripción de la validación). Las 3 validaciones o *asserts* son agrupadas en una *prueba* o *test*, definida por el método `QUnit.test`. Al final debe quedar así:
+
+![QUnit](/images/5-pruebas/qunit.png "QUnit")
 
 ### Jasmine
 
