@@ -4,7 +4,7 @@
 
 ## Pruebas automatizadas
 
-Cada vez que copiamos un código y refrescamos el navegador para saber si funciona o no, estamos probando. Es un proceso rápido, pero en ocasiones puede ser tedioso y aburrido, así que lo ideal sería dejar que la computadora prueba por nosotros. Es aquí donde aparecen las pruebas automatizadas.
+Cada vez que copiamos un código y refrescamos el navegador para saber si funciona o no, estamos probando. Es un proceso rápido, pero en ocasiones puede ser tedioso y aburrido, así que lo ideal sería dejar que la computadora pruebe por nosotros. Es aquí donde aparecen las pruebas automatizadas.
 
 En términos simples, una prueba automatizada verifica el correcto funcionamiento de un código mediante valores `true` o `false`. Por ejemplo, si deseamos probar una suma, podemos hacer lo siguiente:
 
