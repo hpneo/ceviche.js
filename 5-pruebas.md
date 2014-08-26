@@ -16,14 +16,14 @@ console.assert(resultado === 25, 'La suma de 10 y 15 debe ser 25');
 
 Usamos `console.assert` para verificar una condición, que debe dar `true`, o, en caso contrario, mostrar un mensaje de error, el cual contiene la descripción de la validación. `console.assert` es un método de la consola disponible en todos los navegadores modernos (desde IE8 en adelante, Firefox, Chrome, Safari y Opera).
 
-Idealmente, nuestro código más importante debe tener pruebas automatizadas que validen que funcione correctamente.
+Idealmente, nuestro código más importante debe tener pruebas automatizadas que validen su correcto funcionamiento.
 
 ## Pruebas unitarias
 
 Existen diferentes tipos de pruebas, de acuerdo a la forma cómo se desea probar el código:
 
 * Pruebas unitarias: Buscan validar una parte del código a la vez, sin importar para qué se utilice dicho código.
-* Pruebas funcionales: Buscan validar toda una acción que un usuario normalmente haría en el sitio o la aplicación web en la que se trabaja.
+* Pruebas funcionales: Buscan validar toda acción que un usuario normalmente haría en el sitio o la aplicación web en la que se trabaja.
 
 Las pruebas unitarias son *fáciles* de hacer, si se identifican correctamente las partes de la aplicación que deben probarse. En el [capítulo 2](2-funciones.md) creamos un módulo llamado `titleBuilder`, que permite crear un título para la web de La Buena Espina según la sección que estemos visitando:
 
@@ -190,7 +190,7 @@ Para poder usar Jasmine debemos descargarlo desde la [cuenta del proyecto en Git
 * Archivo `SpecRunner.html`: Este archivo servirá de reporte para las pruebas que haremos. Similar a la página que armamos para QUnit.
 * Carpeta `src`: Aquí debería ir el código que queremos probar.
 
-Por defecto, Jasmine viene con código de ejemplo dentro de `spec` y `src`, indicando el orden en el que debe ir nuestro código en `SpecRunner.html`:
+Por defecto, Jasmine viene con código de ejemplo dentro de las carpetas `spec` y `src`, e indicando el orden en el que debe ir nuestro código en `SpecRunner.html`:
 
 ```html
 <!DOCTYPE HTML>
@@ -220,3 +220,13 @@ Por defecto, Jasmine viene con código de ejemplo dentro de `spec` y `src`, indi
 </body>
 </html>
 ```
+
+El *Spec Runner* de Jasmine carga los siguientes archivos:
+
+* `jasmine.js`: La biblioteca que contiene el código de Jasmine
+* `jasmine-html.js`: Contiene el código necesario para mostrar los resultados en forma de HTML, dentro del *Spec Runner*.
+* `boot.js`: Este archivo se encargar de cargar todo el entorno de pruebas de Jasmine y activar el reporte en HTML (`jasmine-html.js`)
+
+Luego de esto, se debe cargar el código que deseamos probar (los que se encuentran en la carpeta `src`), y luego las pruebas en sí (carpeta `spec`). Al final debe quedar así:
+
+![Jasmine Spec Runner 2.0.2](/images/5-pruebas/jasmine_spec_runner.png "Jasmine Spec Runner 2.0.2")
