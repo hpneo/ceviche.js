@@ -1,4 +1,4 @@
-# Peticiones asíncronas
+# Capítulo 6: Peticiones asíncronas
 
 > Junto al DOM, las peticiones asíncronas son las características más utilizadas en un sitio o aplicación web, y permiten disminuir la carga que contiene una llamada al servidor, dando la impresión de tener un sitio mucho más rápido.
 
@@ -101,4 +101,4 @@ xhr.addEventListener('readystatechange', function() {
 });
 ```
 
-En este caso, verificamos que el `readyState` sea 4, dado que la petición solo tendrá una respuesta cuando este sea `4`.
+En este caso, verificamos que el `readyState` sea 4, dado que la petición solo tendrá una respuesta cuando tenga dicho estado.
