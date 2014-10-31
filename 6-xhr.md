@@ -91,7 +91,7 @@ La propiedad `readyState` indica el estado de la petición y tiene los siguiente
 * `3`: El navegador está esperando por la respuesta a la petición.
 * `4`: La petición obtiene información de respuesta.
 
-Ahora ya sabemos los estados por los que pasa una petición, pero aún no sabemos cuál es la respuesta. Esto se obtiene con la propiedad `responseText`.
+Ahora ya sabemos los estados por los que pasa una petición, pero aún no sabemos cuál es la respuesta. Para obtenerla utilizamos la propiedad `responseText`.
 
 ```javascript
 xhr.addEventListener('readystatechange', function() {
@@ -102,3 +102,31 @@ xhr.addEventListener('readystatechange', function() {
 ```
 
 En este caso, verificamos que el `readyState` sea 4, dado que la petición solo tendrá una respuesta cuando tenga dicho estado.
+
+### Peticiones POST
+
+Las peticiones asíncronas son, generalmente, peticiones GET, por lo que si se envían valores en la petición, estos estarán expuestos fácilmente en la URL de la misma petición, creando un potencial problema de seguridad. Así mismo, las URLs tienen un límite de caracteres, por lo que no se podrá enviar toda la información que uno desee. Estos dos puntos son cruciales al momento de realizar peticiones, asíncronas o no. Es aquí donde aparecen las peticiones POST: peticiones que pueden enviar gran cantidad de información, la cual no es accesible de forma fácil.
+
+En el caso de `XMLHttpRequest`, crear una petición POST es sencillo y consta de dos pasos: indicar el tipo de petición y agregar los valores que se deseen ingresar.
+
+Para indicar el tipo de petición simplemente cambiamos el primer parámetro del método `open()`:
+
+```javascript
+xhr.open('POST', url, true);
+```
+
+Cabe notar que la url debe aceptar peticiones POST, lo cual es definido en el servidor.
+
+Para agregar los valores que se desean enviar se utiliza una instancia de `FormData`, donde se agregan los valores utilizando el método `append()`:
+
+```javascript
+var data = new FormData();
+
+data.append('nombre', 'valor');
+```
+
+Luego, el nuevo objeto `FormData` debe ser pasado como parámetro en el método `send()` de la instancia de `XMLHttpRequest`:
+
+```javascript
+xhr.send(data);
+```
