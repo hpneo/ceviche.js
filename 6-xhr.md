@@ -131,7 +131,7 @@ Luego, el nuevo objeto `FormData` debe ser pasado como parámetro en el método 
 xhr.send(data);
 ```
 
-Así, el código final quedaría de esta forma;
+Así, el código final quedaría de esta forma:
 
 ```javascript
 var xhr = new XMLHttpRequest();
@@ -157,8 +157,19 @@ data.append('nombre', 'valor');
 xhr.send(data);
 ```
 
-Y su resultado sería:
+Y su resultado de la petición sería:
 
 ```javascript
 // {"nombre":"valor"}
+```
+
+### JSON
+
+En los ejemplos donde se utiliza `coffeemaker.herokuapp.com` vemos que las respuestas vienen en forma de texto, pero con un formato que nos recuerda a objetos u arreglos en JavaScript. Este formato se llama JSON (JavaScript Object Notation), y permite enviar y recibir información de una manera simple y liviana.
+
+Para poder leer este formato utilizamos el método `JSON.parse`, el cual es nativo en todos los navegadores, y en Internet Explorer 9 y superiores:
+
+```javascript
+JSON.parse('{"nombre":"valor"}');
+// Object {nombre: "valor"}
 ```
