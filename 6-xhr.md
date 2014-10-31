@@ -107,7 +107,7 @@ En este caso, verificamos que el `readyState` sea 4, dado que la petición solo 
 
 Las peticiones asíncronas son, generalmente, peticiones GET, por lo que si se envían valores en la petición, estos estarán expuestos fácilmente en la URL de la misma petición, creando un potencial problema de seguridad. Así mismo, las URLs tienen un límite de caracteres, por lo que no se podrá enviar toda la información que uno desee. Estos dos puntos son cruciales al momento de realizar peticiones, asíncronas o no. Es aquí donde aparecen las peticiones POST: peticiones que pueden enviar gran cantidad de información, la cual no es accesible de forma fácil.
 
-En el caso de `XMLHttpRequest`, crear una petición POST es sencillo y consta de dos pasos: indicar el tipo de petición y agregar los valores que se deseen ingresar.
+En el caso de `XMLHttpRequest`, crear una petición POST es sencillo y agrega dos pasos a lo descrito anteriormente: indicar el tipo de petición y agregar los valores que se deseen ingresar.
 
 Para indicar el tipo de petición simplemente cambiamos el primer parámetro del método `open()`:
 
@@ -129,4 +129,36 @@ Luego, el nuevo objeto `FormData` debe ser pasado como parámetro en el método 
 
 ```javascript
 xhr.send(data);
+```
+
+Así, el código final quedaría de esta forma;
+
+```javascript
+var xhr = new XMLHttpRequest();
+
+var url = 'http://coffeemaker.herokuapp.com/form';
+
+xhr.open('POST', url, true);
+
+xhr.addEventListener('error', function(e) {
+  console.log('Un error ocurrió', e);
+});
+
+xhr.addEventListener('readystatechange', function() {
+  if (xhr.readyState === 4) {
+    console.log(xhr.responseText);
+  }
+});
+
+var data = new FormData();
+
+data.append('nombre', 'valor');
+
+xhr.send(data);
+```
+
+Y su resultado sería:
+
+```javascript
+// {"nombre":"valor"}
 ```
