@@ -111,31 +111,27 @@ Luego de haber creado un elemento, debemos agregarlo a un elemento padre:
 
 ```javascript
 Dom.prototype.append = function(newChildElement) {
-  var i = 0;
-
-  for (i; i < this.elements.length; i++) {
-    this.elements[i].appendChild(newChildElement);
-  }
+  this.elements[0].appendChild(newChildElement);
 
   return this;
 };
 ```
 
+En `append` no iteramos por todos los elementos de la instancia, dado que un nodo (`newChildElement`) solo puede ser agregado a un elemento, y tener un solo nodo padre.
+
 En el caso anterior, `newChildElement` debería ser un elemento; pero también debería poder aceptar un objeto similar al pasado en `Dom.createElement`:
 
 ```javascript
 Dom.prototype.append = function(newChildElement) {
-  var i = 0;
-
   if (!(newChildElement instanceof Element)) {
     if (newChildElement.hasOwnProperty('tag')) {
       newChildElement = Dom.createElement(newChildElement);
     }
   }
 
-  for (i; i < this.elements.length; i++) {
-    this.elements[i].appendChild(newChildElement);
-  }
+  this.elements[0].appendChild(newChildElement);
+
+  return this;
 };
 ```
 
@@ -143,6 +139,7 @@ De esta forma, verificamos si el parámetro pasado a `Dom.prototype.append` es u
 
 ```javascript
 var nav = new Dom('header nav');
+
 nav.append({
   tag: 'a',
   content: 'Reservaciones',

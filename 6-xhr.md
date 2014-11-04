@@ -163,7 +163,11 @@ Y su resultado de la petición sería:
 // {"nombre":"valor"}
 ```
 
-### JSON
+Una de las características de `FormData` es que no solo permite adjuntar texto, si no también archivos. Esto se logra agregando instancias de `File` con el método `append`. Recordemos que cada campo de formulario de tipo archivo (`<input type="file">`) tiene una propiedad llamada `files`, el cual contiene una lista de instancias `File`.
+
+La ventaja de `FormData` es que, al crear una instancia, podemos pasarle como parámetro un elemento formulario (`<form>`), por lo que automáticamente toma todos los campos del formulario, siempre y cuando tengan un nombre (atributo `name`), incluyendo los campos de tipo archivo.
+
+## JSON
 
 En los ejemplos donde se utiliza `coffeemaker.herokuapp.com` vemos que las respuestas vienen en forma de texto, pero con un formato que nos recuerda a objetos u arreglos en JavaScript. Este formato se llama JSON (JavaScript Object Notation), y permite enviar y recibir información de una manera simple y liviana.
 
@@ -173,3 +177,26 @@ Para poder leer este formato utilizamos el método `JSON.parse`, el cual es nati
 JSON.parse('{"nombre":"valor"}');
 // Object {nombre: "valor"}
 ```
+
+En el caso opuesto, si deseamos convertir un objeto a una cadena en formato JSON (por ejemplo, si deseamos guardarlo en `localStorage`), utilizamos el método `JSON.stringify`, el cual convertirá un objeto a su contraparte en JSON.
+
+```javascript
+JSON.stringify({nombre: 'valor'});
+// "{"nombre":"valor"}"
+```
+
+Este método podría no funcionar en casos donde un objeto o un arreglo contiene una referencia a sí mismo:
+
+```javascript
+var a = [];
+
+a.push(a);
+
+JSON.stringify(a);
+// Uncaught TypeError: Converting circular structure to JSON
+
+JSON.stringify(window);
+// Uncaught TypeError: Converting circular structure to JSON
+```
+
+En el caso de `window`, este tiene propiedades como `top`, `parent` o `self` que son referencias a sí mismos.

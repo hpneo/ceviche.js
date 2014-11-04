@@ -168,9 +168,9 @@ Para que el navegador sepa dónde encontrar este archivo, debe ser incluido como
 
 ## File
 
-Con esta API podemos leer archivos que cargamos desde el navegador, mediante la etiqueta `<input type="file" />`, así como al realizar operaciones *drag and drop* de manera nativa. De esta forma, podemos previsualizar imágenes antes de subirlas a un servidor o realizar operaciones con los archivos aunque la aplicación esté *offline*.
+Con esta API podemos leer archivos que cargamos desde el navegador, mediante la etiqueta `<input type="file">`, así como al realizar operaciones *drag and drop* de manera nativa. De esta forma, podemos previsualizar imágenes antes de subirlas a un servidor o realizar operaciones con los archivos aunque la aplicación esté *offline*.
 
-Cuando trabajamos con elementos `<input>` podemos acceder a los archivos que han sido elegidos mediante la propiedad `files`, la cual es una lista instancia de `FileList`. Cada elemento de esta lista es un objeto instancia de `File` y tiene algunas propiedades:
+Cuando trabajamos con elementos `<input type="file">` podemos acceder a los archivos que han sido elegidos mediante la propiedad `files`, la cual es una lista instancia de `FileList`. Cada elemento de esta lista es un objeto instancia de `File` y tiene algunas propiedades:
 
 | Propiedad | Descripción |
 |-----------|-------------|
@@ -182,7 +182,7 @@ Cuando trabajamos con elementos `<input>` podemos acceder a los archivos que han
 Sabiendo las propiedades que tienen estos objetos de *File API*, podemos crear un demo simple, empezando con el código HTML básico:
 
 ```html
-<input type="file" name="files" id="files" multiple />
+<input type="file" name="files" id="files" multiple>
 
 <h4>Imágenes elegidas:</h4>
 <div id="preview"></div>
