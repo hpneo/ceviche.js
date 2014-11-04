@@ -196,7 +196,7 @@ JSON.stringify({nombre: 'valor'});
 // "{"nombre":"valor"}"
 ```
 
-Este método podría no funcionar en casos donde un objeto o un arreglo contiene una referencia a sí mismo:
+Este método no funciona en casos donde un objeto o un arreglo contiene una referencia a sí mismo:
 
 ```javascript
 var a = [];
@@ -210,4 +210,4 @@ JSON.stringify(window);
 // Uncaught TypeError: Converting circular structure to JSON
 ```
 
-En el caso de `window`, este tiene propiedades como `top`, `parent` o `self` que son referencias a sí mismos.
+En el caso de `window`, este tiene propiedades como `top`, `parent` o `self` que son referencias a sí mismos. `JSON.stringify` recorre todo el arreglo u objeto que se desea convertir a formato JSON y, de encontrar una referencia al mismo objeto, falla al tratar de convertir una estructura que se referencia a sí misma en algún punto.
