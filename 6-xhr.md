@@ -157,7 +157,7 @@ data.append('nombre', 'valor');
 xhr.send(data);
 ```
 
-Y su resultado de la petición sería:
+Y el resultado de la petición sería:
 
 ```javascript
 // {"nombre":"valor"}
