@@ -163,6 +163,8 @@ Y el resultado de la petición sería:
 // {"nombre":"valor"}
 ```
 
+---
+
 Una de las características de `FormData` es que no solo permite adjuntar texto, si no también archivos. Esto se logra agregando instancias de `File` con el método `append`. Recordemos que cada campo de formulario de tipo archivo (`<input type="file">`) tiene una propiedad llamada `files`, el cual contiene una lista de instancias `File`. De esta forma, podemos subir archivos a un servidor de manera **asíncrona**.
 
 La ventaja de `FormData` es que, al crear una instancia, podemos pasarle como parámetro un elemento formulario (`<form>`), por lo que automáticamente toma todos los campos del formulario, siempre y cuando tengan un nombre (atributo `name`), incluyendo los campos de tipo archivo.
@@ -171,6 +173,8 @@ La ventaja de `FormData` es que, al crear una instancia, podemos pasarle como pa
 var form = document.querySelector('#formulario_comentario');
 var data = new FormData(form);
 ```
+
+---
 
 ## JSON
 
