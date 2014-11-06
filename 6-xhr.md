@@ -483,6 +483,38 @@ request.then(function(xhRequest) {
 // ID del primer elemento:  530216282797264900
 ```
 
-De esta forma, podemos manejar las peticiones asíncronas de una manera más flexible, separando la petición de las funciones que trabajan con su resultado.
+Por otro lado, es posible que en alguna promesa de la cadena ocurra un error, por lo que es importante manejar callbacks de error, ya sea como segundo parámetro de `then`, o utilizando el mètodo `catch`:
+
+```javascript
+var request = xhr({
+  url: 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche',
+  method: 'GET'
+});
+
+request.then(function(xhRequest) {
+  var newPromiseValue = JSON.parse(xhRequest.responseText);
+
+  conosle.log(newPromiseValue.length + ' elementos'); // ojo aquí
+
+  return newPromiseValue;
+}).then(function(value) {
+  // Aquí value es un arreglo
+  var newPromiseValue = value[0];
+
+  console.log('Primer elemento: ', newPromiseValue);
+
+  return newPromiseValue;
+}).then(function(value) {
+  // Y aquí value es un objeto
+  var newPromiseValue = value.id;
+  console.log('ID del primer elemento: ', newPromiseValue);
+}).catch(function(error) {
+  console.log('Error', error);
+});
+
+// Error ReferenceError: conosle is not defined {stack: (...), message: "conosle is not defined"}
+```
+
+De esta forma, podemos manejar las peticiones asíncronas de una manera más flexible, separando la petición de las funciones que trabajan con su resultado, así como manejar errores de una forma mucho más simple.
 
 El constructor `Promise` es soportado por [todos los navegadores actuales, excepto por Internet Explorer](http://caniuse.com/#search=promise).
