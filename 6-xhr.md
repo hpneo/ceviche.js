@@ -372,11 +372,11 @@ var url = 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche';
 
 var method = 'GET';
 
-var promise = new Promise(function(resolve, reject) {
-  var xhRequest = new XMLHttpRequest();
+var xhRequest = new XMLHttpRequest();
 
-  xhRequest.open(method, url, true);
-  
+xhRequest.open(method, url, true);
+
+var promise = new Promise(function(resolve, reject) {  
   xhRequest.addEventListener('readystatechange', function() {
     if (xhRequest.readyState === 4) {
       resolve(xhRequest);
@@ -386,9 +386,9 @@ var promise = new Promise(function(resolve, reject) {
   xhRequest.addEventListener('error', function() {
     reject(xhRequest);
   });
-
-  xhRequest.send();
 });
+
+xhRequest.send();
 ```
 
 Y se usa de la siguiente manera:
@@ -400,7 +400,89 @@ promise.then(function(request) {
   console.log('Promesa rechazada.', request);
 });
 
-// Promesa cumplida. XMLHttpRequest { }
+// Promesa cumplida. XMLHttpRequest {...}
 ```
+
+Al final, la función `xhr` quedaría así:
+
+```javascript
+function xhr(options) {
+  var xhRequest = new XMLHttpRequest();
+
+  var url = options.url;
+
+  xhRequest.open(options.method, url, true);
+
+  var promise = new Promise(function(resolve, reject) {
+    xhRequest.addEventListener('readystatechange', function() {
+      if (xhRequest.readyState === 4) {
+        resolve(xhRequest);
+      }
+    });
+
+    xhRequest.addEventListener('error', function() {
+      reject(xhRequest);
+    });
+  });
+
+  xhRequest.send();
+
+  return promise;
+}
+```
+
+Y se usaría de la siguiente forma:
+
+```javascript
+var request = xhr({
+  url: 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche',
+  method: 'GET'
+});
+
+request.then(function(xhRequest) {
+  console.log('Estado: ', xhRequest.status);
+});
+
+request.then(function(xhRequest) {
+  console.log('Resultado: ', JSON.parse(xhRequest.responseText));
+});
+
+// Estado:  200
+// Resultado:  [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object]
+```
+
+Como se ve en el código, se pueden añadir varios callbacks con el método `then`, y estos se ejecutan en el orden en el que fueron agregados. Otra de las características de las promesas es que, tanto `then` como `catch`, devuelven una promesa nueva, lo que permite **encadenar promesas**: Cada método `then` toma el valor de la promesa anterior:
+
+```javascript
+var request = xhr({
+  url: 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche',
+  method: 'GET'
+});
+
+request.then(function(xhRequest) {
+  var newPromiseValue = JSON.parse(xhRequest.responseText);
+
+  console.log(newPromiseValue.length + ' elementos');
+
+  return newPromiseValue;
+}).then(function(value) {
+  // Aquí value es un arreglo
+  var newPromiseValue = value[0];
+
+  console.log('Primer elemento: ', newPromiseValue);
+
+  return newPromiseValue;
+}).then(function(value) {
+  // Y aquí value es un objeto
+  var newPromiseValue = value.id;
+  console.log('ID del primer elemento: ', newPromiseValue);
+});
+
+// 15 elementos
+// Primer elemento:  Object {...}
+// ID del primer elemento:  530216282797264900
+```
+
+De esta forma, podemos manejar las peticiones asíncronas de una manera más flexible, separando la petición de las funciones que trabajan con su resultado.
 
 El constructor `Promise` es soportado por [todos los navegadores actuales, excepto por Internet Explorer](http://caniuse.com/#search=promise).
