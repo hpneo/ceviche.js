@@ -178,7 +178,7 @@ var data = new FormData(form);
 
 ---
 
-## JSON
+### JSON
 
 En los ejemplos donde se utiliza `coffeemaker.herokuapp.com` vemos que las respuestas vienen en forma de texto, pero con un formato que nos recuerda a objetos u arreglos en JavaScript. Este formato se llama JSON (JavaScript Object Notation), y permite enviar y recibir información de una manera simple y liviana.
 
@@ -211,3 +211,196 @@ JSON.stringify(window);
 ```
 
 En el caso de `window`, este tiene propiedades como `top`, `parent` o `self` que son referencias a sí mismos. `JSON.stringify` recorre todo el arreglo u objeto que se desea convertir a formato JSON y, de encontrar una referencia al mismo objeto, falla al tratar de convertir una estructura que se referencia a sí misma en algún punto.
+
+## Simplificando las peticiones asíncronas con `xhr.js`
+
+Manejar peticiones asíncronas puede ser un tanto tedioso. Por ejemplo, para realizar una petición GET sencilla se debe escribir el siguiente código:
+
+```javascript
+var xhr = new XMLHttpRequest();
+
+var url = 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche';
+
+xhr.open('GET', url, true);
+
+xhr.addEventListener('error', function(e) {
+  console.log('Un error ocurrió', e);
+});
+
+xhr.addEventListener('readystatechange', function() {
+  console.log('xhr.readyState:', xhr.responseText);
+});
+
+xhr.send();
+```
+
+Y si queremos realizar una petición POST:
+
+```javascript
+var xhr = new XMLHttpRequest();
+
+var url = 'http://coffeemaker.herokuapp.com/form';
+
+xhr.open('POST', url, true);
+
+xhr.addEventListener('error', function(e) {
+  console.log('Un error ocurrió', e);
+});
+
+xhr.addEventListener('readystatechange', function() {
+  console.log('xhr.readyState:', xhr.responseText);
+});
+
+var data = new FormData();
+data.append('nombre', 'valor');
+
+xhr.send(data);
+```
+
+Queremos evitar tener que escribir tanto código, así que crearemos una biblioteca, similar a `dom.js` (ver [Capítulo 3](3-dom-cssom.md)), que permita manejar peticiones asíncronas en menos líneas.
+
+Empecemos por lo básico, creando una función llamada `xhr`:
+
+```javascript
+function xhr(options) {
+  var xhRequest = new XMLHttpRequest();
+
+  var url = options.url;
+
+  xhRequest.open(options.method, url, true);
+
+  xhRequest.send();
+
+  return xhRequest;
+}
+```
+
+Hasta ahora, lo único que hicimos fue encapsular el cuerpo de una petición asíncrona en una función, que será llamada de la siguiente forma:
+
+```javascript
+var request = xhr({
+  url: 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche',
+  method: 'GET'
+});
+```
+
+Hasta aquí no tenemos control de los eventos que pueda lanzar la variable `request`, así que necesitamos agregar soporte para ello:
+
+```javascript
+function xhr(options) {
+  var xhRequest = new XMLHttpRequest();
+
+  var url = options.url;
+
+  xhRequest.open(options.method, url, true);
+
+  xhRequest.addEventListener('error', options.onError);
+  xhRequest.addEventListener('readystatechange', options.onReadyStateChange);
+
+  xhRequest.send();
+
+  return xhRequest;
+}
+```
+
+Y lo usamos de la siguiente forma:
+
+```javascript
+var request = xhr({
+  url: 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche',
+  method: 'GET',
+  onError: function(e) {
+    console.log('Un error ocurrió', e);
+  },
+  onReadyStateChange: function() {
+    console.log('xhr.readyState:', this.readyState);
+  }
+});
+```
+
+Ya tenemos una biblioteca que cumple con su trabajo, pero se puede mejorar. Por ejemplo, ¿qué pasaría si el método `onReadyStateChange` crece más? Recordemos que la meta de toda aplicación es mantenerla simple. Una de las formas de convertir algo complejo en simple es dividirlo en pequeñas partes (como vimos en el ejemplo de módulos); y en este caso necesitamos dividir la función `xhr` en dos partes: la petición por un lado, y los eventos que maneja por otro.
+
+Y al separar la petición de los eventos nos ataca otra duda: ¿Y si necesitamos más de un método `onReadyStateChange`? Si el método `onReadyStateChange` crece, deberíamos poder dividirlo en pequeños métodos `onReadyStateChange`. ¿Cómo solucionamos estos dos problemas?
+
+### *Promises*
+
+Una *promesa*, o *promise*, es un objeto con el que se puede trabajar sin necesidad de saber su valor, ya que este se sabrá en *el futuro* (de ahí el nombre). ¿Y cómo funciona? En términos simples, guarda callbacks que van a trabajar con el valor a futuro, los cuales se ejecutarán, en el orden en el que fueron agregados, inmediatamente después de que la promesa obtenga un valor.
+
+Debemos tener en cuenta que los *callbacks* pueden ser ejecutadas tanto si la promesa ha sido cumplida o rechazada. Una promesa es un contenedor de una operación que devuelve un valor a futuro, como las **peticiones asíncronas**. Si la petición asíncrona falla, la promesa es **rechazada**; pero, por el contrario, si la petición asíncrona ha devuelto un valor, la promesa es **cumplida**. Para ambos casos se pueden definir *callbacks* diferentes.
+
+Para crear una promesa, debemos usar el constructor `Promise`:
+
+```javascript
+var promise = new Promise(function(resolve, reject) {
+  // 
+});
+```
+
+El constructor `Promise` toma como único parámetro una función, la cual a su vez toma dos parámetros, que también son funciones:
+
+```javascript
+var promise = new Promise(function(resolve, reject) {
+  if (1 == '1') {
+    resolve(1);
+  }
+  else {
+    reject('Esta promesa nunca será rechazada');
+  }
+});
+```
+
+Por su parte, cada instancia de `Promise` tiene dos métodos: `then` y `catch`. Ambos métodos permiten guardar los *callbacks* que se ejecutarán cuando la promesa devuelva un valor: mientras que `then` toma dos valores (un *callback* para la promesa cumplida y otro para la promesa rechazada), `catch` solo permite guardar *callbacks* que se ejecutarán si la promesa es rechazada:
+
+```javascript
+promise.then(function(value) {
+  console.log('Promesa cumplida.', value);
+}, function(error) {
+  console.log('Promesa rechazada.', error);
+});
+
+promise.catch(function(error) {
+  console.log('Esto tampoco se ejecutará')
+});
+
+// Promesa cumplida. 1
+```
+
+En este caso la promesa se evaluará de inmediato, ya que no existe una operación asíncrona. Para ver su funcionamiento real, crearemos una petición asíncrona dentro de la promesa:
+
+```javascript
+var url = 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche';
+
+var method = 'GET';
+
+var promise = new Promise(function(resolve, reject) {
+  var xhRequest = new XMLHttpRequest();
+
+  xhRequest.open(method, url, true);
+  
+  xhRequest.addEventListener('readystatechange', function() {
+    if (xhRequest.readyState === 4) {
+      resolve(xhRequest);
+    }
+  });
+
+  xhRequest.addEventListener('error', function() {
+    reject(xhRequest);
+  });
+
+  xhRequest.send();
+});
+```
+
+Y se usa de la siguiente manera:
+
+```javascript
+promise.then(function(request) {
+  console.log('Promesa cumplida.', request);
+}, function(request) {
+  console.log('Promesa rechazada.', request);
+});
+
+// Promesa cumplida. XMLHttpRequest { }
+```
+
+El constructor `Promise` es soportado por [todos los navegadores actuales, excepto por Internet Explorer](http://caniuse.com/#search=promise).
