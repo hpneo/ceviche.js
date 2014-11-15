@@ -86,7 +86,7 @@ Esto difiere de jQuery, que soporta a todos los navegadores posibles en su rama 
 
 Una característica importante de Zepto es que la biblioteca por defecto contiene ciertos módulos: Core, Events, Ajax, Form, IE. Si se desea tener la biblioteca con todos los módulos, se debe [construir la biblioteca desde el código fuente](https://github.com/madrobby/zepto#building).
 
-## Underscore
+## Underscore
 
 [Underscore](http://underscorejs.org/) es una biblioteca que contiene métodos necesarios para realizar operaciones con arreglos, objetos, colecciones (arreglos u objetos) y funciones. Así mismo, contiene otras funciones utilitarias.
 
