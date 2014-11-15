@@ -15,11 +15,11 @@ El hilo conductor de este libro es una historia que permitirá entender y aplica
 4. [APIs del navegador](4-apis-navegador.md)
 5. [Pruebas](5-pruebas.md)
 6. [Peticiones asíncronas](6-xhr.md)
-7. Bibliotecas de terceros
-8. jQuery
-9. Mejorando el flujo de trabajo
+7. jQuery
+8. Mejorando el flujo de trabajo
 
 ## Apéndices
 A. [Referencia DOM](a-dom.md)
+B. [Bibliotecas de terceros](b-bibliotecas.md)
 
 Ceviche.js tiene licencia [Creative Commons Attribution-Noncommercial-No Derivative Works 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/).
