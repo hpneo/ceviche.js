@@ -69,12 +69,12 @@ jQuery tiene [documentación con ejemplos](http://api.jquery.com/), dividida en 
 * Android 2.3+ Browser
 * Internet Explorer 10+ (Windows, Windows Phone)
 
-Mientras que soporta parcialmente:
+Y soporta parcialmente:
 
-* iOS 3+ Safari
+* Safari 3+ (iOS)
 * Chrome <30
 * Firefox 4+
-* Safari <6
+* Safari <6 (Mac)
 * Android Browser 2.2
 * Opera 10+
 * webOS 1.4.5+ Browser
@@ -91,3 +91,14 @@ Una característica importante de Zepto es que la biblioteca por defecto contien
 [Underscore](http://underscorejs.org/) es una biblioteca que contiene métodos necesarios para realizar operaciones con arreglos, objetos, colecciones (arreglos u objetos) y funciones. Así mismo, contiene otras funciones utilitarias.
 
 Underscore tiene su [código fuente comentado](http://underscorejs.org/docs/underscore.html), información muy útil para aprender cómo mejorar nuestro propio código.
+
+Dentro de los métodos más populares dentro de Underscore, se encuentran:
+
+* `each`: Itera por cada valor de un arreglo, o por cada valor de cada par llave-valor de un objeto
+* `map`: Similar a `each`, pero devuelve un arreglo con los valores devueltos por una función pasada como parámetro
+* `compact`: Devuelve una copia de un arreglo con los elementos que no sean *falsy*
+* `uniq`: Devuelve una copia de un arreglo sin los elementos repetidos
+* `bind`: Cambia el contexto de una función, y define parámetros. Similar a `Function.prototype.call`, pero no ejecuta la función (mientras que `Function.prototype.call` sí lo hace)
+* `values`: Devuelve un arreglo con los valores de un objeto
+* `extend`: Copia las propiedades de un objeto a otro
+* `template`: Permite crear plantillas utilizando una cadena de texto, devolviendo una función que, al ser ejecutada, reemplazará los valores de la plantilla por los que sean pasados como parámetros.
