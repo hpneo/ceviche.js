@@ -1,38 +1,10 @@
 # Apéndice B: Bibliotecas de terceros
 
-Cuando nos metemos al desarrollo de un sitio web, es común encontrarse con necesidades que pueden ser cubiertas fácilmente por código de otras personas, lo cual es perfectamente válido. Estas son algunas bibliotecas útiles en cualquier desarrollo web.
+Cuando nos metemos al desarrollo de un sitio web, es común encontrarse con necesidades que pueden ser cubiertas fácilmente por código de otras personas. De esta forma, podemos ahorrar mucho tiempo y confiar que nuestro código funcione sobre el código de otros. Estas son algunas bibliotecas útiles en cualquier desarrollo web.
 
 ## jQuery
 
 [jQuery](http://jquery.com/) es la biblioteca más popular de JavaScript y resuelve uno de los más grandes problemas en el desarrollo web: El código *cross-browser*. Hace muchos años, se tenía que crear dos versiones del mismo código: una para Netscape y otra para Internet Explorer. Cuando Netscape desapareció y apareció Firefox, se dio el mismo caso, una vez más con Internet Explorer del otro lado. Si a eso le sumamos otros navegadores, como Opera o Safari (para Mac OS), el código crece rápidamente.
-
-jQuery ofrece una serie de métodos para manipular el DOM, manejar eventos y realizar llamadas asíncronas, de tal forma que todo funcione de la misma manera en todos los navegadores.
-
-Para utilizar jQuery en un sitio web debemos ir a la sección *Download* y elegir una de las versiones que ofrece jQuery. Cabe resaltar que se está dando a dos versiones: la 1.x y la 2.x. La diferencia entre ambas es que la 2.x ya no tiene soporte para Internet Explorer 6, 7 y 8; así que elegir una u otra versión depende del soporte que quieras para tu sitio o aplicación.
-
-En este caso, elegimos la versión 1.11.1 en su versión para desarrollo:
-
-```html
-<!DOCTYPE html>
-<html>
-<head>
-  <title></title>
-</head>
-<body>
-  <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
-</body>
-</html>
-```
-
----
-
-Para cargar un archivo JavaScript utilizamos la etiqueta `<script>`, poniendo la dirección del archivo en el atributo `src`. En algunos casos la etiqueta `<script>` estará dentro de la etiqueta `<head>`, pero en otros casos puede estar al final de la etiqueta `<body>`. ¿Por qué pasa esto?
-
-Los navegadores leen un documento HTML y lo muestran de forma visual en un proceso que es llamado __renderizado__. En este proceso, que puede variar un poco entre navegadores, el navegador lee el documento HTML y lo va interpretando progresivamente, lo cual quiere decir que, por cada parte que lee, verifica si existe algún recurso que debe ser cargado (puede ser una imagen, un iframe, una hoja de estilos o un archivo JavaScript).
-
-Este proceso va de inicio a fin, por lo que, si las etiquetas `<script>` se ponen dentro de la etiqueta `<head>`, el navegador va a esperar a que terminen de cargar los archivos JavaScript para seguir leyendo el resto del documento. Esto puede ser contraproducente en la mayoría de casos, por lo que se recomienda poner las etiquetas `<script>` al final de la etiqueta `<body>`, de esta forma todo el documento cargará y se mostrará en la pantalla de una forma más rápida.
-
----
 
 jQuery tiene [documentación con ejemplos](http://api.jquery.com/), dividida en las siguientes secciones:
 
@@ -107,4 +79,4 @@ Dentro de los métodos más populares dentro de Underscore, se encuentran:
 
 [Moment](http://momentjs.com/) permite manejar fechas de una forma mucho más completa que lo ofrecido por defecto. No solo permite mostrar una fecha en diferentes formatos (que puede ir desde `31/12/2014` hasta `miércoles, 31 de diciembre de 2014 0:00`), si no que permite mostrar fechas en diferentes idiomas (79 idiomas hasta ahora) y permite realizar operaciones entre fechas.
 
-Adicionalmente, existe una biblioteca llamada Moment Timezone que permite manejar fechas entre zonas horarias, así como darles formato y realizar todas las operaciones disponibles en Moment.js.
+Adicionalmente, existe una biblioteca llamada [Moment Timezone](http://momentjs.com/timezone/) que permite manejar fechas entre zonas horarias, así como darles formato y realizar todas las operaciones disponibles en Moment.js.

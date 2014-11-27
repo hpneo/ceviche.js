@@ -15,7 +15,7 @@ El hilo conductor de este libro es una historia que permitirá entender y aplica
 4. [APIs del navegador](4-apis-navegador.md)
 5. [Pruebas](5-pruebas.md)
 6. [Peticiones asíncronas](6-xhr.md)
-7. jQuery
+7. [jQuery](7-jquery.md)
 8. Mejorando el flujo de trabajo
 
 ## Apéndices
