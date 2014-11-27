@@ -86,7 +86,7 @@ Esto difiere de jQuery, que soporta a todos los navegadores posibles en su rama 
 
 Una característica importante de Zepto es que la biblioteca por defecto contiene ciertos módulos: Core, Events, Ajax, Form, IE. Si se desea tener la biblioteca con todos los módulos, se debe [construir la biblioteca desde el código fuente](https://github.com/madrobby/zepto#building).
 
-## Underscore
+## Underscore.js
 
 [Underscore](http://underscorejs.org/) es una biblioteca que contiene métodos necesarios para realizar operaciones con arreglos, objetos, colecciones (arreglos u objetos) y funciones. Así mismo, contiene otras funciones utilitarias.
 
@@ -102,3 +102,9 @@ Dentro de los métodos más populares dentro de Underscore, se encuentran:
 * `values`: Devuelve un arreglo con los valores de un objeto
 * `extend`: Copia las propiedades de un objeto a otro
 * `template`: Permite crear plantillas utilizando una cadena de texto, devolviendo una función que, al ser ejecutada, reemplazará los valores de la plantilla por los que sean pasados como parámetros.
+
+## Moment.js
+
+[Moment](http://momentjs.com/) permite manejar fechas de una forma mucho más completa que lo ofrecido por defecto. No solo permite mostrar una fecha en diferentes formatos (que puede ir desde `31/12/2014` hasta `miércoles, 31 de diciembre de 2014 0:00`), si no que permite mostrar fechas en diferentes idiomas (79 idiomas hasta ahora) y permite realizar operaciones entre fechas.
+
+Adicionalmente, existe una biblioteca llamada Moment Timezone que permite manejar fechas entre zonas horarias, así como darles formato y realizar todas las operaciones disponibles en Moment.js.
