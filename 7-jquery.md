@@ -39,3 +39,61 @@ jQuery tiene una función del mismo nombre, pero se utiliza comúnmente un alias
 Usando la función `$` con cualquiera de los 3 parámetros se devuelve un objeto instancia de jQuery. Esta instancia es parecida a un arreglo, y tiene diferentes métodos para manejar sus elementos.
 
 Adicionalmente, `$` puede aceptar una función, la cual se ejecutará cuando todo el documento ha terminado de cargar.
+
+## Selectores
+
+jQuery permite obtener los elementos del DOM mediante selectores, de la misma forma como lo hace el método `querySelectorAll`, con la diferencia que también acepta selectores propios:
+
+### Atributos
+
+* `[name!="value"]`
+
+### Básico
+
+* `:animated`
+* `:eq()`
+* `:even`
+* `:first`
+* `:gt()`
+* `:header`
+* `:last`
+* `:lt()`
+* `:odd`
+
+### Contenido
+
+* `:has()`
+* `:parent`
+
+### Formularios
+
+* `:button`
+* `:checkbox`
+* `:file`
+* `:image`
+* `:input`
+* `:password`
+* `:radio`
+* `:reset`
+* `:selected`
+* `:submit`
+* `:text`
+
+### Visibilidad
+
+* `:hidden`
+* `:visible`
+
+## Eventos
+
+jQuery permite manejar eventos, tanto del navegador como propios, utilizando los métodos `on` y `off` (para agregar y eliminar *listeners*, respectivamente). Estos métodos funcionan de la misma manera para eventos del navegador y propios, e incluso se pueden lanzar (o *disparar*) manualmente utilizando el método `trigger`.
+
+Cabe recordar que jQuery agrega *listeners* a los eventos en la *bubbling phase*, y no en la *capture phase*. Esto es importante de recordar, dada la [diferencia que existe entre agregar un *listener* en cualquiera de las dos fases](3-dom-cssom#event-flow).
+
+## Ajax
+
+Además de manejar operaciones en el DOM, jQuery es capaz de manejar operaciones asíncronas. jQuery utiliza `XMLHttpRequest` o `ActiveXObject`, según sea el caso (por ejemplo, en versiones de Internet Explorer donde existe `ActiveXObject`, se utiliza este).
+
+## Plugins
+
+Una de las ventajas de jQuery es la comunidad que tiene detrás, creada en buena parte por los *plugins* que permite crear. Un *plugin* en jQuery es, básicamente, un método agregado al *prototype* de la función `jQuery` al cual se puede acceder mediante la propiedad `jQuery.fn`.
