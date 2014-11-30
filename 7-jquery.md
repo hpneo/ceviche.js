@@ -46,43 +46,43 @@ jQuery permite obtener los elementos del DOM mediante selectores, de la misma fo
 
 ### Atributos
 
-* `[name!="value"]`
+* `[name!="value"]`: Devuelve todos los elementos cuyo atributo de nombre `name` __no__ tiene el valor `value`
 
 ### Básico
 
-* `:animated`
-* `:eq()`
-* `:even`
-* `:first`
-* `:gt()`
-* `:header`
-* `:last`
-* `:lt()`
-* `:odd`
+* `:animated`: Devuelve los elementos que están siendo animados en ese instante.
+* `:eq(index)`: Devuelve el elemento que se encuentra en el índice seleccionado, dentro de un conjunto de elementos.
+* `:even`: Devuelve los elementos cuyos índices sean pares, teniendo en cuenta que el índice empieza en `0`, por lo que selecciona los elementos en los índices `0`, `2`, `4` y sucesivos.
+* `:first`: Devuelve el primer elemento de un conjunto de elementos.
+* `:gt(index)`: Devuelve los elementos cuyos índices sean mayores al índice seleccionado.
+* `:header`: Devuelve todos los elementos que sean `h1`, `h2`, `h3` y similares.
+* `:last`: Devuelve el último elemento de un conjunto de elementos.
+* `:lt(index)`: Devuelve los elementos cuyos índices sean menores al índice seleccionado.
+* `:odd`: Devuelve los elementos cuyos índices sean impares, teniendo en cuenta que el índice empieza en `0`, por lo que selecciona los elementos en los índices `1`, `3`, `5` y sucesivos.
 
 ### Contenido
 
-* `:has()`
-* `:parent`
+* `:has(selector)`: Devuelve todos los elementos que contienen los elementos definidos en el segundo selector.
+* `:parent`: Devuelve todos los elementos que tienen al menos un nodo hijo (ya sea elemento o no).
 
 ### Formularios
 
-* `:button`
-* `:checkbox`
-* `:file`
-* `:image`
-* `:input`
-* `:password`
-* `:radio`
-* `:reset`
-* `:selected`
-* `:submit`
-* `:text`
+* `:button`: Devuelve los elementos que sean botones, ya sean elementos `<button>` o `<input type="button">`
+* `:checkbox`: Devuelve todos los elementos que son `<input type="checkbox">`
+* `:file`: Devuelve todos los elementos que son `<input type="file">`
+* `:image`: Devuelve todos los elementos que son `<input type="image">`
+* `:input`: Devuelve todos los elementos que son `<input>`, `<textarea>`, `<select>` y `<button>`
+* `:password`: Devuelve todos los elementos que son `<input type="password">`
+* `:radio`: Devuelve todos los elementos que son `<input type="radio">`
+* `:reset`: Devuelve todos los elementos que son `<input type="reset">`
+* `:selected`: Devuelve el elemento `<option>` seleccionado para un elemento `<select>`
+* `:submit`: Devuelve todos los elementos que son `<input type="submit">`
+* `:text`: Devuelve todos los elementos que son `<input type="text">`
 
 ### Visibilidad
 
-* `:hidden`
-* `:visible`
+* `:hidden`: Devuelve todos los elementos ocultos, los cuales pueden ser: por tener `display: none` en sus estilos, ser elementos `<input type="hidden">`, tener `width` y `height` en 0, o si tiene algún elemento ancestro oculto.
+* `:visible`: Devuelve todos los elementos que son visibles. En jQuery, un elemento es considerado visible si ocupa espacio en la pantalla, por lo que elementos con `visibility: hidden` u `opacity: 0` en sus estilos son considerados elementos visibles.
 
 ## Eventos
 
@@ -96,4 +96,4 @@ Además de manejar operaciones en el DOM, jQuery es capaz de manejar operaciones
 
 ## Plugins
 
-Una de las ventajas de jQuery es la comunidad que tiene detrás, creada en buena parte por los *plugins* que permite crear. Un *plugin* en jQuery es, básicamente, un método agregado al *prototype* de la función `jQuery` al cual se puede acceder mediante la propiedad `jQuery.fn`.
+Una de las ventajas de jQuery es la comunidad que tiene detrás, creada en buena parte por los *plugins* que permite crear. Un *plugin* en jQuery es, básicamente, un método agregado al *prototype* de la función `jQuery` al cual se puede acceder mediante la propiedad `jQuery.fn` (o `$.fn`).
