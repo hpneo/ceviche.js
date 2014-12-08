@@ -1,6 +1,6 @@
 # Capítulo 7: jQuery
 
-Si bien ya sabemos cómo manejar el DOM, necesitamos que nuestro sitio web funcione bien en diferentes navegadores por igual. [jQuery](http://jquery.com) está diseñado desde sus inicios para dar soporte al manejo del DOM en todos los navegadores conocidos.
+Si bien ya sabemos cómo manejar el DOM, necesitamos que nuestro sitio web funcione bien en diferentes navegadores por igual. [jQuery](http://jquery.com) está diseñado desde sus inicios para dar soporte al manejo del DOM en todos los navegadores conocidos, simplificando drásticamente el desarrollo de un sitio web.
 
 jQuery ofrece una serie de métodos para manipular el DOM, manejar eventos y realizar llamadas asíncronas, de tal forma que todo funcione de la misma manera en todos los navegadores.
 
@@ -90,10 +90,14 @@ jQuery permite manejar eventos, tanto del navegador como propios, utilizando los
 
 Cabe recordar que jQuery agrega *listeners* a los eventos en la *bubbling phase*, y no en la *capture phase*. Esto es importante de recordar, dada la [diferencia que existe entre agregar un *listener* en cualquiera de las dos fases](3-dom-cssom#event-flow).
 
+Por otro lado, jQuery utiliza [*event delegation*](3-dom-cssom#event-delegation), el cual permite definir eventos en elementos que aún no han sido creados, así como definir el mismo evento a un conjunto de elementos, sin la necesidad de crear un *listener* por cada elemento.
+
 ## Ajax
 
 Además de manejar operaciones en el DOM, jQuery es capaz de manejar operaciones asíncronas. jQuery utiliza `XMLHttpRequest` o `ActiveXObject`, según sea el caso (por ejemplo, en versiones de Internet Explorer donde existe `ActiveXObject`, se utiliza este).
 
+Para poder realizar operaciones asíncronas, jQuery ofrece una serie de métodos, los cuales van desde el básico `$.ajax` hasta `$.get` o `$.post`.
+
 ## Plugins
 
-Una de las ventajas de jQuery es la comunidad que tiene detrás, creada en buena parte por los *plugins* que permite crear. Un *plugin* en jQuery es, básicamente, un método agregado al *prototype* de la función `jQuery` al cual se puede acceder mediante la propiedad `jQuery.fn` (o `$.fn`).
+Una de las ventajas de jQuery es la comunidad que tiene detrás, creada en buena parte gracias a los *plugins* que permite crear. Un *plugin* en jQuery es, básicamente, un método agregado al *prototype* de la función `jQuery` al cual se puede acceder mediante la propiedad `jQuery.fn` (o `$.fn`).
