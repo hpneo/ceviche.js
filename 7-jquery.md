@@ -84,13 +84,73 @@ jQuery permite obtener los elementos del DOM mediante selectores, de la misma fo
 * `:hidden`: Devuelve todos los elementos ocultos, los cuales pueden ser: por tener `display: none` en sus estilos, ser elementos `<input type="hidden">`, tener `width` y `height` en 0, o si tiene algún elemento ancestro oculto.
 * `:visible`: Devuelve todos los elementos que son visibles. En jQuery, un elemento es considerado visible si ocupa espacio en la pantalla, por lo que elementos con `visibility: hidden` u `opacity: 0` en sus estilos son considerados elementos visibles.
 
+Si vemos el ejemplo usado en el [capítulo 3](http://cevichejs.com/files/3-dom-cssom/index.html), podremos cambiar el siguiente código:
+
+```javascript
+var container = dom('#background');
+container.delegate('transitionend', '.slide.current', function(e) {
+  var current = dom(e.target),
+      next = current.next();
+
+  current.removeClass('current');
+
+  if (current.isLastSibling()) {
+    next = current.firstSibling();
+  }
+
+  next.addClass('current');
+});
+```
+
+por:
+
+```javascript
+var container = $('#background');
+container.on('transitionend', '.slide.current', function(e) {
+  var current = $(e.target),
+      next = current.next();
+
+  current.removeClass('current');
+
+  if (current.is(':last-child')) {
+    next = current.siblings().first();
+  }
+
+  next.addClass('current');
+});
+```
+
+Cuando diseñamos `dom.js` tuvimos en mente algunos métodos que maneja jQuery (como `next`, `addClass` y `removeClass`), por lo que el código es bastante similar. Sin embargo, en jQuery no tenemos `isLastSibling` ni `firstSibling`.
+
+En el primer caso, cambiamos `isLastSibling()` por `is(':last-child')`. `is` es un método que permite comparar entre el *set* de elementos seleccionado y un selector (el cual puede ser de CSS o uno de los descrito al inicio del capítulo). En el segundo caso, reemplazamos `firstSibling()` por `siblings().first()`, donde `siblings` es un método que devuelve todos los nodos *hermanos* del nodo seleccionado (pero __no incluye al nodo seleccionado en el resultado__), y `first`, que devuelve el primer elemento de un *set* de nodos en jQuery.
+
 ## Eventos
 
 jQuery permite manejar eventos, tanto del navegador como propios, utilizando los métodos `on` y `off` (para agregar y eliminar *listeners*, respectivamente). Estos métodos funcionan de la misma manera para eventos del navegador y propios, e incluso se pueden lanzar (o *disparar*) manualmente utilizando el método `trigger`.
 
-Cabe recordar que jQuery agrega *listeners* a los eventos en la *bubbling phase*, y no en la *capture phase*. Esto es importante de recordar, dada la [diferencia que existe entre agregar un *listener* en cualquiera de las dos fases](3-dom-cssom#event-flow).
+Cabe recordar que jQuery agrega *listeners* a los eventos en la *bubbling phase*, y no en la *capture phase*. Esto es importante a tener en cuenta, dada la [diferencia que existe entre agregar un *listener* en cualquiera de las dos fases](3-dom-cssom#event-flow).
 
 Por otro lado, jQuery utiliza [*event delegation*](3-dom-cssom#event-delegation), el cual permite definir eventos en elementos que aún no han sido creados, así como definir el mismo evento a un conjunto de elementos, sin la necesidad de crear un *listener* por cada elemento.
+
+Volvamos al ejemplo de la sección anterior:
+
+```javascript
+var container = $('#background');
+container.on('transitionend', '.slide.current', function(e) {
+  var current = $(e.target),
+      next = current.next();
+
+  current.removeClass('current');
+
+  if (current.is(':last-child')) {
+    next = current.siblings().first();
+  }
+
+  next.addClass('current');
+});
+```
+
+En este caso, seguimos usando *event delegation*. Sabemos que `$('#background')` devolverá un elemento, y que este, a su vez, tiene elementos hijo cuyas clases son `slide` y también serán `current`, y necesitamos agregar lanzar un evento `transitionend` para cada elemento `.slide.current` (es decir, el elemento `.slide` visible). En `dom.js` se llamaba `delegate`, pero en jQuery toma el nombre de `on`.
 
 ## Ajax
 
@@ -101,3 +161,51 @@ Para poder realizar operaciones asíncronas, jQuery ofrece una serie de métodos
 ## Plugins
 
 Una de las ventajas de jQuery es la comunidad que tiene detrás, creada en buena parte gracias a los *plugins* que permite crear. Un *plugin* en jQuery es, básicamente, un método agregado al *prototype* de la función `jQuery` al cual se puede acceder mediante la propiedad `jQuery.fn` (o `$.fn`).
+
+De nuevo, en el ejemplo de las dos primeras secciones, tenemos:
+
+```javascript
+var container = $('#background');
+container.on('transitionend', '.slide.current', function(e) {
+  var current = $(e.target),
+      next = current.next();
+
+  current.removeClass('current');
+
+  if (current.is(':last-child')) {
+    next = current.siblings().first();
+  }
+
+  next.addClass('current');
+});
+```
+
+En `dom.js` teníamos `isLastSibling` y `firstSibling`, pero en jQuery no. Sin embargo, podemos extender el *prototype* de jQuery y agregar estos métodos:
+
+```javascript
+$.fn.isLastSibling = function() {
+  return $(this).is(':last-child');
+}
+
+$.fn.firstSibling = function() {
+  return $(this).siblings().first();
+}
+```
+
+Y, de esta forma, tendríamos el siguiente código, más entendible:
+
+```javascript
+var container = $('#background');
+container.on('transitionend', '.slide.current', function(e) {
+  var current = $(e.target),
+      next = current.next();
+
+  current.removeClass('current');
+
+  if (current.isLastSibling()) {
+    next = current.firstSibling();
+  }
+
+  next.addClass('current');
+});
+```

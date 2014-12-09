@@ -78,7 +78,7 @@ Para eliminar un nodo solo es necesario que el nodo padre ejecute el método `re
 
 ##### Simplificando el manejo del DOM con `dom.js`
 
-Como vimos en el punto anterior, tener que realizar 2 pasos para agregar un nodo al DOM puede llegar a ser tedioso (sobre todo si tenemos que hacerlo varias veces). Adicionalmente, pronto notarás que la API del DOM es verbosa, por lo que sería una buena idea crear una biblioteca que permita reducir el número de palabras escritas y simplifique los pasos para manejar el DOM; así que realizaremos una biblioteca llamada `dom.js`, la cual usaremos dentro de [La Buena Espina](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html).
+Como vimos en el punto anterior, tener que realizar 2 pasos para agregar un nodo al DOM puede llegar a ser tedioso (sobre todo si tenemos que hacerlo varias veces). Adicionalmente, pronto notarás que la API del DOM es verbosa, por lo que sería una buena idea crear una biblioteca que permita reducir el número de palabras escritas y simplifique los pasos para manejar el DOM; así que realizaremos una biblioteca llamada `dom.js`, la cual usaremos dentro de [La Buena Espina](http://cevichejs.com/files/3-dom-cssom/index.html).
 
 Empecemos por crear un constructor llamado `Dom`:
 
@@ -425,7 +425,7 @@ document.dispatchEvent(sectionChangedEvent);
 
 Cuando un evento es lanzado, este pasa por 3 fases, en el siguiente orden: *Capture phase*, *Target phase* y *Bubbling phase*. El hecho de pasar por las 3 fases es denominado _*event flow*_.
 
-![Document Object Model (DOM) Level 3 Events Specification: Event flow](http://www.w3.org/TR/DOM-Level-3-Events/images/eventflow.png "Document Object Model (DOM) Level 3 Events Specification")
+![Document Object Model (DOM) Level 3 Events Specification: Event flow](http://www.w3.org/TR/DOM-Level-3-Events/images/eventflow.svg "Document Object Model (DOM) Level 3 Events Specification")
 
 *Document Object Model (DOM) Level 3 Events Specification. http://www.w3.org/TR/DOM-Level-3-Events/*
 
@@ -629,7 +629,7 @@ Dom.prototype.delegate = function(eventName, selector, callbak) {
 };
 ```
 
-Y lo utilizamos de la siguiente manera (podemos probar en el archivo [http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html](http://cevichejs.herokuapp.com/files/3-dom-cssom/index.html)):
+Y lo utilizamos de la siguiente manera (podemos probar en el archivo [http://cevichejs.com/files/3-dom-cssom/index.html](http://cevichejs.com/files/3-dom-cssom/index.html)):
 
 ```javascript
 var doc = new Dom(document);
