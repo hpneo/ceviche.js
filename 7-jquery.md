@@ -216,7 +216,7 @@ request.then(function(data) {
 
 ---
 
-Por otro lado, una buena prática sería separar la dirección de la cadena de búsqueda, y pasar los parámetros de búsqueda como un objeto:
+Por otro lado, una buena práctica sería separar la dirección de la cadena de búsqueda, y pasar los parámetros de búsqueda como un objeto:
 
 ```javascript
 var request = $.get('http://coffeemaker.herokuapp.com/twitter.json', { q: 'ceviche' });
