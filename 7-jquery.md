@@ -158,6 +158,74 @@ Además de manejar operaciones en el DOM, jQuery es capaz de manejar operaciones
 
 Para poder realizar operaciones asíncronas, jQuery ofrece una serie de métodos, los cuales van desde el básico `$.ajax` hasta `$.get` o `$.post`.
 
+En el [capítulo anterior](6-xhr) vimos cómo realizar llamadas asíncronas a un servidor. Utilizamos `http://coffeemaker.herokuapp.com` para probar con el siguiente código:
+
+```javascript
+var xhr = new XMLHttpRequest();
+
+var url = 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche';
+
+xhr.open('GET', url, true);
+
+xhr.addEventListener('error', function(e) {
+  console.log('Un error ocurrió', e);
+});
+
+xhr.addEventListener('readystatechange', function() {
+  console.log('xhr.readyState:', xhr.readyState);
+});
+
+xhr.send();
+```
+
+Luego, creamos `xhr.js`, que simplificaba todo el código anterior a:
+
+```javascript
+var request = xhr({
+  url: 'http://coffeemaker.herokuapp.com/twitter.json?q=ceviche',
+  method: 'GET'
+});
+```
+
+Una de las ventajas de jQuery es que permite tomar el código anterior y convertirlo en una sola línea: 
+
+```javascript
+var request = $.get('http://coffeemaker.herokuapp.com/twitter.json?q=ceviche');
+```
+
+Actualmente, jQuery tiene soporte para promesas, por lo que podemos usarlo de la siguiente forma:
+
+```javascript
+var request = $.get('http://coffeemaker.herokuapp.com/twitter.json?q=ceviche');
+
+request.then(function(data) {
+  console.log(data.length + ' elementos');
+
+  return data;
+}).then(function(data) {
+  var newPromiseValue = data[0];
+
+  console.log('Primer elemento: ', newPromiseValue);
+
+  return newPromiseValue;
+}).then(function(data) {
+  var newPromiseValue = data.id;
+  console.log('ID del primer elemento: ', newPromiseValue);
+});
+```
+
+---
+
+Por otro lado, una buena prática sería separar la dirección de la cadena de búsqueda, y pasar los parámetros de búsqueda como un objeto:
+
+```javascript
+var request = $.get('http://coffeemaker.herokuapp.com/twitter.json', { q: 'ceviche' });
+```
+
+jQuery se encargará de generar la URL antes de enviar la petición, pero ganamos flexibilidad si deseamos cambiar la dirección de la petición.
+
+---
+
 ## Plugins
 
 Una de las ventajas de jQuery es la comunidad que tiene detrás, creada en buena parte gracias a los *plugins* que permite crear. Un *plugin* en jQuery es, básicamente, un método agregado al *prototype* de la función `jQuery` al cual se puede acceder mediante la propiedad `jQuery.fn` (o `$.fn`).
