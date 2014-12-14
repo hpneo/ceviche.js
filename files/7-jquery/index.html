@@ -32,19 +32,71 @@
     </div>
     <div class="panel" id="locales">
       <h3>Locales</h3>
+      <ul class="venues">
+        <li>
+          <h4>La Buena Espina</h4>
+          <p>Calle Uno #125 - Magdalena</p>
+        </li>
+        <li>
+          <h4>La Buena Espina</h4>
+          <p>Avenida La Fontana #1010 - La Molina</p>
+        </li>
+        <li>
+          <h4>La Buena Espina Express</h4>
+          <p>Avenida Javier Prado Este #105 - Lince</p>
+        </li>
+        <li>
+          <h4>La Buena Espina</h4>
+          <p>Calle Nueve #592 - San Isidro</p>
+        </li>
+        <li>
+          <h4>La Buena Espina</h4>
+          <p>Jr. de la Unión #132 - Cercado</p>
+        </li>
+      </ul>
     </div>
     <div class="panel" id="historia">
       <h3>Historia</h3>
+      <p>La Buena Espina empezó como un pequeño restaurante en Magdalena, y se convirtió en una cadena de restaurantes en poco tiempo, siendo ganador del Mistura 2012 y 2013. Actualmente cuenta con 5 locales en toda la ciudad de Lima, y espera abrir nuevos restaurantes en Trujillo, Tumbes y Tacna.</p>
     </div>
     <div class="panel" id="contacto">
       <h3>Contacto</h3>
+
+      <form id="contact-form">
+        <p>
+          <label for="contacto_nombre">Nombre:</label>
+          <input type="text" id="contacto_nombre" name="contacto[nombre]">
+        </p>
+        <p>
+          <label for="contacto_mensaje">Mensaje:</label>
+          <textarea id="contacto_mensaje" name="contacto[mensaje]"></textarea>
+        </p>
+        <p>
+          <input type="submit" value="Enviar">
+        </p>
+      </form>
     </div>
   </section>
   <footer></footer>
   <script src="scripts/jquery-1.11.1.js"></script>
   <script src="scripts/cssom.js"></script>
   <script>
-    var container = $('#background');
+    var container = $('#background'),
+        contactForm = $('#contact-form');
+
+    contactForm.on('submit', function(e) {
+      e.preventDefault();
+
+      var xhr = $.post('http://coffeemaker.herokuapp.com/form', contactForm);
+
+      window.localStorage.setItem('contact-form', $('#contacto_mensaje').val());
+
+      xhr.then(function() {
+        alert('¡Gracias por contactarnos!');
+        window.localStorage.removeItem('contact-form');
+      });
+    });
+
     container.on('transitionend', '.slide.current', function(e) {
       var current = $(e.target),
           next = current.next();
@@ -72,6 +124,8 @@
 
       current.removeClass('current');
       next.addClass('current');
+
+      $('#contacto_mensaje').val(window.localStorage.getItem('contact-form'));
     });
   </script>
 </body>

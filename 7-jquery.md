@@ -154,7 +154,7 @@ En este caso, seguimos usando *event delegation*. Sabemos que `$('#background')`
 
 ---
 
-Ya sabiendo cómo usar jQuery, podemos terminar el sitio web de "La Buena Espina". Agreguemos un evento `hashchange` a `window`:
+Ya sabiendo cómo usar jQuery, podemos terminar el sitio web de __La Buena Espina__. Agreguemos un evento `hashchange` a `window`:
 
 ```javascript
 $(window).on('hashchange', function(e) {
@@ -168,7 +168,7 @@ $(window).on('hashchange', function(e) {
 
 De esta forma, cada vez que naveguemos por la barra de navegación, aparecerá el contenido correcto.
 
-Sin embargo, ocurre un *bug* si recargamos la página y tenemos el hash `#historia` en la dirección. El contenido de Historia no aparece. Recordemos que al usar el evento `hashchange`, la función del *listener* solo se ejecutará cuando el *hash* cambie, así que necesitamos agregar un evento más a `window`. jQuery permite agregar más de un listener en una sola vez:
+Sin embargo, ocurre un *bug* si recargamos la página y tenemos el hash `#historia` en la dirección: __El contenido de Historia no aparece__. Recordemos que al usar el evento `hashchange`, la función del *listener* solo se ejecutará cuando el *hash* cambie, así que necesitamos agregar un evento más a `window`. jQuery permite agregar un listener a más de un evento utilizando `on` una sola vez:
 
 ```javascript
 $(window).on('hashchange load', function(e) {
@@ -246,8 +246,6 @@ request.then(function(data) {
 });
 ```
 
----
-
 Por otro lado, una buena práctica sería separar la dirección de la cadena de búsqueda, y pasar los parámetros de búsqueda como un objeto:
 
 ```javascript
@@ -255,6 +253,37 @@ var request = $.get('http://coffeemaker.herokuapp.com/twitter.json', { q: 'cevic
 ```
 
 jQuery se encargará de generar la URL antes de enviar la petición, pero ganamos flexibilidad si deseamos cambiar la dirección de la petición.
+
+---
+
+En la primera parte vimos cómo mostrar las diferentes secciones del sitio web de __La Buena Espina__, excepto una: el formulario de contacto.
+
+Para poder hacer funcionar el formulario de contacto usaremos `$.post`:
+
+```javascript
+var contactForm = $('#contact-form');
+
+contactForm.on('submit', function(e) {
+  e.preventDefault();
+
+  var xhr = $.post('http://coffeemaker.herokuapp.com/form', contactForm);
+
+  window.localStorage.setItem('contact-form', $('#contacto_mensaje').val());
+
+  xhr.then(function() {
+    alert('¡Gracias por contactarnos!');
+    window.localStorage.removeItem('contact-form');
+  });
+});
+```
+
+Una de las ventajas de `$.post` es que podemos pasarle un objeto jQuery, y este se __serializará__ automáticamente, para obtener todos los valores de los elementos de formulario dentro del mismo objeto que tengan atributo `name`.
+
+También utilizamos la API de *Web Storage* en este código. Recordemos el primer párrafo de esta [API del navegador](4-apis-navegador#web-storage):
+
+> Empecemos con una API simple de usar pero que soluciona un problema común al trabajar con una aplicación web: El dueño de **La Buena Espina** quiere un formulario de contacto para que los comensales puedan dar sus impresiones sobre el servicio y la comida. Pero, ¿qué pasaría si luego de enviar el formulario se pierde la conexión, el usuario cierra su navegador o el servidor no responde? Los comentarios no llegarán al dueño y se pueden perder buenas críticas con respecto al restaurante.
+
+De esta forma, nos aseguramos que el mensaje del usuario no se pierda si es que existe un error al momento de enviar el mensaje.
 
 ---
 
