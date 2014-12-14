@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>La Buena Espina</title>
+  <link href='http://fonts.googleapis.com/css?family=Paprika|Gafata' rel='stylesheet' type='text/css' />
+  <link rel="stylesheet" href="styles/layout.css" />
+  <link rel="stylesheet" href="styles/slides.css" />
+  <link rel="stylesheet" href="styles/panels.css" />
+</head>
+<body>
+  <header>
+    <h1>La Buena Espina</h1>
+    <nav>
+      <a href="#carta">Carta</a>
+      <a href="#locales">Locales</a>
+      <a href="#historia">Historia</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </header>
+  <section id="content">
+    <div id="background">
+      <div class="slide current" id="slide-1" title="Créditos: http://www.flickr.com/photos/saucesupreme/6774616862/"></div>
+      <div class="slide" id="slide-2" title="Créditos: http://www.flickr.com/photos/c32/4775267221/"></div>
+      <div class="slide" id="slide-3" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998183161/"></div>
+      <div class="slide" id="slide-4" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998217897/"></div>
+      <div class="slide" id="slide-5" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998185723/"></div>
+      <div class="slide" id="slide-6" title="Créditos: http://www.flickr.com/photos/renzovallejo/7998141711/"></div>
+    </div>
+    <div class="panel" id="carta">
+      <h3>Carta</h3>
+    </div>
+    <div class="panel" id="locales">
+      <h3>Locales</h3>
+    </div>
+    <div class="panel" id="historia">
+      <h3>Historia</h3>
+    </div>
+    <div class="panel" id="contacto">
+      <h3>Contacto</h3>
+    </div>
+  </section>
+  <footer></footer>
+  <script src="scripts/jquery-1.11.1.js"></script>
+  <script src="scripts/cssom.js"></script>
+  <script>
+    var container = $('#background');
+    container.on('transitionend', '.slide.current', function(e) {
+      var current = $(e.target),
+          next = current.next();
+
+      current.removeClass('current');
+
+      if (current.is(':last-child')) {
+        next = current.siblings().first();
+      }
+
+      next.addClass('current');
+    });
+
+    $(window).on('hashchange load', function(e) {
+      $('.panel.current').removeClass('current');
+
+      if (location.hash !== '') {
+        $('.panel' + location.hash).addClass('current');
+      }
+    });
+
+    $(document).ready(function() {
+      var current = $('.slide.current'),
+          next = current.next();
+
+      current.removeClass('current');
+      next.addClass('current');
+    });
+  </script>
+</body>
+</html>

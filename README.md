@@ -16,7 +16,7 @@ El hilo conductor de este libro es una historia que permitirá entender y aplica
 5. [Pruebas](5-pruebas.md)
 6. [Peticiones asíncronas](6-xhr.md)
 7. [jQuery](7-jquery.md)
-8. Mejorando el flujo de trabajo
+8. [Mejorando el flujo de trabajo](8-herramientas.md)
 
 ## Apéndices
 A. [Referencia DOM](a-dom.md)

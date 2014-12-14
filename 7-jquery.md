@@ -152,6 +152,38 @@ container.on('transitionend', '.slide.current', function(e) {
 
 En este caso, seguimos usando *event delegation*. Sabemos que `$('#background')` devolverá un elemento, y que este, a su vez, tiene elementos hijo cuyas clases son `slide` y también serán `current`, y necesitamos agregar lanzar un evento `transitionend` para cada elemento `.slide.current` (es decir, el elemento `.slide` visible). En `dom.js` se llamaba `delegate`, pero en jQuery toma el nombre de `on`.
 
+---
+
+Ya sabiendo cómo usar jQuery, podemos terminar el sitio web de "La Buena Espina". Agreguemos un evento `hashchange` a `window`:
+
+```javascript
+$(window).on('hashchange', function(e) {
+  $('.panel.current').removeClass('current');
+
+  if (location.hash !== '') {
+    $('.panel' + location.hash).addClass('current');
+  }
+});
+```
+
+De esta forma, cada vez que naveguemos por la barra de navegación, aparecerá el contenido correcto.
+
+Sin embargo, ocurre un *bug* si recargamos la página y tenemos el hash `#historia` en la dirección. El contenido de Historia no aparece. Recordemos que al usar el evento `hashchange`, la función del *listener* solo se ejecutará cuando el *hash* cambie, así que necesitamos agregar un evento más a `window`. jQuery permite agregar más de un listener en una sola vez:
+
+```javascript
+$(window).on('hashchange load', function(e) {
+  $('.panel.current').removeClass('current');
+
+  if (location.hash !== '') {
+    $('.panel' + location.hash).addClass('current');
+  }
+});
+```
+
+De esta forma, nuestro código se ejecutará tanto al cambiar el *hash* en la barra de direcciones, como al cargar la ventana. Podemos ver el código funcionando en [http://cevichejs.com/files/7-jquery/index.html](http://cevichejs.com/files/7-jquery/index.html)
+
+---
+
 ## Ajax
 
 Además de manejar operaciones en el DOM, jQuery es capaz de manejar operaciones asíncronas. jQuery utiliza `XMLHttpRequest` o `ActiveXObject`, según sea el caso (por ejemplo, en versiones de Internet Explorer donde existe `ActiveXObject`, se utiliza este).
@@ -187,7 +219,7 @@ var request = xhr({
 });
 ```
 
-Una de las ventajas de jQuery es que permite tomar el código anterior y convertirlo en una sola línea: 
+Una de las ventajas de jQuery es que permite tomar el código anterior y convertirlo a una sola línea: 
 
 ```javascript
 var request = $.get('http://coffeemaker.herokuapp.com/twitter.json?q=ceviche');
