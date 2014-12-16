@@ -261,17 +261,24 @@ En la primera parte vimos cómo mostrar las diferentes secciones del sitio web d
 Para poder hacer funcionar el formulario de contacto usaremos `$.post`:
 
 ```javascript
-var contactForm = $('#contact-form');
+var contactForm = $('#contact-form'),
+    contactName = $('#contacto_nombre'),
+    contactMessage = $('#contacto_mensaje');
 
 contactForm.on('submit', function(e) {
   e.preventDefault();
 
-  var xhr = $.post('http://coffeemaker.herokuapp.com/form', contactForm);
+  window.localStorage.setItem('contact-form', contactMessage.val());
 
-  window.localStorage.setItem('contact-form', $('#contacto_mensaje').val());
+  var xhr = $.post('http://coffeemaker.herokuapp.com/form', contactForm);
 
   xhr.then(function() {
     alert('¡Gracias por contactarnos!');
+  });
+
+  xhr.then(function() {
+    contactMessage.val('');
+    contactName.val('');
     window.localStorage.removeItem('contact-form');
   });
 });
