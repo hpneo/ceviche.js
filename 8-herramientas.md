@@ -14,7 +14,7 @@ Sin embargo, si los módulos que creamos dependen de otros módulos (como segura
 <script src="c.js"></script>
 ```
 
-Pero esto no es óptimo. Si en algún momento `b.js` ya no depende de `a.js`, o `a.js` empieza a depender de un módulo nuevo, las cosas se complican más. Incluso, podría darse el caso que `a.js` empieza a depender de `c.js`, y este sigue dependiendo de `b.js` (lo cual pasa, pero debería hacerse lo posible para que no suceda). Es aquí donde aparece [RequireJS](http://requirejs.org/).
+Pero esto no es óptimo. Si en algún momento `b.js` ya no depende de `a.js`, o `a.js` empieza a depender de un módulo nuevo, las cosas se complican más. Incluso, podría darse el caso en el que `a.js` empieza a depender de `c.js`, y este sigue dependiendo de `b.js` (lo cual pasa, pero debería hacerse lo posible para que no suceda). Es aquí donde aparece [RequireJS](http://requirejs.org/).
 
 RequireJS solo necesita una etiqueta `<script>`, y permite definir módulos con sus respectivas dependencias, para luego cargar cada archivo con el módulo correspondiente según sea necesario. Para utilizar RequireJS se va a la [sección de descargas](http://requirejs.org/docs/download.html#requirejs), y luego utilizarlo en el siguiente código:
 
@@ -36,7 +36,7 @@ En este caso, definimos agregar un parámetro a la url de cada archivo que carga
 
 ## Grunt
 
-En un flujo de trabajo común, vamos a verificar que el código no tenga errores de sintáxis, realizar pruebas unitarias automatizadas, y minificar el código para reducir espacio. Realizar cada una de estas tareas puede tomar tiempo, y son tareas que vamos a realizar siempre cada cierto tiempo, sobre todo después de realizar un cambio fuerte en el código, así que necesitaremos una herramienta que le delegue a la computadora este tipo de tareas. [Grunt](http://gruntjs.com/) es un *task runner*, una herramienta que permite definir y realizar este tipo de tareas automatizadas.
+En un flujo de trabajo común vamos a: verificar que el código no tenga errores de sintáxis, realizar pruebas unitarias automatizadas, y minificar el código para reducir espacio. Realizar cada una de estas tareas puede tomar tiempo, y son tareas que vamos a realizar siempre cada cierto tiempo, sobre todo después de realizar un cambio fuerte en el código, así que necesitaremos una herramienta que le delegue a la computadora este tipo de tareas. [Grunt](http://gruntjs.com/) es un *task runner*, una herramienta que permite definir y realizar este tipo de tareas automatizadas.
 
 ## Bower
 
