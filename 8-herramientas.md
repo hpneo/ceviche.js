@@ -40,7 +40,7 @@ Por ejemplo, utilizando este código tendremos que cada archivo cargado por Requ
 
 En un flujo de trabajo común vamos a verificar que el código no tenga errores de sintáxis, realizar pruebas unitarias automatizadas, y minificar el código para reducir espacio, entre otras acciones. Realizar cada una de estas tareas puede tomar tiempo, y las vamos a realizar siempre cada cierto tiempo, sobre todo después de realizar un cambio fuerte en el código, así que es vital tener una herramienta que le delegue a la computadora este trabajo tedioso y aburrido. [Grunt](http://gruntjs.com/) es un *task runner*, una herramienta que permite definir y realizar este tipo de tareas automatizadas.
 
-Para utilizar Grunt necesitamos [Node.js](http://nodejs.org/), el cual instalará la herramienta de comandos `npm`. Luego de esto, es necesario instalar la herramienta `grunt-cli` utilizando el comando `npm`:
+Para utilizar Grunt necesitamos [Node.js](http://nodejs.org/), una plataforma que permite ejecutar JavaScript fuera del navegador, el cual también instalará la herramienta de comandos `npm`. Luego de esto, es necesario instalar la herramienta `grunt-cli` utilizando el comando `npm`:
 
 ```
 npm install -g grunt-cli
