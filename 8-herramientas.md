@@ -22,7 +22,7 @@ RequireJS solo necesita una etiqueta `<script>`, y permite definir módulos con 
 <script data-main="main" src="require.js"></script>
 ```
 
-La biblioteca es cargada en una etiqueta `<script>` a la que se define un atributo llamado `data-main`. RequireJS necesita un archivo principal desde donde empezar a cargar la aplicación, usualmente llamado `main.js`. El atributo `data-main` indica la ruta de ese archivo  __en relación__ al archivo HTML.
+La biblioteca es cargada en una etiqueta `<script>` a la que se define un atributo llamado `data-main`. RequireJS necesita un archivo principal desde donde empezar a cargar la aplicación, usualmente llamado `main.js`. El atributo `data-main` indica la ruta de ese archivo __en relación__ al archivo HTML.
 
 Adicionalmente a ello, se puede definir cierta [configuración](http://requirejs.org/docs/api.html#config) para RequireJS en una etiqueta `<script>` aparte:
 
@@ -48,7 +48,7 @@ npm install -g grunt-cli
 
 Con esto ya tenemos instalado el comando `grunt` en nuestra consola, el cual es necesario para ejecutar las tareas.
 
-El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta del proyecto. Este archivo es utilizado para definir los paquetes de [NPM](https://www.npmjs.com) (el repositorio de paquetes de Node.js) a utilizar en el proyecto, pero en este caso lo usaremos para trabajar con Grunt:
+El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta del proyecto. Este archivo es utilizado para definir los paquetes de [NPM](https://www.npmjs.com) a utilizar en el proyecto, pero en este caso lo usaremos para trabajar con Grunt:
 
 ```javascript
 {
@@ -60,7 +60,9 @@ El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta d
 }
 ```
 
-Este archivo contiene 3 propiedades principales, pudiendo tener más: el nombre del proyecto, la versión y las dependencias del proyecto (en este caso, los plugins para Grunt).
+Un paquete de NPM es solo una biblioteca de JavaScript que, por lo general, funciona dentro de Node.js, y pueden ser encontradas en el sitio web de NPM (cualquiera puede subir sus bibliotecas a NPM, haciéndolas disponibles al público). NPM se encarga de manejar cada paquete y las dependencias de cada paquete, y las descarga de ser necesarias.
+
+El archivo `package.json` contiene 3 propiedades principales, pudiendo tener más: el nombre del proyecto, la versión y las dependencias del proyecto (en este caso, los plugins para Grunt).
 
 Lo siguiente que tenemos que hacer es instalar el paquete `grunt` desde NPM (lo que instalamos líneas arriba solo era el comando para consola, pero también necesitamos la biblioteca que permita utilizar los plugins de Grunt):
 
@@ -74,7 +76,7 @@ npm install
 npm install grunt-contrib-jshint --save-dev
 ```
 
-`grunt-contrib-jshint` es un plugin para Grunt que permite utilizar JSHint, una herramienta que analiza el código y lanza advertencias sobre su calidad y posibles errores que pueda tener.
+`grunt-contrib-jshint` es un plugin para Grunt que permite utilizar [JSHint](http://www.jshint.com/), una herramienta que analiza el código y lanza advertencias sobre su calidad y posibles errores que pueda tener.
 
 Utilizando la propiedad `--save-dev` guardaremos `grunt-contrib-jshint` dentro de `devDependencies`:
 
@@ -180,3 +182,23 @@ grunt
 ## Bower
 
 Cuando trabajamos con proyectos medianos o grandes, tendremos que utilizar varias bibliotecas, las cuales pueden depender, a su vez, de otras bibliotecas. Si bien hemos visto el manejo de dependencias con RequireJS, esta maneja dependencias a nivel __lógico__, pero no a nivel de archivos. [Bower](http://bower.io/) permite manejar este tipo de dependencias (de archivos), descargando las bibliotecas que necesitemos, así como sus dependencias.
+
+Para instalar Bower también necesitamos Node.js. En este caso el comando es el siguiente:
+
+```
+npm install -g bower
+```
+
+La propiedad `-g` instala el paquete a instalar (en este caso, `bower`), a nivel global, para que pueda ser utilizado por cualquier proyecto en la computadora. Este paquete instalará un comando en la consola, llamado `bower`. Este comando permitirá instalar bibliotecas simplemente con pasarle un nombre.
+
+Por ejemplo, si deseamos instalar jQuery desde bower, solo debemos ejecutar el siguiente comando en la consola:
+
+```
+bower install jquery
+```
+
+Bower buscará, en su [propio repositorio](http://bower.io/search/), una biblioteca con ese nombre. En este punto funciona bastante parecido a NPM, ya que cada biblioteca (o paquete de NPM) tiene un nombre único. Estas bibliotecas también manejan versiones, por lo que puedo instalar una versión específica de jQuery:
+
+```
+bower install jquery#1.11.1
+```
