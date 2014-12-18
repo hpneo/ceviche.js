@@ -60,7 +60,7 @@ El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta d
 }
 ```
 
-Un paquete de NPM es solo una biblioteca de JavaScript que, por lo general, funciona dentro de Node.js, y pueden ser encontradas en el sitio web de NPM (cualquiera puede subir sus bibliotecas a NPM, haciéndolas disponibles al público). NPM se encarga de manejar cada paquete y las dependencias de cada paquete, y las descarga de ser necesarias.
+Un paquete de NPM es solo una biblioteca de JavaScript que, por lo general, funciona dentro de Node.js, y pueden ser encontradas en el [sitio web de NPM](https://www.npmjs.com/browse) (cualquiera puede subir sus bibliotecas a NPM, haciéndolas disponibles al público). NPM se encarga de manejar cada paquete y las dependencias de cada paquete, y las descarga de ser necesarias.
 
 El archivo `package.json` contiene 3 propiedades principales, pudiendo tener más: el nombre del proyecto, la versión y las dependencias del proyecto (en este caso, los plugins para Grunt).
 
