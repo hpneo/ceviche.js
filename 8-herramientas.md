@@ -46,7 +46,9 @@ Para utilizar Grunt necesitamos [Node.js](http://nodejs.org/), una plataforma qu
 npm install -g grunt-cli
 ```
 
-Con esto ya tenemos instalado el comando `grunt` en nuestra consola. El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta del proyecto:
+Con esto ya tenemos instalado el comando `grunt` en nuestra consola, el cual es necesario para ejecutar las tareas.
+
+El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta del proyecto. Este archivo es utilizado para definir los paquetes de [NPM](https://www.npmjs.com) a utilizar en el proyecto, pero en este caso lo usaremos para trabajar con Grunt:
 
 ```javascript
 {
@@ -60,15 +62,13 @@ Con esto ya tenemos instalado el comando `grunt` en nuestra consola. El siguient
 
 Este archivo contiene 3 propiedades principales, pudiendo tener más: el nombre del proyecto, la versión y las dependencias del proyecto (en este caso, los plugins para Grunt).
 
-Lo siguiente que tenemos que hacer es instalar es el paquete `grunt` dentro de [NPM](https://www.npmjs.com) (lo que instalamos líneas arriba era el comando para consola, pero también necesitamos la biblioteca que permita utilizar los plugins de Grunt):
+Lo siguiente que tenemos que hacer es instalar el paquete `grunt` desde NPM (lo que instalamos líneas arriba solo era el comando para consola, pero también necesitamos la biblioteca que permita utilizar los plugins de Grunt):
 
 ```
 npm install
 ```
 
-Vamos a utilizar este comando cada vez que querramos instalar una biblioteca definida dentro del archivo `package.json`. Este archivo es utilizado para definir los paquetes de NPM a utilizar en el proyecto, pero en este caso lo usaremos para trabajar con Grunt.
-
-Para agregar un plugin de Grunt al proyecto podemos utilizar el siguiente comando en la consola:
+`npm install` es un comando que descargará cualquier paquete definida como parámetro, o los paquetes definidos en un archivo `package.json`, de existir uno. Vamos a utilizar este comando cada vez que querramos instalar una biblioteca definida dentro del archivo `package.json`. Por ejemplo, para agregar un plugin de Grunt al proyecto podemos utilizar el siguiente comando en la consola:
 
 ```
 npm install grunt-contrib-jshint --save-dev
@@ -76,7 +76,7 @@ npm install grunt-contrib-jshint --save-dev
 
 `grunt-contrib-jshint` es un plugin para Grunt que permite utilizar JSHint, una herramienta que analiza el código y lanza advertencias sobre su calidad y posibles errores que pueda tener.
 
-De esta forma, `grunt-contrib-jshint` se agregará a la propiedad `devDependencies`:
+Utilizando la propiedad `--save-dev` guardaremos `grunt-contrib-jshint` dentro de `devDependencies`:
 
 ```javascript
 {
