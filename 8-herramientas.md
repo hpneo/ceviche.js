@@ -16,13 +16,15 @@ Sin embargo, si los módulos que creamos dependen de otros módulos (como segura
 
 Pero esto no es óptimo. Si en algún momento `b.js` ya no depende de `a.js`, o `a.js` empieza a depender de un módulo nuevo, las cosas se complican más. Incluso, podría darse el caso en el que `a.js` empieza a depender de `c.js`, y este sigue dependiendo de `b.js` (lo cual pasa, pero debería hacerse lo posible para que no suceda). Es aquí donde aparece [RequireJS](http://requirejs.org/).
 
-RequireJS solo necesita una etiqueta `<script>`, y permite definir módulos con sus respectivas dependencias, para luego cargar cada archivo con el módulo correspondiente según sea necesario. Para utilizar RequireJS se va a la [sección de descargas](http://requirejs.org/docs/download.html#requirejs), y luego utilizarlo en el siguiente código:
+RequireJS solo necesita una etiqueta `<script>`, y permite definir módulos con sus respectivas dependencias, para luego cargar cada archivo con el módulo correspondiente según sea necesario. Para utilizar RequireJS es necesario [descargarlo](http://requirejs.org/docs/download.html#requirejs), en este caso al mismo nivel del archivo HTML, y luego llamar a la biblioteca agregando la siguiente etiqueta:
 
 ```html
 <script data-main="main" src="require.js"></script>
 ```
 
-La biblioteca es cargada en una etiqueta `<script>` a la que se define un atributo llamado `data-main`. Este atributo indica la ruta relativa del archivo principal de la aplicación (es decir, la ruta __en relación__ al archivo HTML). Adicionalmente a ello, se puede definir cierta [configuración](http://requirejs.org/docs/api.html#config) para RequireJS en una etiqueta `<script>` aparte:
+La biblioteca es cargada en una etiqueta `<script>` a la que se define un atributo llamado `data-main`. RequireJS necesita un archivo principal desde donde empezar a cargar la aplicación, usualmente llamado `main.js`. El atributo `data-main` indica la ruta de ese archivo  __en relación__ al archivo HTML.
+
+Adicionalmente a ello, se puede definir cierta [configuración](http://requirejs.org/docs/api.html#config) para RequireJS en una etiqueta `<script>` aparte:
 
 ```html
 <script >
@@ -32,11 +34,11 @@ La biblioteca es cargada en una etiqueta `<script>` a la que se define un atribu
 </script>
 ```
 
-En este caso, definimos la opción `urlArgs`, para agregar un parámetro a la url de cada archivo que cargará RequireJS. Esto sirve para evitar el caché de los archivos cargados previamente.
+Por ejemplo, utilizando este código tendremos que cada archivo cargado por RequireJS tendrá una dirección parecida a `archivo.js?timestamp=1418873637178`. De esta forma, el navegador evitará guardar en caché a estos archivos (útil cuando probamos un código muy seguido y necesitamos que el navegador siempre utilice el archivo real).
 
 ## Grunt
 
-En un flujo de trabajo común vamos a: verificar que el código no tenga errores de sintáxis, realizar pruebas unitarias automatizadas, y minificar el código para reducir espacio. Realizar cada una de estas tareas puede tomar tiempo, y son tareas que vamos a realizar siempre cada cierto tiempo, sobre todo después de realizar un cambio fuerte en el código, así que necesitaremos una herramienta que le delegue a la computadora este tipo de tareas. [Grunt](http://gruntjs.com/) es un *task runner*, una herramienta que permite definir y realizar este tipo de tareas automatizadas.
+En un flujo de trabajo común vamos a verificar que el código no tenga errores de sintáxis, realizar pruebas unitarias automatizadas, y minificar el código para reducir espacio, entre otras acciones. Realizar cada una de estas tareas puede tomar tiempo, y las vamos a realizar siempre cada cierto tiempo, sobre todo después de realizar un cambio fuerte en el código, así que es vital tener una herramienta que le delegue a la computadora este trabajo tedioso y aburrido. [Grunt](http://gruntjs.com/) es un *task runner*, una herramienta que permite definir y realizar este tipo de tareas automatizadas.
 
 Para utilizar Grunt necesitamos [Node.js](http://nodejs.org/), el cual instalará la herramienta de comandos `npm`. Luego de esto, es necesario instalar la herramienta `grunt-cli` utilizando el comando `npm`:
 
