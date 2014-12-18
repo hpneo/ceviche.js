@@ -48,7 +48,7 @@ npm install -g grunt-cli
 
 Con esto ya tenemos instalado el comando `grunt` en nuestra consola, el cual es necesario para ejecutar las tareas.
 
-El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta del proyecto. Este archivo es utilizado para definir los paquetes de [NPM](https://www.npmjs.com) a utilizar en el proyecto, pero en este caso lo usaremos para trabajar con Grunt:
+El siguiente paso es crear un archivo `package.json` en la raíz de la carpeta del proyecto. Este archivo es utilizado para definir los paquetes de [NPM](https://www.npmjs.com) (el repositorio de paquetes de Node.js) a utilizar en el proyecto, pero en este caso lo usaremos para trabajar con Grunt:
 
 ```javascript
 {
