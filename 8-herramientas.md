@@ -97,7 +97,7 @@ module.exports = function(grunt) {};
 
 Dentro de esta función, debemos realizar 3 pasos:
 
-1. Definir la configuración de cada plugin.
+ 1. Definir la configuración de cada plugin.
 
 ```javascript
 module.exports = function(grunt) {
@@ -118,7 +118,7 @@ module.exports = function(grunt) {
 };
 ```
 
-2. Cargar los módulos de Node.js, definidos en el archivo `package.json`.
+ 2. Cargar los módulos de Node.js, definidos en el archivo `package.json`.
 
 ```javascript
 module.exports = function(grunt) {
@@ -130,12 +130,37 @@ module.exports = function(grunt) {
 };
 ```
 
-3. Registrar las tareas de cada módulo.
+ 3. Registrar las tareas de cada módulo.
 
 ```javascript
 module.exports = function(grunt) {
   grunt.initConfig({
     // ...
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+
+  grunt.registerTask('default', ['jshint']);
+};
+```
+
+Al final, el archivo `Gruntfile.js` quedaría así:
+
+```javascript
+module.exports = function(grunt) {
+  grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
+    jshint: {
+      all: ['scripts/index.js'],
+      options: {
+        curly: true,
+        eqeqeq: true,
+        browser: true,
+        globals: {
+          jQuery: true
+        }
+      }
+    }
   });
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
