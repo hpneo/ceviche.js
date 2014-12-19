@@ -185,7 +185,7 @@ Sin embargo, si los módulos que creamos dependen de otros módulos (como segura
 
 Pero esto no es óptimo. Si en algún momento `b.js` ya no depende de `a.js`, o `a.js` empieza a depender de un módulo nuevo, las cosas se complican más: No solo vamos a tener que cambiar el código dentro de cada archivo, si no el orden de las etiquetas `<script>`, para que cargue correctamente. Incluso, podría darse el caso en el que `a.js` empieza a depender de `c.js`, y este sigue dependiendo de `b.js` (lo cual pasa, pero debería hacerse lo posible para que no suceda). Es aquí donde aparece [RequireJS](http://requirejs.org/).
 
-RequireJS solo necesita una etiqueta `<script>`, y permite definir módulos con sus respectivas dependencias, para luego cargar cada archivo con el módulo correspondiente según sea necesario. Para utilizar RequireJS es necesario [descargarlo](http://requirejs.org/docs/download.html#requirejs), en este caso al mismo nivel del archivo HTML, y luego llamar a la biblioteca agregando la siguiente etiqueta:
+RequireJS permite definir módulos, con sus respectivas dependencias, y solo necesita una etiqueta `<script>`. Para utilizar RequireJS es necesario [descargarlo](http://requirejs.org/docs/download.html#requirejs), y luego llamar a la biblioteca agregando la siguiente etiqueta:
 
 ```html
 <script data-main="main" src="require.js"></script>
