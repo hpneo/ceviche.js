@@ -207,7 +207,7 @@ Por ejemplo, utilizando este código tendremos que cada archivo cargado por Requ
 
 En nuestro caso, solo tenemos dos archivos, `jquery.js` e `index.js`, que será suficiente para hacer un ejemplo básico de RequireJS.
 
-Para empezar, debemos instalar RequireJS. Esto puede hacerse descargándolo, como se explicó en párrafos anteriores, o usando Bower:
+Como ya hemos instalado Bower, lo usaremos para instalar RequireJS. Si bien puede descargarse directamente, en este caso usaremos el comando `bower install`:
 
 ```
 bower install requirejs
