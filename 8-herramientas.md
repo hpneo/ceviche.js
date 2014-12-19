@@ -44,7 +44,7 @@ npm install grunt-contrib-jshint --save-dev
 
 `grunt-contrib-jshint` es un plugin para Grunt que permite utilizar [JSHint](http://www.jshint.com/), una herramienta que analiza el código y lanza advertencias sobre su calidad y posibles errores que pueda tener.
 
-Utilizando la propiedad `--save-dev` guardaremos `grunt-contrib-jshint` dentro de `devDependencies`:
+Utilizando la propiedad `--save-dev` en el comando de la consola, NPM agregará una nueva propiedad (`grunt-contrib-jshint`) dentro de la propiedad `devDependencies`. Esta propiedad (`nombre : valor`) tendrá por nombre el nombre del paquete de NPM, y el valor será la versión que se desea instalar:
 
 ```javascript
 {
