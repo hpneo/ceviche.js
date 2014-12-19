@@ -213,7 +213,7 @@ Como ya hemos instalado Bower, lo usaremos para instalar RequireJS. Si bien pued
 bower install requirejs
 ```
 
-Luego de haber utilizado Bower, vamos a ver el archivo `index.html`, donde tenemos las siguientes etiquetas:
+Luego de haber instalado RequireJS, vamos a modificar el archivo `index.html`, donde tenemos las siguientes etiquetas:
 
 ```html
 <script src="bower_components/jquery/dist/jquery.js"></script>
@@ -226,9 +226,14 @@ Lo primero que debemos hacer es dejar una sola etiqueta `<script>`, de la siguie
 <script data-main="scripts/index" src="bower_components/requirejs/require.js"></script>
 ```
 
-Nuestro archivo `scripts/index.js` necesita convertirse en un módulo de RequireJS. Para esto, definimos un módulo con la función `require`, el cual toma dos parámetros: Un arreglo con las rutas de las dependencias del módulo que se está creando (que deben ser otros módulos de RequireJS), y una función que contendrá el código del módulo. Esta función, a su vez, debe tener definidos tantos argumentos como elementos tenga el arreglo, asumiendo que cada elemento es una ruta a un módulo.
+Nuestro archivo `scripts/index.js` necesita convertirse en un módulo de RequireJS. Para esto, definimos un módulo con la función `require`, el cual toma dos parámetros:
 
-De esa forma, el código que estaba dentro de `index.js` debería ir aquí (notemos que la función no tiene ningún argumento):
+* Un arreglo con las rutas de las dependencias del módulo que se está creando (que deben ser otros módulos de RequireJS)
+* Una función que contendrá el código del módulo.
+
+Esta función, a su vez, debe tener definidos tantos argumentos como elementos tenga el arreglo, asumiendo que cada elemento es una ruta a un módulo.
+
+Así, el código que estaba dentro de `index.js` debería ir aquí (notemos que la función no tiene ningún argumento):
 
 ```javascript
 require(['../bower_components/jquery/dist/jquery'], function() {
@@ -236,7 +241,7 @@ require(['../bower_components/jquery/dist/jquery'], function() {
 });
 ```
 
-La cadena dentro del arreglo es la ruta de la biblioteca jQuery descargada desde Bower, y esta ruta es relativa a `scripts/index.js`. Si usamos más bibliotecas desde Bower, o armamos una estructura mucho más compleja de carpetas y archivos, tendremos muchas rutas que escribir, posiblemente la misma ruta en más de un solo lugar.
+`../bower_components/jquery/dist/jquery` es la ruta de la biblioteca jQuery descargada desde Bower, y esta ruta es relativa a `scripts/index.js`. Si usamos más bibliotecas desde Bower, o armamos una estructura mucho más compleja de carpetas y archivos, tendremos muchas rutas que escribir, y posiblemente en más de un solo lugar.
 
 RequireJS tiene una propiedad de configuración llamada `paths`, donde se pueden definir los nombres de cada módulo y sus respectivas rutas. De esta forma, les damos un alias a cada módulo:
 
@@ -258,7 +263,11 @@ require(['jquery'], function($) {
 });
 ```
 
-`jquery.js` es una biblioteca que trata de servir en todos los casos posibles, ya sea llamándolo desde una etiqueta `<script>` o utilizando RequireJS. Para el primer caso, agrega una variable global llamada `jQuery` (y su alias `$`) a `window`, mientras que en el segundo caso, crea un módulo del tipo AMD (que es el tipo de módulo que usa RequireJS). Puedes leer más sobre AMD en la misma [web de RequireJS](http://requirejs.org/docs/whyamd.html).
+---
+
+jQuery es una biblioteca que trata de funcionar en todos los casos posibles, ya sea llamándolo desde una etiqueta `<script>` o utilizando RequireJS.
+
+Para el primer caso, la biblioteca agrega una variable global llamada `jQuery` (y su alias `$`) a `window`, mientras que en el segundo caso, crea un módulo del tipo AMD (que es el tipo de módulo que usa RequireJS). Puedes leer más sobre AMD en la misma [web de RequireJS](http://requirejs.org/docs/whyamd.html).
 
 Estas dos porciones de código están dentro de `jquery.js`, donde el primero crea las variables globales `jQuery`y `$`:
 
@@ -278,11 +287,13 @@ if ( typeof define === "function" && define.amd ) {
 }
 ```
 
-Aquí podemos notar dos cosas importantes: se usa la función `define`, y esta toma 3 parámetros. La función `define` permite, como su nombre indica, definir un módulo, y puede tener un nombre *propio* (que es el primer parámetro). Los otros dos parámetros son similares a los usados en la función `require`: un arreglo de dependencias y una función que englobe el código del módulo. Cabe resaltar que `require` solo debe utilizarse en el archivo principal (definido en el atributo `data-main`), ya que no solo define un módulo, si no que lo ejecuta inmediatamente, mientras que `define` solo define un módulo que será utilizado luego.
+Aquí podemos notar dos cosas importantes: se usa la función `define`, y esta toma 3 parámetros. La función `define` permite, como su nombre indica, definir un módulo, y puede tener un nombre *propio* (que es el primer parámetro). Los otros dos parámetros son similares a los usados en la función `require`: un arreglo de dependencias y una función que englobe el código del módulo. Cabe resaltar que `require` solo debe usarse en el archivo principal (definido en el atributo `data-main`), ya que no solo define un módulo, si no que lo __ejecuta inmediatamente__, mientras que `define` solo define un módulo que será utilizado luego.
 
 En el caso de jQuery, el módulo es llamado `jquery`, y es por eso que debemos usarlo en la configuración de RequireJS, dentro de la propiedad `paths`.
 
-Volvamos por un momento a la primera implementación de nuestro código con RequireJS:
+---
+
+Para terminar, volvamos por un momento a la primera implementación de nuestro código con RequireJS:
 
 ```javascript
 require(['../bower_components/jquery/dist/jquery'], function() {
@@ -290,9 +301,9 @@ require(['../bower_components/jquery/dist/jquery'], function() {
 });
 ```
 
-Aquí vemos que la función que englobará nuestro código no tiene ningún argumento, pero el código funciona sin problemas. Esto significa que jQuery está siendo usado como una variable global (utilizando `window.jQuery` o `window.$`).
+Aquí vemos que la función que englobará nuestro código no tiene ningún argumento, pero el código funciona sin problemas. Esto significa que jQuery está usando como una variable global (utilizando `window.jQuery` o `window.$`).
 
-Sin embargo, en la última implementación, vemos que sí tiene un argumento:
+Sin embargo, en la última implementación, vemos que la función sí tiene un argumento:
 
 ```javascript
 require(['jquery'], function($) {
@@ -300,4 +311,4 @@ require(['jquery'], function($) {
 });
 ```
 
-Esto sucede porque, al usar el nombre del módulo de jQuery, definido por `jquery.js`, en la propiedad `paths`, ya estamos usando el módulo de tipo AMD.
+Esto sucede porque, al usar el nombre del módulo de jQuery (definido por `jquery.js`) en la propiedad `paths`, ya estamos usando el módulo de tipo AMD.
