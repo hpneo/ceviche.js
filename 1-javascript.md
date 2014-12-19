@@ -148,7 +148,7 @@ dateParts.join('/');
 // "19/8/1990"
 
 var menuCategories = ['Entradas', 'Segundos', 'Postres'];
-dateParts.join(', ');
+menuCategories.join(', ');
 // "Entradas, Segundos, Postres"
 ```
 
