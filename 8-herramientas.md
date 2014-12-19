@@ -278,7 +278,7 @@ if ( typeof define === "function" && define.amd ) {
 }
 ```
 
-Aquí podemos notar dos cosas importantes: se usa la función `define`, y esta toma 3 parámetros. La función `define` permite, como su nombre indica, definir un módulo, y puede tener un nombre *propio* (que es el primer parámetro). Los otros dos parámetros son similares a los usados en la función `require`: un arreglo de dependencias y una función que englobe el código del módulo.
+Aquí podemos notar dos cosas importantes: se usa la función `define`, y esta toma 3 parámetros. La función `define` permite, como su nombre indica, definir un módulo, y puede tener un nombre *propio* (que es el primer parámetro). Los otros dos parámetros son similares a los usados en la función `require`: un arreglo de dependencias y una función que englobe el código del módulo. Cabe resaltar que `require` solo debe utilizarse en el archivo principal (definido en el atributo `data-main`), ya que no solo define un módulo, si no que lo ejecuta inmediatamente, mientras que `define` solo define un módulo que será utilizado luego.
 
 En el caso de jQuery, el módulo es llamado `jquery`, y es por eso que debemos usarlo en la configuración de RequireJS, dentro de la propiedad `paths`.
 
