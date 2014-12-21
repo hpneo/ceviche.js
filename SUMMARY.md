@@ -9,4 +9,5 @@
 * Capítulo 6: Peticiones asíncronas
 * Capítulo 7: jQuery
 * Capítulo 8: Mejorando el flujo de trabajo
+* Apéndice A: Referencia DOM
 
