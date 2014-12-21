@@ -5,4 +5,5 @@
 * Capítulo 2: Funciones
 * Capítulo 3: DOM y CSSOM
 * Capítulo 4: APIs del navegador
+* Capítulo 5: Pruebas
 
