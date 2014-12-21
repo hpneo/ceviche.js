@@ -6,4 +6,5 @@
 * Capítulo 3: DOM y CSSOM
 * Capítulo 4: APIs del navegador
 * Capítulo 5: Pruebas
+* Capítulo 6: Peticiones asíncronas
 
