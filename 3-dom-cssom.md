@@ -425,7 +425,7 @@ document.dispatchEvent(sectionChangedEvent);
 
 Cuando un evento es lanzado, este pasa por 3 fases, en el siguiente orden: *Capture phase*, *Target phase* y *Bubbling phase*. El hecho de pasar por las 3 fases es denominado _*event flow*_.
 
-![Document Object Model (DOM) Level 3 Events Specification: Event flow](http://www.w3.org/TR/DOM-Level-3-Events/images/eventflow.svg "Document Object Model (DOM) Level 3 Events Specification")
+![Document Object Model (DOM) Level 3 Events Specification: Event flow](images/3-dom-cssom/eventflow.png "Document Object Model (DOM) Level 3 Events Specification")
 
 *Document Object Model (DOM) Level 3 Events Specification. http://www.w3.org/TR/DOM-Level-3-Events/*
 
