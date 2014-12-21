@@ -10,5 +10,5 @@
 * [Capítulo 7: jQuery](7-jquery.md)
 * [Capítulo 8: Mejorando el flujo de trabajo](8-herramientas.md)
 * [Apéndice A: Referencia DOM](a-dom.md)
-* Apéndice B: Bibliotecas de terceros
+* [Apéndice B: Bibliotecas de terceros](b-bibliotecas.md)
 
