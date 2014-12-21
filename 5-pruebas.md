@@ -131,7 +131,7 @@ QUnit.test('módulo titleBuilder', function(assert) {
 
 En este caso `assert.ok` toma los mismos valores que `console.assert` (una condición que debe evaluarse como verdadera y la descripción de la validación). Las 3 validaciones o *asserts* son agrupadas en una *prueba* o *test*, definida por el método `QUnit.test`. Al final debe quedar así:
 
-![QUnit](/images/5-pruebas/qunit.png "QUnit")
+![QUnit](images/5-pruebas/qunit.png "QUnit")
 
 ### Jasmine
 
@@ -233,7 +233,7 @@ El *Spec Runner* de Jasmine carga los siguientes archivos:
 
 Luego de esto, se debe cargar el código que deseamos probar (los que se encuentran en la carpeta `src`), y luego las pruebas en sí (carpeta `spec`). Al final debe quedar así:
 
-![Jasmine Spec Runner 2.0.2](/images/5-pruebas/jasmine_spec_runner.png "Jasmine Spec Runner 2.0.2")
+![Jasmine Spec Runner 2.0.2](images/5-pruebas/jasmine_spec_runner.png "Jasmine Spec Runner 2.0.2")
 
 #### Pruebas con Jasmine
 
@@ -304,7 +304,7 @@ describe('Módulo titleBuilder', function() {
 
 Y el resultado sería el siguiente:
 
-![Jasmine Spec Runner 2.0.2](/images/5-pruebas/jasmine_spec_runner_title_builder.png "Jasmine Spec Runner 2.0.2")
+![Jasmine Spec Runner 2.0.2](images/5-pruebas/jasmine_spec_runner_title_builder.png "Jasmine Spec Runner 2.0.2")
 
 En Jasmine, cada prueba (definida con el método `it`) puede tener una o más validaciones o *asserts*, que, en este caso, son definidas con el método `expect`.
 
