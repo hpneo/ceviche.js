@@ -5,7 +5,7 @@
 * [Capítulo 2: Funciones](2-funciones.md)
 * [Capítulo 3: DOM y CSSOM](3-dom-cssom.md)
 * [Capítulo 4: APIs del navegador](4-apis-navegador.md)
-* Capítulo 5: Pruebas
+* [Capítulo 5: Pruebas](5-pruebas.md)
 * Capítulo 6: Peticiones asíncronas
 * Capítulo 7: jQuery
 * Capítulo 8: Mejorando el flujo de trabajo
