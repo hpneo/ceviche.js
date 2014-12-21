@@ -2,7 +2,7 @@
 
 * [Introduction](README.md)
 * [Capítulo 1: Entendiendo JavaScript](1-javascript.md)
-* Capítulo 2: Funciones
+* [Capítulo 2: Funciones](2-funciones.md)
 * Capítulo 3: DOM y CSSOM
 * Capítulo 4: APIs del navegador
 * Capítulo 5: Pruebas
