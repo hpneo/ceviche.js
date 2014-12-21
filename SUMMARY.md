@@ -8,7 +8,7 @@
 * [Capítulo 5: Pruebas](5-pruebas.md)
 * [Capítulo 6: Peticiones asíncronas](6-xhr.md)
 * [Capítulo 7: jQuery](7-jquery.md)
-* Capítulo 8: Mejorando el flujo de trabajo
+* [Capítulo 8: Mejorando el flujo de trabajo](8-herramientas.md)
 * Apéndice A: Referencia DOM
 * Apéndice B: Bibliotecas de terceros
 
