@@ -7,4 +7,5 @@
 * Capítulo 4: APIs del navegador
 * Capítulo 5: Pruebas
 * Capítulo 6: Peticiones asíncronas
+* Capítulo 7: jQuery
 
