@@ -173,7 +173,7 @@ Después de descargar la biblioteca a instalar (jQuery en este caso), creará un
 
 ## RequireJS
 
-Cuando se trabajan en aplicaciones, es necesario separar el código de acuerdo a sus responsabilidades, es decir, lo que realiza cada parte del código, y una buena forma de hacerlo es mediante el [patrón Module](2-funciones#module). De esta forma, separamos el código por responsabilidades, y este se vuelve código reusable.
+Cuando se trabajan en aplicaciones, es necesario separar el código de acuerdo a sus responsabilidades, es decir, lo que realiza cada parte del código, y una buena forma de hacerlo es mediante el [patrón Module](2-funciones.html#module). De esta forma, separamos el código por responsabilidades, y este se vuelve código reusable.
 
 Sin embargo, si los módulos que creamos dependen de otros módulos (como seguramente será), vamos a tener problemas. En un documento HTML, deberíamos definir primero el módulo que no depende de nadie (llamado módulo `a.js`), luego definir el módulo que depende de `a.js` (el cual será llamado `b.js`), para luego definir al módulo que depende de `b.js`, si existiera, y así sucesivamente. El código quedaría así:
 

@@ -10,7 +10,7 @@ jQuery tiene [documentación con ejemplos](http://api.jquery.com/), dividida en 
 
 * __Ajax__: Funciones relacionadas a operaciones asíncronas
 * __Attributes__: Métodos que manejan atributos de elementos
-* __Callbacks__: Objeto para manejar callbacks (tal y como vimos en [el capítulo 2](/2-funciones.html#callbacks))
+* __Callbacks__: Objeto para manejar callbacks (tal y como vimos en [el capítulo 2](2-funciones.html#callbacks))
 * __Core__: Funciones relacionadas al uso de jQuery
 * __CSS__: Métodos que manejan estilos de elementos
 * __Data__: Métodos que manejan datos de elementos (utilizando la propiedad `dataset`)
