@@ -217,7 +217,7 @@ input.addEventListener('change', function(e) {
 
 Dentro de este código de ejemplo utilizamos la función constructora `FileReader`, la cual permite leer las instancias de `File` y convertirlo a una cadena de tipo [__Data URI__](https://developer.mozilla.org/en/docs/data_URIs) para, de esta forma, poder cargarlo en un elemento `<img>`.
 
-En el bucle que lee cada imagen obtenida por el input `files` utilizamos una [función inmediatamente invocada](2-funciones#funciones-inmediatamente-invocadas) debido a la naturaleza asíncrona de `FileReader`. Con este tipo de funciones, se obliga al navegador a ejecutar todo el código dentro de la función antes de pasar a la siguiente iteración, lo que nos asegura que se lean los valores correctos para cada iteración.
+En el bucle que lee cada imagen obtenida por el input `files` utilizamos una [función inmediatamente invocada](2-funciones.html#funciones-inmediatamente-invocadas) debido a la naturaleza asíncrona de `FileReader`. Con este tipo de funciones, se obliga al navegador a ejecutar todo el código dentro de la función antes de pasar a la siguiente iteración, lo que nos asegura que se lean los valores correctos para cada iteración.
 
 > [Soporte para File](http://caniuse.com/#feat=fileapi)
 

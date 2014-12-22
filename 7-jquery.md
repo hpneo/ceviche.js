@@ -128,9 +128,9 @@ En el primer caso, cambiamos `isLastSibling()` por `is(':last-child')`. `is` es 
 
 jQuery permite manejar eventos, tanto del navegador como propios, utilizando los métodos `on` y `off` (para agregar y eliminar *listeners*, respectivamente). Estos métodos funcionan de la misma manera para eventos del navegador y propios, e incluso se pueden lanzar (o *disparar*) manualmente utilizando el método `trigger`.
 
-Cabe recordar que jQuery agrega *listeners* a los eventos en la *bubbling phase*, y no en la *capture phase*. Esto es importante a tener en cuenta, dada la [diferencia que existe entre agregar un *listener* en cualquiera de las dos fases](3-dom-cssom#event-flow).
+Cabe recordar que jQuery agrega *listeners* a los eventos en la *bubbling phase*, y no en la *capture phase*. Esto es importante a tener en cuenta, dada la [diferencia que existe entre agregar un *listener* en cualquiera de las dos fases](3-dom-cssom.html#event-flow).
 
-Por otro lado, jQuery utiliza [*event delegation*](3-dom-cssom#event-delegation), el cual permite definir eventos en elementos que aún no han sido creados, así como definir el mismo evento a un conjunto de elementos, sin la necesidad de crear un *listener* por cada elemento.
+Por otro lado, jQuery utiliza [*event delegation*](3-dom-cssom.html#event-delegation), el cual permite definir eventos en elementos que aún no han sido creados, así como definir el mismo evento a un conjunto de elementos, sin la necesidad de crear un *listener* por cada elemento.
 
 Volvamos al ejemplo de la sección anterior:
 
@@ -190,7 +190,7 @@ Además de manejar operaciones en el DOM, jQuery es capaz de manejar operaciones
 
 Para poder realizar operaciones asíncronas, jQuery ofrece una serie de métodos, los cuales van desde el básico `$.ajax` hasta `$.get` o `$.post`.
 
-En el [capítulo anterior](6-xhr) vimos cómo realizar llamadas asíncronas a un servidor. Utilizamos `http://coffeemaker.herokuapp.com` para probar con el siguiente código:
+En el [capítulo anterior](6-xhr.html) vimos cómo realizar llamadas asíncronas a un servidor. Utilizamos `http://coffeemaker.herokuapp.com` para probar con el siguiente código:
 
 ```javascript
 var xhr = new XMLHttpRequest();
@@ -286,7 +286,7 @@ contactForm.on('submit', function(e) {
 
 Una de las ventajas de `$.post` es que podemos pasarle un objeto jQuery, y este se __serializará__ automáticamente, para obtener todos los valores de los elementos de formulario dentro del mismo objeto que tengan atributo `name`.
 
-También utilizamos la API de *Web Storage* en este código. Recordemos el primer párrafo de esta [API del navegador](4-apis-navegador#web-storage):
+También utilizamos la API de *Web Storage* en este código. Recordemos el primer párrafo de esta [API del navegador](4-apis-navegador.html#web-storage):
 
 > Empecemos con una API simple de usar pero que soluciona un problema común al trabajar con una aplicación web: El dueño de **La Buena Espina** quiere un formulario de contacto para que los comensales puedan dar sus impresiones sobre el servicio y la comida. Pero, ¿qué pasaría si luego de enviar el formulario se pierde la conexión, el usuario cierra su navegador o el servidor no responde? Los comentarios no llegarán al dueño y se pueden perder buenas críticas con respecto al restaurante.
 
