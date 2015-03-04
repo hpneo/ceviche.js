@@ -153,10 +153,10 @@ menuCategories.join(', ');
 ```
 
 #### `pop`
-Quita un elemento del arreglo y retorna su valor.
+Quita el último elemento del arreglo y retorna su valor.
 
 #### `push`
-Agrega un elemento al arreglo y retorna el nuevo tamaño del arreglo.
+Agrega un elemento al final del arreglo y retorna el nuevo tamaño.
 
 ```javascript
 var dateParts = [19, 8, 1990];
@@ -703,11 +703,11 @@ El número de parámetros pasados a una función no es estricta. Si una función
 ```javascript
 function sum(a, b, c) {
   var result = a + b;
- 
+
   if (c) {
     result += c;  // similar a: result = result + c;
   }
- 
+
   return result;
 };
 
