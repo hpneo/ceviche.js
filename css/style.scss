@@ -1,0 +1,130 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+body {
+  color: #485a6c;
+}
+
+.highlight {
+  background: #ffffff;
+  color: #929292;
+
+  .hll { background-color: #efefef; }
+
+  .c { color: #929292 }
+
+  // .err { background: #C82829; color: #FFFFFF }
+  .err { background: none }
+
+  .k { color: #8959A8 }
+  .l { color: #F5871F }
+  .n { color: #929292 }
+  .o { color: #545454 }
+  .p { color: #929292 }
+  .cm { color: #929292 }
+  .cp { color: #929292 }
+  .c1 { color: #929292 }
+  .cs { color: #929292 }
+  .gd { color: #C82829 }
+  .ge { font-style: italic }
+  .gh { color: #545454; font-weight: bold }
+  .gi { color: #718C00 }
+  .gp { color: #718C00; font-weight: bold }
+  .gs { font-weight: bold }
+  .gu { color: #3E999F; font-weight: bold }
+  .kc { color: #8959A8 }
+  .kd { color: #8959A8 }
+  .kn { color: #3E999F }
+  .kp { color: #4271AE }
+  .kr { color: #8959A8 }
+  .kt { color: #EAB700 }
+  .ld { color: #718C00 }
+  .m { color: #F5871F }
+  .s { color: #718C00 }
+  .na { color: #4271AE }
+  .nb { color: #4271AE }
+  .nc { color: #EAB700 }
+  .no { color: #EAB700 }
+  .nd { color: #3E999F }
+  .ni { color: #545454 }
+  .ne { color: #C82829 }
+  .nf { color: #4271AE }
+  .nl { color: #545454 }
+  .nn { color: #EAB700 }
+  .nx { color: #4271AE }
+  .py { color: #545454 }
+  .nt { color: #3E999F }
+  .nv { color: #C82829 }
+  .ow { color: #3E999F }
+  .w { color: #545454 }
+  .mf { color: #F5871F }
+  .mh { color: #F5871F }
+  .mi { color: #F5871F }
+  .mo { color: #F5871F }
+  .sb { color: #718C00 }
+  .sc { color: #545454 }
+  .sd { color: #929292 }
+  .s2 { color: #718C00 }
+  .se { color: #F5871F }
+  .sh { color: #718C00 }
+  .si { color: #F5871F }
+  .sx { color: #718C00 }
+  .sr { color: #718C00 }
+  .s1 { color: #718C00 }
+  .ss { color: #718C00 }
+  .bp { color: #545454 }
+  .vc { color: #C82829 }
+  .vg { color: #C82829 }
+  .vi { color: #C82829 }
+  .il { color: #F5871F }
+}
+
+.page-header {
+  background-color: #3689e6;
+  background-image: linear-gradient(120deg, #3689e6, #0d52bf);
+}
+
+.main-content {
+  pre > code {
+    font-size: 0.85rem;
+  }
+
+  code {
+    font-family: Menlo, Monaco, Consolas, Courier, "Courier New", monospace;
+  }
+
+  h2 code {
+    font-size: 1.5rem !important;
+  }
+
+  .post-item {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.icon-link {
+  display: inline-block;
+}
+
+.site-navbar {
+  @extend.main-content;
+  max-width: 52rem;
+  padding: 0;
+  font-size: 0.9rem;
+
+  > * {
+    display: inline-block;
+    padding: 1rem;
+    border-right: solid 1px #eff0f1;
+
+    &:first-child {
+      border-left: solid 1px #eff0f1;
+    }
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+}

@@ -98,7 +98,7 @@ B. Cuando la función es una función constructora, el contexto de dicha funció
 ```javascript
 var Constructor = function Constructor(newValue) {
   this.property = newValue;
-  
+
   console.log('context: ', this);
 };
 
@@ -172,7 +172,7 @@ function buildSiteTitle() {     // Ya no es necesario definir los parámetros
   if (arguments.length > 2) {   // arguments tiene una propiedad llamada length
     separator = ' › ';
   }
-  
+
   for (var i = 0; i < arguments.length; i++) {
     if (i == 0) {
       title += arguments[i];    // La primera parte del título no debe tener separador
@@ -181,7 +181,7 @@ function buildSiteTitle() {     // Ya no es necesario definir los parámetros
       title += separator + arguments[i];
     }
   }
-  
+
   return title;
 };
 
@@ -387,7 +387,7 @@ Un closure en JavaScript es una función definida dentro de otra función, tenie
 ```javascript
 function buildTitle(parts) {
   var baseTitle = 'La Buena Espina';
-  
+
   function getSeparator() {
     if (parts.length == 1) {
       return ' — ';
@@ -396,10 +396,10 @@ function buildTitle(parts) {
       return ' › ';
     }
   };
-  
+
   var separator = getSeparator();
   parts.unshift(baseTitle);
-  
+
   return parts.join(separator);
 }
 
@@ -418,7 +418,7 @@ Sin embargo, de ser necesario, el closure puede ser devuelto por la función ext
 function titleBuilder() {
   var baseTitle = 'La Buena Espina';
   var parts = [baseTitle];
-  
+
   function getSeparator() {
     if (parts.length == 2) {
       return ' — ';
@@ -427,13 +427,13 @@ function titleBuilder() {
       return ' › ';
     }
   };
-  
+
   function addPart(part) {
     parts.push(part);
-    
+
     return parts.join(getSeparator());
   };
-  
+
   return addPart;
 };
 
@@ -457,7 +457,7 @@ Un módulo utiliza las funciones inmediatamente invocadas y los closures para en
 var titleBuilder = (function() {
   var baseTitle = 'La Buena Espina';
   var parts = [baseTitle];
-  
+
   function getSeparator() {
     if (parts.length == 2) {
       return ' — ';
@@ -466,7 +466,7 @@ var titleBuilder = (function() {
       return ' › ';
     }
   };
-  
+
   return {
     reset: function() {
       parts = [baseTitle];
@@ -538,15 +538,15 @@ if (!Array.prototype.each) {
 El patrón publish / subscribe permite la comunicación entre objetos de forma asíncrona y define dos tipos de objetos: aquel que se suscribe a un canal (*subscriber*) y aquel que envía el mensaje (*publisher*). Cada suscripción permite definir un callback que se ejecutará cuando el objeto *publisher* envíe un mensaje en el canal el objeto *subscriber* está suscrito.
 
 ```javascript
-var SiteNotifier = (function() {                        // Este patrón utiliza el patrón módulo...
+var SiteNotifier = (function() {                        // Esta función utiliza el patrón módulo...
   var channels = {};
-  
+
   return {
     subscribe: function(channelName, callback) {        // ...con 2 closures: subscribe y publish
       if (channels[channelName] === undefined) {        // en subscribe verifica si el canal existe
         channels[channelName] = [];                     // y si no, lo inicializa como un array vacío
       }
-      
+
       if (callback instanceof Function) {
         channels[channelName].push(callback);           // al ser un closure tiene acceso a la variable channels del ámbito externo
       }
@@ -554,10 +554,10 @@ var SiteNotifier = (function() {                        // Este patrón utiliza 
     publish: function(channelName, message) {
       if (channels[channelName] instanceof Array) {     // solo se ejecutará si el valor del canal es un array
         var subscribers = channels[channelName];
-        
+
         for (var i = 0; i < subscribers.length; i++) {  // itera a través de todos los suscriptores (callbacks)...
           var callback = subscribers[i];
-          
+
           callback.call(null, message);                 // ...y las ejecuta sin contexto, pasándole el mensaje como parámetro
         }
       }
@@ -592,7 +592,7 @@ Este patrón se utiliza en casos donde se requiera condicionar la ejecución de 
 var titleBuilder = (function() {
   var baseTitle = 'La Buena Espina';
   var parts = [baseTitle];
-  
+
   function getSeparator() {
     if (parts.length == 2) {
       return ' — ';
@@ -601,26 +601,26 @@ var titleBuilder = (function() {
       return ' › ';
     }
   };
-  
+
   return {
     reset: function() {
       var message = {
         oldTitle: this.toString()
       };
-      
+
       parts = [baseTitle];
       message.newTitle = this.toString();
-      
+
       SiteNotifier.publish('site_title:changed', message);
     },
     addPart: function(part) {
       var message = {
         oldTitle: this.toString()
       };
-      
+
       parts.push(part);
       message.newTitle = this.toString();
-      
+
       SiteNotifier.publish('site_title:changed', message);
     },
     toString: function() {
@@ -669,7 +669,7 @@ function Beverage(options) {
 };
 ```
 
-Pero el dueño de La Buena Espina quiere tener una calculadora en el sitio web, que permita saber cuánto gastará un posible cliente según lo que vaya a pedir, y para esto necesitamos que todos los items de la carta (en este caso, `Dish`y `Beverage`) tengan un método que agregue el precio a una calculadora. 
+Pero el dueño de La Buena Espina quiere tener una calculadora en el sitio web, que permita saber cuánto gastará un posible cliente según lo que vaya a pedir, y para esto necesitamos que todos los items de la carta (en este caso, `Dish`y `Beverage`) tengan un método que agregue el precio a una calculadora.
 
 Podríamos tener un *prototype* en común para ambos pero suena un poco forzado. ¿Cómo es que `Dish` y `Beverage` podrían tener un objeto *padre* en común? Ambos necesitan el mismo comportamiento, pero son muy diferentes para compartir un *prototype*. Es aquí donde podemos usar un *mixin*.
 
